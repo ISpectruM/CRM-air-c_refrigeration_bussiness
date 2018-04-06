@@ -16,25 +16,34 @@ public class User implements UserDetails {
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator")
-    private Long id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id;
 
+    @Column(name = "user", nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
+    @JoinTable(name="users_auth",
             joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
 
     public User() {
         this.authorities = new HashSet<>();
     }
 
-    public void setId(Long id) {
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

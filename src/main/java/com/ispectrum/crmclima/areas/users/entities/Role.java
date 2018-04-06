@@ -13,17 +13,18 @@ public class Role implements GrantedAuthority {
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator")
-    private Long id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id;
 
     private String authority;
 
     public Role() { }
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
