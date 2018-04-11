@@ -1,0 +1,79 @@
+<div class="card text-white bg-danger mb-3 mt-3 mx-auto" style="max-width: 20rem;">
+    <h3 class="card-header">Edit User</h3>
+    <div class="card-body">
+        <form class="form-horizontal" th:action="@{/users/edit/{id}(id=${user.id})}" th:method="POST">
+            <div class="form-group">
+                <label for="username" class="control-label">Username</label>
+                <div class="col-lg-12">
+                    <input type="text" th:value="${user.username}" class="form-control has-danger" id="username" name="username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <div class="col-lg-12">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="control-label">Confirm Password</label>
+                <div class="col-lg-12">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <legend>Restrictions</legend>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${user.isAccountNonExpired()}" type="checkbox" name="isAccountNonExpired">
+                        isAccountNonExpired
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${user.isAccountNonLocked()}" type="checkbox" name="isAccountNonLocked">
+                        isAccountNonLocked
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${user.isCredentialsNonExpired()}" type="checkbox" name="isCredentialsNonExpired">
+                        isCredentialsNonExpired
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${user.isEnabled()}" type="checkbox" name="isEnabled">
+                        isEnabled
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>Roles</legend>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${#lists.contains(user.getAuthorities(),'ROLE_MODERATOR')}" type="checkbox" name="role" value="ROLE_MODERATOR">
+                        Moderator
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" th:checked="${#lists.contains(user.getAuthorities(),'ROLE_ADMIN')}" type="checkbox" name="role" value="ROLE_ADMIN">
+                        Admin
+                    </label>
+                </div>
+            </fieldset>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+            <div class="form-group">
+                <div class="col-lg-12 col-lg-offset-2">
+                    <a type="button" th:href="@{/users/all}" class="btn btn-default">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

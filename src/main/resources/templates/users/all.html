@@ -1,0 +1,28 @@
+<h3>All users</h3>
+<div class="button mt-3 mb-3">
+    <a th:href="@{/users/add}">Add user</a>
+</div>
+<table class="table table-hover mt-10">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">id</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="table-active" th:each="user, iter:${users}" th:object="${user}">
+        <th scope="row" th:text="${iter.index+1}"></th>
+        <td th:text="*{id}"></td>
+        <td th:text="*{username}">Column content</td>
+        <td th:text="*{password}">Column content</td>
+        <td>
+            <a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a>
+            <a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>

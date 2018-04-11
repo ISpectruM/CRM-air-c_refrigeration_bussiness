@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/head}"></head>
+<body>
+<div class="container-fluid navbar-color" th:include="~{fragments/header}"></div>
+
+    <div class="row">
+        <div class="container" th:include="${view}"></div>
+    </div>
+    <footer class="footer" th:include="~{fragments/footer}"></footer>
+</body>
+</html>

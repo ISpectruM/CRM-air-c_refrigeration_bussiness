@@ -8,8 +8,21 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
 public class UserController extends BaseController{
+
+    @GetMapping("/login")
+    public ModelAndView login(@RequestParam(required = false)String error){
+
+        if (error != null){
+            return this.addViewObject("error", error,"users/login");
+        }
+        return this.view("users/login");
+    }
+
+    @PostMapping("/login")
+    public ModelAndView loginAction(){
+        return this.redirect("/");
+    }
 
     @GetMapping("/add")
     public ModelAndView addUser(){
