@@ -1,16 +1,16 @@
-package com.ispectrum.crmclima.areas.clients.entities;
+package com.ispectrum.crmclima.areas.schedules.entities;
 
-import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Client {
+public class Schedule {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -19,26 +19,19 @@ public class Client {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    private String name;
-
-    @ManyToOne(targetEntity = Location.class)
-    private Location location;
-
-    private String email;
-
-    private String phone;
-
-    @OneToMany(mappedBy = "client")
+    @OneToMany(targetEntity = MontageOrder.class)
     private Set<MontageOrder> montageOrders;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(targetEntity = RepairOrder.class)
     private Set<RepairOrder> repairOrders;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(targetEntity = ProphylacticOrder.class)
     private Set<ProphylacticOrder> prophylacticOrders;
 
-
-    public Client() {
+    public Schedule() {
+        this.montageOrders = new HashSet<>();
+        this.repairOrders = new HashSet<>();
+        this.prophylacticOrders = new HashSet<>();
     }
 
     public String getId() {
@@ -47,38 +40,6 @@ public class Client {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Location getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Set<MontageOrder> getMontageOrders() {
