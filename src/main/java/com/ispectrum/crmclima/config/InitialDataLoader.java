@@ -36,19 +36,19 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if (alreadySetup) return;
 
         this.createRoleIfNotFound("ROLE_ADMIN");
-        this.createRoleIfNotFound("ROLE_USER");
+        this.createRoleIfNotFound("ROLE_SELLER");
         this.createRoleIfNotFound("ROLE_INSTALLER");
 
         User admin = createAdminIfNotFound();
 
         this.createAdminIfNotFound();
-        this.userService.addUser(admin);
+        this.userService.persistUser(admin);
 
         alreadySetup = true;
     }
 
     private User createAdminIfNotFound() {
-        Role adminRole = this.roleRepository.findByAuthority("ROLE_ADMIN");
+        Role adminRole = this.roleRepository.findFirstByAuthority("ROLE_ADMIN");
         User admin = (User)this.userService.loadUserByUsername("admin");
 
         if (admin == null){
@@ -67,7 +67,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     Role createRoleIfNotFound(String name) {
 
-        Role role = this.roleRepository.findByAuthority(name);
+        Role role = this.roleRepository.findFirstByAuthority(name);
         if (role == null) {
             role = new Role();
             role.setAuthority(name);

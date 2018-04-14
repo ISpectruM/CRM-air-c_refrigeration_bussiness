@@ -7,17 +7,19 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/users/all}" class="nav-link navlinks-color my-2 my-sm-0">All users</a>
+            <a th:href="@{/admin/all}" class="nav-link navlinks-color my-2 my-sm-0">All users</a>
         </div>
-        <div class="brand-color" sec:authorize="isAuthenticated()">Welcome,
+        <div class="brand-color" sec:authorize="isAuthenticated()">
+            Welcome,
             <a class="nav-item brand-color my-2 my-lg-0" sec:authentication="name"></a>
         </div>
 
-        <form class="form-inline my-2 my-lg-0 ml-auto">
-            <a class="nav-link navlinks-color my-2 my-sm-0" th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+        <form class="form-inline my-2 my-lg-0 ml-auto" sec:authorize="isAnonymous()">
+            <a class="nav-link navlinks-color my-2 my-sm-0"
+               th:href="@{/users/login}" >Login</a>
         </form>
-        <form th:method="post" th:action="@{/logout}" class="form-inline my-2 my-lg-0">
-            <button class="nav-link navlinks-color my-2 my-lg-0" sec:authorize="isAuthenticated()">Logout</button>
+        <form th:method="post" th:action="@{/logout}" class="form-inline my-2 my-lg-0" sec:authorize="isAuthenticated()">
+            <button class="nav-link navlinks-color nav-button my-2 my-lg-0">Logout</button>
         </form>
     </div>
 </nav>

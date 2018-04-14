@@ -24,13 +24,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/logout").permitAll()
-                    .antMatchers("/clients/**","/schedule/**").hasAnyRole("USER", "INSTALLER")
+                    .antMatchers("/clients/**","/schedule/**").hasAnyRole("SELLER", "INSTALLER")
                     .antMatchers("/statistics/**").hasAnyRole("ADMIN")
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                        .loginPage("/login").permitAll()
+                        .loginPage("/users/login").permitAll()
                         .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
@@ -41,6 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/")
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
-                .and().exceptionHandling().accessDeniedPage("/unauthorized");
+                .and().exceptionHandling().accessDeniedPage("/admin/unauthorized");
     }
 }

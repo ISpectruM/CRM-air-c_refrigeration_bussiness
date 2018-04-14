@@ -47,3 +47,14 @@ footer {
 .plc:hover {
     color: #b21f2d;
 }
+
+.nav-button{
+    background:none;
+    color: #c9c2bd;
+    border:none;
+    padding:2px;
+    margin-left: 20px;
+    font: inherit;
+    /*border is optional*/
+    cursor: pointer;
+}

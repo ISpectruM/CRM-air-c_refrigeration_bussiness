@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/users")
 public class UserController extends BaseController{
 
     @GetMapping("/login")
@@ -19,33 +20,4 @@ public class UserController extends BaseController{
         return this.view("users/login");
     }
 
-    @PostMapping("/login")
-    public ModelAndView loginAction(){
-        return this.redirect("/");
-    }
-
-    @GetMapping("/add")
-    public ModelAndView addUser(){
-        return this.view("add");
-    }
-
-    @PostMapping("/add")
-    public ModelAndView addUserAction(){
-        return this.redirect("/all");
-    }
-
-    @GetMapping("/all")
-    public ModelAndView allUsers(){
-        return this.view("all");
-    }
-
-    @GetMapping("/edit/{id}")
-    public ModelAndView editUser(@PathVariable String id){
-        return this.view("edit");
-    }
-
-    @PostMapping("/edit/{id}")
-    public ModelAndView editUserAction(@PathVariable @Valid String id){
-        return this.redirect("all");
-    }
 }
