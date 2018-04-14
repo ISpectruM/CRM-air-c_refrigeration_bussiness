@@ -10,8 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
+import java.util.List;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent>{
@@ -53,7 +52,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         if (admin == null){
             admin = new User();
-            admin.setAuthorities(Set.of(adminRole));
+            admin.setAuthorities(List.of(adminRole));
             admin.setAccountNonExpired(true);
             admin.setAccountNonLocked(true);
             admin.setCredentialsNonExpired(true);

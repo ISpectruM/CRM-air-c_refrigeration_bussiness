@@ -15,7 +15,7 @@ public class UserController extends BaseController{
     public ModelAndView login(@RequestParam(required = false)String error){
 
         if (error != null){
-            return this.addViewObject("error", error,"users/login");
+            return this.addViewAndObject("error", error,"users/login");
         }
         return this.view("users/login");
     }

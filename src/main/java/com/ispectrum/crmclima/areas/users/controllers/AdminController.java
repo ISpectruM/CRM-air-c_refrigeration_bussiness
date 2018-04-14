@@ -3,6 +3,8 @@ package com.ispectrum.crmclima.areas.users.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
+import com.ispectrum.crmclima.areas.users.models.dtos.RoleDto;
+import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -39,18 +42,31 @@ public class AdminController extends BaseController{
 
     @GetMapping("/all")
     public ModelAndView allUsers(){
-        Set<User> users = this.userService.getAllUsers();
-        return this.addViewObject("users", users,"admin/all");
+        Set<UserDto> users = this.userService.getAllUsers();
+        return this.addViewAndObject("users", users,"admin/all");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editUser(@PathVariable String id){
-        return this.view("edit");
+
+        return this.view("admin/edit");
     }
 
     @PostMapping("/edit/{id}")
     public ModelAndView editUserAction(@PathVariable @Valid String id){
         return this.redirect("all");
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteUser(@PathVariable String id){
+        UserDto user = this.userService.getUserById(id);
+        return this.addViewAndObject("user",user,"admin/delete");
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteUserAction(@PathVariable String id){
+        this.userService.deleteUser(id);
+        return this.redirect("/admin/all");
     }
 
     @GetMapping("/unauthorized")

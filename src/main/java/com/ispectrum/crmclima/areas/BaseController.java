@@ -12,7 +12,11 @@ public abstract class BaseController {
         return this.modelAndView;
     }
 
-    protected ModelAndView addViewObject(
+//    protected ModelAndView addObject(String name,Object object){
+//        return this.modelAndView.addObject(name,object);
+//    }
+
+    protected ModelAndView addViewAndObject(
             String name,
             Object object,
             String view){

@@ -5,9 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class User implements UserDetails {
@@ -29,14 +27,15 @@ public class User implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="users_auth",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> authorities;
+    private List<Role> authorities;
 
     public User() {
-        this.authorities = new HashSet<>();
+        this.authorities = new ArrayList<>();
     }
 
     public String getId() {
@@ -71,7 +70,7 @@ public class User implements UserDetails {
         this.isEnabled = enabled;
     }
 
-    public void setAuthorities(Set<Role> authorities) {
+    public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
     }
 

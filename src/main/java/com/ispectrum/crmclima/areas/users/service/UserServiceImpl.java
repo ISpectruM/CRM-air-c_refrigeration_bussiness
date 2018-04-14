@@ -3,28 +3,38 @@ package com.ispectrum.crmclima.areas.users.service;
 import com.ispectrum.crmclima.areas.users.entities.Role;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
+import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.repository.RoleRepository;
 import com.ispectrum.crmclima.areas.users.repository.UserRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -37,7 +47,7 @@ public class UserServiceImpl implements UserService {
         User user = createUser(model);
 
         Role role = this.roleRepository.findFirstByAuthority(model.getRole());
-        Set<Role> authorities = new HashSet<>();
+        List<Role> authorities = new ArrayList<>();
         authorities.add(role);
         user.setAuthorities(authorities);
 
@@ -64,7 +74,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> getAllUsers() {
-        return this.userRepository.findAllBy();
+    public Set<UserDto> getAllUsers() {
+        Set<User> allUsers = this.userRepository.findAllBy();
+
+        Type setDtoType = new TypeToken<Set<UserDto>>(){}.getType();
+        return this.modelMapper.map(allUsers, setDtoType);
     }
+
+    @Override
+    public UserDto getUserById(String userId) {
+        User user = this.userRepository.findUserById(userId);
+        return this.modelMapper.map(user,UserDto.class);
+    }
+
+    @Override
+    public void deleteUser(String userId) {
+        User user = this.userRepository.findUserById(userId);
+        this.userRepository.delete(user);
+    }
+
+
 }
