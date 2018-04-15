@@ -54,12 +54,12 @@
                 </div>
             </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset th:with="roles=${user.getAuthorities()}" class="form-group" disabled="disabled">
                 <legend>Roles</legend>
                 <div class="form-check">
                     <label class="form-check-label">
                         <input class="form-check-input"
-                               th:checked="${#lists.contains(user.getAuthorities(),'ROLE_SELLER')}"
+                               th:checked="${roles.get(0).getAuthority().equals('ROLE_SELLER')}"
                                type="radio" name="role" value="ROLE_SELLER">
                         Продавач-консултант
                     </label>
@@ -67,7 +67,7 @@
                 <div class="form-check">
                     <label class="form-check-label">
                         <input class="form-check-input"
-                               th:checked="${#lists.contains(user.getAuthorities(),'ROLE_INSTALLER')}"
+                               th:checked="${roles.get(0).getAuthority().equals('ROLE_INSTALLER')}"
                                type="radio" name="role" value="ROLE_INSTALLER">
                         Монтажник
                     </label>
@@ -75,7 +75,7 @@
                 <div class="form-check">
                     <label class="form-check-label">
                         <input class="form-check-input"
-                               th:checked="${#lists.contains(user.getAuthorities(),'ROLE_ADMIN')}"
+                               th:checked="${roles.get(0).getAuthority().equals('ROLE_ADMIN')}"
                                type="radio" name="role" value="ROLE_ADMIN">
                         Администратор
                     </label>

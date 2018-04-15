@@ -3,6 +3,7 @@ package com.ispectrum.crmclima.areas.users.service;
 import com.ispectrum.crmclima.areas.users.entities.Role;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
+import com.ispectrum.crmclima.areas.users.models.bindingModels.EditUserBindingModel;
 import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.repository.RoleRepository;
 import com.ispectrum.crmclima.areas.users.repository.UserRepository;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,6 +54,34 @@ public class UserServiceImpl implements UserService {
         this.persistUser(user);
     }
 
+    @Override
+    public Set<UserDto> getAllUsers() {
+        Set<User> allUsers = this.userRepository.findAllBy();
+
+        Type setDtoType = new TypeToken<Set<UserDto>>(){}.getType();
+        return this.modelMapper.map(allUsers, setDtoType);
+    }
+
+    @Override
+    public UserDto getUserById(String userId) {
+        User user = this.userRepository.findUserById(userId);
+        return this.modelMapper.map(user,UserDto.class);
+    }
+
+    @Override
+    public void editUser(String id, EditUserBindingModel editModel) {
+        User user = this.modelMapper.map(editModel, User.class);
+
+        String password = this.bCryptPasswordEncoder.encode(editModel.getPassword());
+        user.setPassword(password);
+
+        List<Role> authorities = new ArrayList<>();
+        authorities.add(this.roleRepository.findFirstByAuthority(editModel.getRole()));
+        user.setAuthorities(authorities);
+
+        this.userRepository.saveAndFlush(user);
+    }
+
     private User createUser(AddUserBindingModel model) {
         String password = model.getPassword();
         String encodedPassword = this.bCryptPasswordEncoder.encode(password);
@@ -71,20 +99,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void persistUser(User user) {
         this.userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public Set<UserDto> getAllUsers() {
-        Set<User> allUsers = this.userRepository.findAllBy();
-
-        Type setDtoType = new TypeToken<Set<UserDto>>(){}.getType();
-        return this.modelMapper.map(allUsers, setDtoType);
-    }
-
-    @Override
-    public UserDto getUserById(String userId) {
-        User user = this.userRepository.findUserById(userId);
-        return this.modelMapper.map(user,UserDto.class);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.ispectrum.crmclima.areas.users.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
+import com.ispectrum.crmclima.areas.users.models.bindingModels.EditUserBindingModel;
 import com.ispectrum.crmclima.areas.users.models.dtos.RoleDto;
 import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.service.UserService;
@@ -48,13 +49,15 @@ public class AdminController extends BaseController{
 
     @GetMapping("/edit/{id}")
     public ModelAndView editUser(@PathVariable String id){
-
-        return this.view("admin/edit");
+        UserDto user = this.userService.getUserById(id);
+        return this.addViewAndObject("user",user,"admin/edit");
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editUserAction(@PathVariable @Valid String id){
-        return this.redirect("all");
+    public ModelAndView editUserAction(@PathVariable @Valid String id,
+                                       EditUserBindingModel editModel){
+        this.userService.editUser(id,editModel);
+        return this.redirect("/admin/all");
     }
 
     @GetMapping("/delete/{id}")
