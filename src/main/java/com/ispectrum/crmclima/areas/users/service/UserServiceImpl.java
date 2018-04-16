@@ -8,7 +8,6 @@ import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.repository.RoleRepository;
 import com.ispectrum.crmclima.areas.users.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

@@ -19,10 +19,10 @@ public class MontageOrder extends BaseOrder{
     @OneToOne
     private Location location;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Shift shift;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private MontageType montageType;
 
     @ManyToMany(targetEntity = AirConditioner.class)

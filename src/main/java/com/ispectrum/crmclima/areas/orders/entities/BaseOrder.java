@@ -30,6 +30,8 @@ public abstract class BaseOrder {
 
     private LocalDate scheduleDate;
 
+    private LocalDate endDate;
+
     private boolean isMarked;
     private boolean isFinished;
     private boolean isWithInvoice;
@@ -169,5 +171,13 @@ public abstract class BaseOrder {
 
     public void setWarranty(boolean warranty) {
         isWarranty = warranty;
+    }
+
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

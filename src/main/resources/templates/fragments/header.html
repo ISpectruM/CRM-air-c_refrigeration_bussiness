@@ -6,6 +6,9 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasAnyRole('ADMIN','SELLER')">
+            <a th:href="@{/clients/all}" class="nav-link navlinks-color my-2 my-sm-0">All clients</a>
+        </div>
         <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasRole('ADMIN')">
             <a th:href="@{/admin/all}" class="nav-link navlinks-color my-2 my-sm-0">All users</a>
         </div>

@@ -1,6 +1,5 @@
 package com.ispectrum.crmclima.areas.clients.entities;
 
-import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
@@ -10,6 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -21,8 +21,7 @@ public class Client {
 
     private String name;
 
-    @ManyToOne(targetEntity = Location.class)
-    private Location location;
+    private String address;
 
     private String email;
 
@@ -55,14 +54,6 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Location getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public String getEmail() {
@@ -103,5 +94,13 @@ public class Client {
 
     public void setProphylacticOrders(Set<ProphylacticOrder> prophylacticOrders) {
         this.prophylacticOrders = prophylacticOrders;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
