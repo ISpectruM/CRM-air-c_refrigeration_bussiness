@@ -1,0 +1,32 @@
+<form class="form-inline" th:action="@{/search}" th:method="POST">
+    <div class="form-group mb-2">
+        <label for="label" class="sr-only">Търсене</label>
+        <input type="text" readonly class="form-control-plaintext" id="label" value="Търсене">
+    </div>
+    <fieldset class="form-group">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input"
+                       type="radio" name="isPhoneSearch" value="true">
+                Телефон
+            </label>
+            <label class="form-check-label">
+                <input class="form-check-input"
+                       type="radio" name="isAddressSearch" value="true">
+                Адрес
+            </label>
+            <label class="form-check-label">
+                <input class="form-check-input"
+                       type="radio" name="isNameSearch" value="true">
+                Име
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="searchString" class="sr-only">Име, адрес или телефон</label>
+        <input type="text" class="form-control" id="searchString"
+               name="searchString" placeholder="Име, адрес или телефон">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Търси</button>
+</form>

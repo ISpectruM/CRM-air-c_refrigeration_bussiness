@@ -51,4 +51,10 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository.saveAndFlush(client);
     }
 
+    @Override
+    public void deleteClient(String id) {
+        Client client = this.clientRepository.findFirstById(id);
+        this.clientRepository.delete(client);
+    }
+
 }

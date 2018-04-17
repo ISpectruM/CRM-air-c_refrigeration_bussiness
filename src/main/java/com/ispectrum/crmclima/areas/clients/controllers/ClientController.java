@@ -4,6 +4,7 @@ import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
+import com.ispectrum.crmclima.areas.search.models.SearchBindingModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,16 @@ public class ClientController extends BaseController{
         return this.redirect("/clients/details/"+id);
     }
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteClient(@PathVariable String id){
+        ClientDto client = this.clientService.getClientById(id);
+        return this.addViewAndObject("client",client,"clients/delete");
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteClientAction(@PathVariable String id){
+        this.clientService.deleteClient(id);
+        return this.redirect("/clients/all");
+    }
 
 }

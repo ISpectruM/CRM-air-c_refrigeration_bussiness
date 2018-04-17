@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="table-active" th:each="client, iter:${clients}" th:object="${client}">
+    <tr class="table-active" th:each="client, iter:${results}" th:object="${client}">
         <th scope="row" th:text="${iter.index+1}"></th>
         <td th:text="*{name}"></td>
         <td th:text="*{address}"></td>

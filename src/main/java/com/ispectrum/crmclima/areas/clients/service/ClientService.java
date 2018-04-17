@@ -13,4 +13,6 @@ public interface ClientService {
     ClientDto getClientById(String id);
 
     void editClient(String id, AddClientModel model);
+
+    void deleteClient(String id);
 }
