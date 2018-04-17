@@ -1,11 +1,13 @@
 package com.ispectrum.crmclima.areas.clients.controllers;
 
 import com.ispectrum.crmclima.areas.BaseController;
+import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,5 +38,24 @@ public class ClientController extends BaseController{
     public ModelAndView addClient(){
         return this.view("clients/add");
     }
+
+    @PostMapping("/add")
+    public ModelAndView addClientAction(AddClientModel model){
+        this.clientService.addClient(model);
+        return this.redirect("/clients/all");
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView editModel(@PathVariable String id){
+        ClientDto client = this.clientService.getClientById(id);
+        return this.addViewAndObject("client",client,"clients/edit");
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editClientAction(@PathVariable String id, AddClientModel model){
+        this.clientService.editClient(id,model);
+        return this.redirect("/clients/details/"+id);
+    }
+
 
 }

@@ -26,7 +26,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void addClient(AddClientModel model) {
-
+        Client client = this.modelMapper.map(model, Client.class);
+        this.clientRepository.saveAndFlush(client);
     }
 
     @Override
@@ -42,4 +43,12 @@ public class ClientServiceImpl implements ClientService {
         Client client = this.clientRepository.findFirstById(id);
         return this.modelMapper.map(client,ClientDto.class);
     }
+
+    @Override
+    public void editClient(String id, AddClientModel model) {
+        Client client = this.modelMapper.map(model, Client.class);
+        client.setId(id);
+        this.clientRepository.saveAndFlush(client);
+    }
+
 }

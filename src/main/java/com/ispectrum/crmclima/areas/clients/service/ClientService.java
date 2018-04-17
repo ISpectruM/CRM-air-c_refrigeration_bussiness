@@ -11,4 +11,6 @@ public interface ClientService {
     Set<ClientDto> getAllClients();
 
     ClientDto getClientById(String id);
+
+    void editClient(String id, AddClientModel model);
 }

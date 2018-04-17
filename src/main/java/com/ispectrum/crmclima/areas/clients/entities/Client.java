@@ -21,6 +21,8 @@ public class Client {
 
     private String name;
 
+    private String city;
+
     private String address;
 
     private String email;
@@ -102,5 +104,13 @@ public class Client {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
