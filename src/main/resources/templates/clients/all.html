@@ -23,9 +23,9 @@
         <td th:text="*{phone}"></td>
         <td>
             <a th:href="@{/clients/details/{id}(id=${client.id})}">Детайли</a>
-            <a th:href="@{/orders/montages/add{id}(id=${client.id})}">Нов монтаж</a>
-            <a th:href="@{/orders/repairs/add{id}(id=${client.id})}">Нова поправка</a>
-            <a th:href="@{/orders/prophylactics/add{id}(id=${client.id})}">Нова профилактика</a>
+            <a th:href="@{/orders/montages/add/{id}(id=${client.id})}">Нов монтаж</a>
+            <a th:href="@{/orders/repairs/add/{id}(id=${client.id})}">Нова поправка</a>
+            <a th:href="@{/orders/prophylactics/add/{id}(id=${client.id})}">Нова профилактика</a>
             <a th:href="@{/clients/edit/{id}(id=${client.id})}">Редакция</a>
             <a th:href="@{/clients/delete/{id}(id=${client.id})}">Изтрий</a>
         </td>
