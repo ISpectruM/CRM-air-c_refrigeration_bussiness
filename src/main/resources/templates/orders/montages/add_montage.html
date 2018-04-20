@@ -1,43 +1,44 @@
-<h3 class="card-header">Нова заявка </h3>
-<hr/>
-<h5 class="card-header">Клиент</h5>
+<div class="container">
 <th:block th:object="${client}">
-    <div class="form-row m-2">
-        <label for="clientName" class="col-sm-2 col-form-label">Име:</label>
+    <div class="form-row m-2 card-header">
+        <h4 class="col-sm-4">Нова заявка за клиент: </h4>
+        <label for="name" class="col-sm-1 col-form-label">Име:</label>
         <div class="form-group col-md-4">
-            <input type="text" readonly class="form-control-plaintext" id="clientName" th:placeholder="*{name}">
+            <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
         </div>
-        <label for="phone" class="col-sm-2 col-form-label">Телефон:</label>
-        <div class="form-group col-md-4">
+        <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
+        <div class="form-group col-sm-2">
             <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{phone}">
         </div>
     </div>
 </th:block>
-
-<form class="form-horizontal" th:action="@{/orders/montages/add}" th:method="POST">
+<hr/>
+<form class="form-horizontal" th:action="@{/orders/montages/add/{id}(id=${client.id})}" th:method="POST">
     <h5 class="card-header">Дата</h5>
     <div class="form-group row m-2">
-        <label for="date" class="col-md-2 col-form-label">Дата:</label>
-        <div class="form-group col-md-4">
-            <input type="date" class="form-control" id="date"
-                   th:value="${#dates.format(#dates.createNow(), 'dd/MMM/yyyy')}"
-                    th:placeholder="${#dates.format(#dates.createNow(), 'dd/MMM/yyyy')}">
+        <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
+        <div class="col-md-3">
+            <input type="date" class="form-control" id="orderDate" name="orderDate"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
+                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
         </div>
     </div>
+
     <h5 class="card-header">Вид заявка</h5>
     <div class="form-group row m-2">
-        <label for="orderType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <select class="col-sm-4" id="orderType">
+        <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
+        <select class="col-sm-3" id="montageType" name="montageType">
             <option class="form-control"
                     th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
-                    th:value="${type}" name="orderType" th:text="${type.displayName}">
+                    th:value="${type}" th:text="${type.displayName}"></option>
         </select>
     </div>
+
     <h5 class="card-header">Продукт</h5>
     <div class="form-group row m-2">
         <div class="form-group col-md-3">
-            <label for="product">Продукт:</label>
-            <select id="product" class="form-control">
+            <label for="productType">Продукт:</label>
+            <select id="productType" name="productType" class="form-control">
                 <option value="0">- Select -</option>
                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                         th:value="${product}" th:text="${product.displayName}"></option>
@@ -50,8 +51,8 @@
             </select>
         </div>
         <div class="form-group col-md-3">
-            <label for="model">Модел:</label>
-            <select id="model" class="form-control">
+            <label for="product">Модел:</label>
+            <select id="product" name="product" class="form-control">
                 <option value="0">- Select -</option>
             </select>
         </div>
@@ -62,29 +63,36 @@
             </div>
         </div>
     </div>
+
     <h5 class="card-header">Адрес</h5>
     <div class="form-group row m-2">
-        <label for="address" class="col-sm-2 col-form-label">Адрес:</label>
-        <div class="col-sm-8">
+        <label for="city" class="col-sm-1 col-form-label">Град:</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="city" name="city" placeholder="град">
+        </div>
+        <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
+        <div class="col-sm-7">
             <input type="text" class="form-control" id="address" name="address" placeholder="адрес">
         </div>
     </div>
+
     <h5 class="card-header">Цена</h5>
     <div class="form-group row m-2">
-            <label for="price" class="col-sm-2 col-form-label">Цена:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="price" name="price" placeholder="цена">
-            </div>
-            <label for="deposit" class="col-sm-2 col-form-label">Капаро:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="deposit" name="deposit" placeholder="капаро">
-            </div>
+        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="price" name="price" placeholder="цена">
+        </div>
+        <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро">
+        </div>
     </div>
+
     <h5 class="card-header">Статус</h5>
     <div class="form-group row m-2 ">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isReady" name="isReady">
-            <label class="form-check-label" for="isReady">Приключена</label>
+            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished">
+            <label class="form-check-label" for="isFinished">Приключена</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting">
@@ -107,11 +115,18 @@
             <label class="form-check-label" for="isMarked">Маркирана</label>
         </div>
     </div>
+
     <h5 class="card-header">Особености/бележки</h5>
     <div class="form-group row m-2">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <label for="comments">Особености/бележки:</label>
             <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+        </div>
+        <div class="col-sm-6">
+            <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
+            <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
+                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
         </div>
     </div>
 
@@ -122,8 +137,9 @@
     <div class="form-group">
         <div class="col-lg-12 col-lg-offset-2">
             <button type="reset" class="btn btn-default">Изчисти</button>
-            <a type="button" class="btn btn-default" th:href="@{/orders/all}">Откажи</a>
+            <a type="button" class="btn btn-default" th:href="@{/orders/montages/all}">Откажи</a>
             <button type="submit" class="btn btn-primary">Запиши</button>
         </div>
     </div>
 </form>
+</div>

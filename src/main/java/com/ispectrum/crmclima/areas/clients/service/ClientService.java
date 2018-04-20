@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.clients.service;
 
+import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 
@@ -15,4 +16,6 @@ public interface ClientService {
     void editClient(String id, AddClientModel model);
 
     void deleteClient(String id);
+
+    Client getPureClientById(String id);
 }

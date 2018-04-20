@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    let productMenu = $("#product");
+    let productMenu = $("#productType");
     let brandMenu =$("#brand");
-    let modelMenu =$("#model");
+    let modelMenu =$("#product");
     let productType;
 
     productMenu.change(function(){

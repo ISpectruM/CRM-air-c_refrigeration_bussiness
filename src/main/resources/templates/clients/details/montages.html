@@ -21,11 +21,11 @@
     <tr class="table-active" th:each="montage, iter:${client.getMontageOrders()}" th:object="${montage}">
         <th scope="row" th:text="${iter.index+1}"></th>
         <td th:text="*{orderDate}"></td>
-        <td th:text="*{montageType}"></td>
+        <td th:text="*{orderType}"></td>
         <td >
             <th:block th:each="product,iter:*{airConditioners}" th:object="${product}">
                 <p class="text-capitalize"
-                   th:text="|${iter.index+1}. *{brand} *{model}|"></p>
+                   th:text="|${iter.index+1}. *{brand} *{product}|"></p>
             </th:block>
         </td>
         <td th:text="${#lists.size(*{airConditioners})}"></td>

@@ -1,18 +1,26 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
+import java.util.Date;
 
 public class MontageOrderBindingModel {
 
-    private LocalDate orderDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderDate;
+
+    private String montageType;
+
+    private String product;
+
+    private String productType;
 
     private Integer count;
 
-    private String comment;
+    private String city;
 
-    private String shift;
-
-    private String montageType;
+    private String address;
 
     private Double price;
 
@@ -20,14 +28,14 @@ public class MontageOrderBindingModel {
 
     private Double discount;
 
-    private Double forPayment;
+    private String comments;
 
-    private LocalDate scheduleDate;
-
-    private LocalDate endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date scheduleDate;
 
     private boolean isMarked;
     private boolean isFinished;
+    private boolean isForFinishing;
     private boolean isWithInvoice;
     private boolean isPayed;
     private boolean isDeferred;
@@ -36,11 +44,11 @@ public class MontageOrderBindingModel {
     public MontageOrderBindingModel() {
     }
 
-    public LocalDate getOrderDate() {
+    public Date getOrderDate() {
         return this.orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -52,12 +60,12 @@ public class MontageOrderBindingModel {
         this.count = count;
     }
 
-    public String getComment() {
-        return this.comment;
+    public String getComments() {
+        return this.comments;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Double getPrice() {
@@ -84,76 +92,60 @@ public class MontageOrderBindingModel {
         this.discount = discount;
     }
 
-    public Double getForPayment() {
-        return this.forPayment;
-    }
-
-    public void setForPayment(Double forPayment) {
-        this.forPayment = forPayment;
-    }
-
-    public LocalDate getScheduleDate() {
+    public Date getScheduleDate() {
         return this.scheduleDate;
     }
 
-    public void setScheduleDate(LocalDate scheduleDate) {
+    public void setScheduleDate(Date scheduleDate) {
         this.scheduleDate = scheduleDate;
-    }
-
-    public LocalDate getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     public boolean isMarked() {
         return this.isMarked;
     }
 
-    public void setMarked(boolean marked) {
-        isMarked = marked;
+    public void setIsMarked(boolean marked) {
+        this.isMarked = marked;
     }
 
     public boolean isFinished() {
         return this.isFinished;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setIsFinished(boolean finished) {
+        this.isFinished = finished;
     }
 
     public boolean isWithInvoice() {
         return this.isWithInvoice;
     }
 
-    public void setWithInvoice(boolean withInvoice) {
-        isWithInvoice = withInvoice;
+    public void setIsWithInvoice(boolean withInvoice) {
+        this.isWithInvoice = withInvoice;
     }
 
     public boolean isPayed() {
         return this.isPayed;
     }
 
-    public void setPayed(boolean payed) {
-        isPayed = payed;
+    public void setIsPayed(boolean payed) {
+        this.isPayed = payed;
     }
 
     public boolean isDeferred() {
         return this.isDeferred;
     }
 
-    public void setDeferred(boolean deferred) {
-        isDeferred = deferred;
+    public void setIsDeferred(boolean deferred) {
+        this.isDeferred = deferred;
     }
 
     public boolean isWaiting() {
         return this.isWaiting;
     }
 
-    public void setWaiting(boolean waiting) {
-        isWaiting = waiting;
+    public void setIsWaiting(boolean waiting) {
+        this.isWaiting = waiting;
     }
 
     public String getMontageType() {
@@ -164,11 +156,43 @@ public class MontageOrderBindingModel {
         this.montageType = montageType;
     }
 
-    public String getShift() {
-        return this.shift;
+    public String getProduct() {
+        return this.product;
     }
 
-    public void setShift(String shift) {
-        this.shift = shift;
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isForFinishing() {
+        return this.isForFinishing;
+    }
+
+    public void setForFinishing(boolean forFinishing) {
+        isForFinishing = forFinishing;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

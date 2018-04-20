@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.orders.models.dtos;
 
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
+import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class MontageOrderDto {
 
     private LocalDate orderDate;
 
-    private String montageType;
+    private MontageType montageType;
 
     private Set<AirConditionerDto> airConditioners;
 
@@ -48,11 +49,11 @@ public class MontageOrderDto {
         this.orderDate = orderDate;
     }
 
-    public String getMontageType() {
+    public MontageType getMontageType() {
         return this.montageType;
     }
 
-    public void setMontageType(String montageType) {
+    public void setMontageType(MontageType montageType) {
         this.montageType = montageType;
     }
 

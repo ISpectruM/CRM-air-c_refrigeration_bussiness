@@ -59,8 +59,6 @@ public abstract class BaseOrder {
         this.orderDate = orderDate;
     }
 
-
-
     public Integer getCount() {
         return this.count;
     }

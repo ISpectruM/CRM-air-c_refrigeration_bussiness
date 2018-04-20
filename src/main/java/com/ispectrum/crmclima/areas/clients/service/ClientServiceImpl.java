@@ -57,4 +57,9 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository.delete(client);
     }
 
+    @Override
+    public Client getPureClientById(String id) {
+        return this.clientRepository.findFirstById(id);
+    }
+
 }

@@ -16,7 +16,7 @@ public class MontageOrder extends BaseOrder{
     @ManyToOne(targetEntity = Client.class)
     private Client client;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Location location;
 
     @Enumerated(EnumType.STRING)
@@ -25,7 +25,7 @@ public class MontageOrder extends BaseOrder{
     @Enumerated(EnumType.STRING)
     private MontageType montageType;
 
-    @ManyToMany(targetEntity = AirConditioner.class)
+    @ManyToMany(targetEntity = AirConditioner.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "montages_conditioners",
             joinColumns = @JoinColumn(name = "morder_id"),

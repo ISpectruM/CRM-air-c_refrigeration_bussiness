@@ -11,5 +11,7 @@ import java.util.Set;
 public interface AirConditionRepository extends JpaRepository<AirConditioner, String> {
     Set<AirConditioner> findAllByBrand(@Param("brand") String brand);
 
+    AirConditioner findFirstByModel(String model);
+
     Set<AirConditioner> findAllBy();
 }
