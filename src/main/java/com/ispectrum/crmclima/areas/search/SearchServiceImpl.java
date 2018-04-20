@@ -47,13 +47,14 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public Set<ClientDto> getSearchResults(SearchBindingModel model) {
-
-        if (model.isAddressSearch()){
-            return this.getClientsByAddress(model.getSearchString());
-        }else if(model.getIsNameSearch()){
-            return  this.getClientsByName(model.getSearchString());
-        }else if(model.getIsPhoneSearch()){
-            return this.getClientByPhone(model.getSearchString());
+        String criteria = model.getCriteria();
+        switch (criteria) {
+            case "isAddressSearch":
+                return this.getClientsByAddress(model.getSearchString());
+            case "isNameSearch":
+                return this.getClientsByName(model.getSearchString());
+            case "isPhoneSearch":
+                return this.getClientByPhone(model.getSearchString());
         }
         return null;
     }

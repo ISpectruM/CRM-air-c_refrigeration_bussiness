@@ -3,42 +3,60 @@ package com.ispectrum.crmclima.areas.orders.models.dtos;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
+import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
+import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 
 public class MontageOrderDto {
-
     private String id;
 
     private LocalDate orderDate;
 
     private MontageType montageType;
 
-    private Set<AirConditionerDto> airConditioners;
+    private Map<AirConditionerDto, Integer> airConditioners;
 
-    private ClientDto clientDto;
+    private Integer count;
 
-    private LocationDto locationDto;
+    private ClientDto client;
+
+    private LocationDto location;
 
     private Double price;
 
     private Double deposit;
 
-    private boolean isFinished;
-
-    private boolean isWaiting;
+    private Double forPayment;
 
     private String comment;
 
     private LocalDate scheduleDate;
 
-    private LocalDate endDate;
-
+    private String status;
 
 
     public MontageOrderDto() {
+    }
+
+
+    public MontageType getMontageType() {
+        return this.montageType;
+    }
+
+    public void setMontageType(MontageType montageType) {
+        this.montageType = montageType;
+    }
+
+    public ClientDto getClient() {
+        return this.client;
+    }
+
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 
     public LocalDate getOrderDate() {
@@ -49,36 +67,28 @@ public class MontageOrderDto {
         this.orderDate = orderDate;
     }
 
-    public MontageType getMontageType() {
-        return this.montageType;
-    }
-
-    public void setMontageType(MontageType montageType) {
-        this.montageType = montageType;
-    }
-
-    public Set<AirConditionerDto> getAirConditioners() {
+    public Map<AirConditionerDto, Integer> getAirConditioners() {
         return this.airConditioners;
     }
 
-    public void setAirConditioners(Set<AirConditionerDto> airConditioners) {
+    public void setAirConditioners(Map<AirConditionerDto, Integer> airConditioners) {
         this.airConditioners = airConditioners;
     }
 
-    public ClientDto getClientDto() {
-        return this.clientDto;
+    public Integer getCount() {
+        return this.count;
     }
 
-    public void setClientDto(ClientDto clientDto) {
-        this.clientDto = clientDto;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public LocationDto getLocationDto() {
-        return this.locationDto;
+    public LocationDto getLocation() {
+        return this.location;
     }
 
-    public void setLocationDto(LocationDto locationDto) {
-        this.locationDto = locationDto;
+    public void setLocation(LocationDto location) {
+        this.location = location;
     }
 
     public Double getPrice() {
@@ -97,20 +107,20 @@ public class MontageOrderDto {
         this.deposit = deposit;
     }
 
-    public boolean isFinished() {
-        return this.isFinished;
+    public Double getForPayment() {
+        return this.forPayment;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setForPayment(Double forPayment) {
+        this.forPayment = forPayment;
     }
 
-    public boolean isWaiting() {
-        return this.isWaiting;
+    public String getComment() {
+        return this.comment;
     }
 
-    public void setWaiting(boolean waiting) {
-        isWaiting = waiting;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public LocalDate getScheduleDate() {
@@ -121,20 +131,12 @@ public class MontageOrderDto {
         this.scheduleDate = scheduleDate;
     }
 
-    public LocalDate getEndDate() {
-        return this.endDate;
+    public String getStatus() {
+        return this.status;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getComment() {
-        return this.comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

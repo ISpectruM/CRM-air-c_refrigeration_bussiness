@@ -1,23 +1,23 @@
 <form class="form-inline" th:action="@{/search}" th:method="POST">
     <div class="form-group mb-2">
-        <label for="label" class="sr-only">Търсене</label>
+        <label for="label">Търсене на клиент:</label>
         <input type="text" readonly class="form-control-plaintext" id="label">
     </div>
     <fieldset class="form-group">
         <div class="form-check">
             <label class="form-check-label">
                 <input class="form-check-input"
-                       type="radio" name="isPhoneSearch" value="true">
+                       type="radio" name="criteria" value="isPhoneSearch">
                 Телефон
             </label>
             <label class="form-check-label">
                 <input class="form-check-input"
-                       type="radio" name="isAddressSearch" value="true">
+                       type="radio" name="criteria" value="isAddressSearch">
                 Адрес
             </label>
             <label class="form-check-label">
                 <input class="form-check-input"
-                       type="radio" name="isNameSearch" value="true">
+                       type="radio" name="criteria" value="isNameSearch">
                 Име
             </label>
         </div>

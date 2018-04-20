@@ -7,8 +7,7 @@ import com.ispectrum.crmclima.areas.orders.entities.enums.Shift;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class MontageOrder extends BaseOrder{
@@ -25,18 +24,21 @@ public class MontageOrder extends BaseOrder{
     @Enumerated(EnumType.STRING)
     private MontageType montageType;
 
-    @ManyToMany(targetEntity = AirConditioner.class, cascade = CascadeType.ALL)
+    @ElementCollection(targetClass = java.lang.Integer.class)
+//    @ManyToMany(targetEntity = AirConditioner.class, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "montages_conditioners",
-            joinColumns = @JoinColumn(name = "morder_id"),
-            inverseJoinColumns = @JoinColumn(name = "airc_id")
-    )
-    private Set<AirConditioner> airConditioners;
+            name = "montages_conditioners_count",
+            joinColumns = @JoinColumn(name = "morder_id")
+            )
+    @MapKeyColumn(name = "airc_type")
+    @Column(name = "count")
+    private Map<AirConditioner,Integer> airConditioners;
 
 
     public MontageOrder() {
-        this.airConditioners = new HashSet<>();
+        this.airConditioners = new HashMap<>();
     }
+
 
     public Client getClient() {
         return this.client;
@@ -62,11 +64,11 @@ public class MontageOrder extends BaseOrder{
         this.shift = shift;
     }
 
-    public Set<AirConditioner> getAirConditioners() {
+    public Map<AirConditioner, Integer> getAirConditioners() {
         return this.airConditioners;
     }
 
-    public void setAirConditioners(Set<AirConditioner> airConditioners) {
+    public void setAirConditioners(Map<AirConditioner, Integer> airConditioners) {
         this.airConditioners = airConditioners;
     }
 
@@ -76,5 +78,15 @@ public class MontageOrder extends BaseOrder{
 
     public void setMontageType(MontageType montageType) {
         this.montageType = montageType;
+    }
+
+    @Override
+    public Integer getCount() {
+        int count = 0;
+        Collection<Integer> values = this.getAirConditioners().values();
+        if(!values.isEmpty()){
+         count = values.stream().mapToInt(Number::intValue).sum();
+        }
+        return count;
     }
 }

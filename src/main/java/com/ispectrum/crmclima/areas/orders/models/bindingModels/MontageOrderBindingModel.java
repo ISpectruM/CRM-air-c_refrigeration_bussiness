@@ -2,7 +2,6 @@ package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class MontageOrderBindingModel {
@@ -28,7 +27,7 @@ public class MontageOrderBindingModel {
 
     private Double discount;
 
-    private String comments;
+    private String comment;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
@@ -60,12 +59,12 @@ public class MontageOrderBindingModel {
         this.count = count;
     }
 
-    public String getComments() {
-        return this.comments;
+    public String getComment() {
+        return this.comment;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Double getPrice() {
@@ -195,4 +194,6 @@ public class MontageOrderBindingModel {
     public void setProductType(String productType) {
         this.productType = productType;
     }
+
+
 }

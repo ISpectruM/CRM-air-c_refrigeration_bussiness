@@ -5,12 +5,10 @@ import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
-import com.ispectrum.crmclima.areas.orders.models.MontageViewModel;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
-import com.ispectrum.crmclima.areas.products.entities.BaseProduct;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -20,9 +18,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MontageOrderServiceImpl implements MontageOrderService {
@@ -41,9 +37,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public MontageViewModel getViewModel(String clientId) {
+    public MontageOrderDto getViewModel(String clientId) {
         ClientDto clientById = this.clientService.getClientById(clientId);
-        MontageViewModel viewModel = new MontageViewModel();
+        MontageOrderDto viewModel = new MontageOrderDto();
         viewModel.setClient(clientById);
         return viewModel;
     }
@@ -85,9 +81,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
     private void addProduct(MontageOrder newOrder, MontageOrderBindingModel model) {
         if(model.getProductType().equals("AIRCONDS")){
-            Set<AirConditioner> airConditioners = new HashSet<>();
+            Map<AirConditioner, Integer> airConditioners = new HashMap<>();
             AirConditioner airc = this.airConditionService.getByModel(model.getProduct());
-            airConditioners.add(airc);
+            airConditioners.put(airc,1);
             newOrder.setAirConditioners(airConditioners);
         }
 //        TODO: Add other equipment

@@ -44,7 +44,7 @@
                         th:value="${product}" th:text="${product.displayName}"></option>
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
             <label for="brand">Марка:</label>
             <select id="brand" class="form-control">
                 <option value="0">- Select -</option>
@@ -60,6 +60,12 @@
             <label for="other">Друго:</label>
             <div id="other">
                 <input class="form-control" name="other" placeholder="Друг продукт">
+            </div>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="count">Брой:</label>
+            <div id="count">
+                <input class="form-control" name="count" placeholder="бр.">
             </div>
         </div>
     </div>
@@ -119,8 +125,8 @@
     <h5 class="card-header">Особености/бележки</h5>
     <div class="form-group row m-2">
         <div class="col-sm-6">
-            <label for="comments">Особености/бележки:</label>
-            <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+            <label for="comment">Особености/бележки:</label>
+            <textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
         </div>
         <div class="col-sm-6">
             <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>

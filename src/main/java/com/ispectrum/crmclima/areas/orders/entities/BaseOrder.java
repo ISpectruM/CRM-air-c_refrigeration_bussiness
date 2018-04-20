@@ -32,6 +32,8 @@ public abstract class BaseOrder {
 
     private LocalDate endDate;
 
+    private String status;
+
     private boolean isMarked;
     private boolean isFinished;
     private boolean isWithInvoice;
@@ -39,6 +41,7 @@ public abstract class BaseOrder {
     private boolean isDeferred;
     private boolean isWaiting;
     private boolean isWarranty;
+    private boolean isForFinishing;
 
     public BaseOrder() {}
 
@@ -177,5 +180,29 @@ public abstract class BaseOrder {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getStatus() {
+        String status="В изпълнение.";
+        if (this.isFinished()){
+            status="Приключен";
+        }else if(this.isWaiting()){
+            status = "В изчакване.";
+        }else if(this.isForFinishing()){
+            status = "За довършване.";
+        }
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isForFinishing() {
+        return this.isForFinishing;
+    }
+
+    public void setForFinishing(boolean forFinishing) {
+        isForFinishing = forFinishing;
     }
 }
