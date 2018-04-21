@@ -34,6 +34,8 @@ public abstract class BaseOrder {
 
     private String status;
 
+    private String other;
+
     private boolean isMarked;
     private boolean isFinished;
     private boolean isWithInvoice;
@@ -110,51 +112,51 @@ public abstract class BaseOrder {
         this.forPayment = forPayment;
     }
 
-    public boolean isMarked() {
+    public boolean getIsMarked() {
         return this.isMarked;
     }
 
-    public void setMarked(boolean marked) {
+    public void setIsMarked(boolean marked) {
         isMarked = marked;
     }
 
-    public boolean isFinished() {
+    public boolean getIsFinished() {
         return this.isFinished;
     }
 
-    public void setFinished(boolean finished) {
+    public void setIsFinished(boolean finished) {
         isFinished = finished;
     }
 
-    public boolean isWithInvoice() {
+    public boolean getIsWithInvoice() {
         return this.isWithInvoice;
     }
 
-    public void setWithInvoice(boolean withInvoice) {
+    public void setIsWithInvoice(boolean withInvoice) {
         isWithInvoice = withInvoice;
     }
 
-    public boolean isPayed() {
+    public boolean getIsPayed() {
         return this.isPayed;
     }
 
-    public void setPayed(boolean payed) {
+    public void setIsPayed(boolean payed) {
         isPayed = payed;
     }
 
-    public boolean isDeferred() {
+    public boolean getIsDeferred() {
         return this.isDeferred;
     }
 
-    public void setDeferred(boolean deferred) {
+    public void setIsDeferred(boolean deferred) {
         isDeferred = deferred;
     }
 
-    public boolean isWaiting() {
+    public boolean getIsWaiting() {
         return this.isWaiting;
     }
 
-    public void setWaiting(boolean waiting) {
+    public void setIsWaiting(boolean waiting) {
         isWaiting = waiting;
     }
 
@@ -166,11 +168,11 @@ public abstract class BaseOrder {
         this.scheduleDate = scheduleDate;
     }
 
-    public boolean isWarranty() {
+    public boolean getIsWarranty() {
         return this.isWarranty;
     }
 
-    public void setWarranty(boolean warranty) {
+    public void setIsWarranty(boolean warranty) {
         isWarranty = warranty;
     }
 
@@ -184,11 +186,11 @@ public abstract class BaseOrder {
 
     public String getStatus() {
         String status="В изпълнение.";
-        if (this.isFinished()){
+        if (this.getIsFinished()){
             status="Приключен";
-        }else if(this.isWaiting()){
+        }else if(this.getIsWaiting()){
             status = "В изчакване.";
-        }else if(this.isForFinishing()){
+        }else if(this.getIsForFinishing()){
             status = "За довършване.";
         }
         return status;
@@ -198,11 +200,19 @@ public abstract class BaseOrder {
         this.status = status;
     }
 
-    public boolean isForFinishing() {
+    public boolean getIsForFinishing() {
         return this.isForFinishing;
     }
 
-    public void setForFinishing(boolean forFinishing) {
+    public void setIsForFinishing(boolean forFinishing) {
         isForFinishing = forFinishing;
+    }
+
+    public String getOther() {
+        return this.other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }

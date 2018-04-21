@@ -10,4 +10,8 @@ import java.util.Set;
 @Repository
 public interface MontageOrderRepository extends JpaRepository<MontageOrder,String>{
     Set<MontageOrder> findAllBy();
+
+    MontageOrder findFirstById(String id);
+
+    Set<MontageOrder> findAllByIsFinished(boolean isFinished);
 }

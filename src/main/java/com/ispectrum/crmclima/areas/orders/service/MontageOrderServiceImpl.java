@@ -1,7 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.clients.entities.Client;
-import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
@@ -37,27 +36,19 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public MontageOrderDto getViewModel(String clientId) {
-        ClientDto clientById = this.clientService.getClientById(clientId);
-        MontageOrderDto viewModel = new MontageOrderDto();
-        viewModel.setClient(clientById);
-        return viewModel;
-    }
-
-    @Override
     public void addMontage(String clientId,MontageOrderBindingModel model) {
         MontageOrder newOrder = this.mapper.map(model, MontageOrder.class);
 
-        newOrder.setOrderDate(getDate(model.getOrderDate()));
+        newOrder.setOrderDate(dateToLocaldate(model.getOrderDate()));
 
         if (model.getScheduleDate() != null){
-            newOrder.setScheduleDate(getDate(model.getScheduleDate()));
+            newOrder.setScheduleDate(dateToLocaldate(model.getScheduleDate()));
         }
 
         newOrder.setClient(getClient(clientId));
         newOrder.setLocation(getLocation(model));
 
-        addProduct(newOrder, model);
+        addProductToOrder(newOrder, model);
 
         this.montageOrderRepository.saveAndFlush(newOrder);
     }
@@ -73,13 +64,13 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         return this.clientService.getPureClientById(clientId);
     }
 
-    private LocalDate getDate(Date date) {
+    private LocalDate dateToLocaldate(Date date) {
         return date.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
     }
 
-    private void addProduct(MontageOrder newOrder, MontageOrderBindingModel model) {
+    private void addProductToOrder(MontageOrder newOrder, MontageOrderBindingModel model) {
         if(model.getProductType().equals("AIRCONDS")){
             Map<AirConditioner, Integer> airConditioners = new HashMap<>();
             AirConditioner airc = this.airConditionService.getByModel(model.getProduct());
@@ -95,4 +86,53 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         Type setType = new TypeToken<Set<MontageOrderDto>>(){}.getType();
         return this.mapper.map(montages,setType);
     }
+
+    @Override
+    public MontageOrderDto getMontageById(String id) {
+        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        return this.mapper.map(montage,MontageOrderDto.class);
+    }
+
+    @Override
+    public void deleteOrder(String id) {
+        MontageOrder order = this.montageOrderRepository.findFirstById(id);
+        this.montageOrderRepository.delete(order);
+    }
+
+    @Override
+    public void editMontage(String id, MontageOrderBindingModel model) {
+        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+
+        LocalDate orderDate = dateToLocaldate(model.getOrderDate());
+        if(!montage.getOrderDate().equals(orderDate)){
+            montage.setOrderDate(orderDate);
+        }
+
+        LocalDate scheduleDate = dateToLocaldate(model.getScheduleDate());
+        if (!montage.getScheduleDate().equals(scheduleDate)){
+            montage.setScheduleDate(scheduleDate);
+        }
+
+        if (!montage.getLocation().getAddress().equals(model.getAddress())){
+            Location location = getLocation(model);
+            montage.setLocation(location);
+        }
+
+        if(!montage.getAirConditioners().isEmpty()){
+            montage.getAirConditioners().clear();
+        }
+        addProductToOrder(montage, model);
+
+        this.montageOrderRepository.saveAndFlush(montage);
+
+    }
+
+    @Override
+    public Set<MontageOrderDto> getAllUnfinishedOrders() {
+        Set<MontageOrder> allUnFinished = this.montageOrderRepository.findAllByIsFinished(false);
+        Type setType = new TypeToken<Set<MontageOrderDto>>(){}.getType();
+        Set<MontageOrderDto> dtos = this.mapper.map(allUnFinished, setType);
+        return dtos;
+    }
+
 }

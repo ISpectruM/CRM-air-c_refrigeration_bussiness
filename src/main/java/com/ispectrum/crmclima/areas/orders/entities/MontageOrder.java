@@ -5,12 +5,16 @@ import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.orders.entities.enums.Shift;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
+import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 public class MontageOrder extends BaseOrder{
+
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
     @ManyToOne(targetEntity = Client.class)
     private Client client;
@@ -88,5 +92,27 @@ public class MontageOrder extends BaseOrder{
          count = values.stream().mapToInt(Number::intValue).sum();
         }
         return count;
+    }
+
+    @Override
+    public Double getForPayment() {
+        Double percent = 0D;
+        if(this.getDiscount() != null){
+            percent = this.getDiscount()/100;
+        }
+        Double total = this.getPrice();
+
+        if (percent!=0){
+            total -= total * percent;
+        }
+        return total - this.getDeposit();
+    }
+
+    public ProductType getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 }

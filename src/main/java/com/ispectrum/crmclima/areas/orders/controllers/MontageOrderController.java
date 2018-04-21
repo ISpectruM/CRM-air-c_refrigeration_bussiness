@@ -44,4 +44,37 @@ public class MontageOrderController extends BaseController{
         this.montageOrderService.addMontage(id, model);
         return this.redirect("/orders/montages/all");
     }
+
+    @GetMapping("/details/{id}")
+    public ModelAndView getMontageDetails(@PathVariable String id){
+        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        return this.addViewAndObject("montage",montage,"orders/montages/details");
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView editOrder(@PathVariable String id){
+        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        return this.addViewAndObject("montage", montage,"orders/montages/edit");
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editOrderAction(@PathVariable String id,
+                                        MontageOrderBindingModel model){
+        this.montageOrderService.editMontage(id,model);
+        return this.redirect("/orders/montages/details/" + id);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteOrder(@PathVariable String id){
+        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        return this.addViewAndObject("montage", montage,"orders/montages/delete");
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteOrderAction(@PathVariable String id){
+        this.montageOrderService.deleteOrder(id);
+        return this.redirect("/orders/montages/all");
+    }
+
+
 }

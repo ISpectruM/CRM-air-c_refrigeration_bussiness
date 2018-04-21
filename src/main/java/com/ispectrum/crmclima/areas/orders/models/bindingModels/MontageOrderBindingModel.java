@@ -29,6 +29,8 @@ public class MontageOrderBindingModel {
 
     private String comment;
 
+    private String other;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
 
@@ -99,7 +101,7 @@ public class MontageOrderBindingModel {
         this.scheduleDate = scheduleDate;
     }
 
-    public boolean isMarked() {
+    public boolean getIsMarked() {
         return this.isMarked;
     }
 
@@ -107,7 +109,7 @@ public class MontageOrderBindingModel {
         this.isMarked = marked;
     }
 
-    public boolean isFinished() {
+    public boolean getIsFinished() {
         return this.isFinished;
     }
 
@@ -115,7 +117,7 @@ public class MontageOrderBindingModel {
         this.isFinished = finished;
     }
 
-    public boolean isWithInvoice() {
+    public boolean getIsWithInvoice() {
         return this.isWithInvoice;
     }
 
@@ -123,7 +125,7 @@ public class MontageOrderBindingModel {
         this.isWithInvoice = withInvoice;
     }
 
-    public boolean isPayed() {
+    public boolean getIsPayed() {
         return this.isPayed;
     }
 
@@ -131,7 +133,7 @@ public class MontageOrderBindingModel {
         this.isPayed = payed;
     }
 
-    public boolean isDeferred() {
+    public boolean getIsDeferred() {
         return this.isDeferred;
     }
 
@@ -139,7 +141,7 @@ public class MontageOrderBindingModel {
         this.isDeferred = deferred;
     }
 
-    public boolean isWaiting() {
+    public boolean getIsWaiting() {
         return this.isWaiting;
     }
 
@@ -171,11 +173,11 @@ public class MontageOrderBindingModel {
         this.address = address;
     }
 
-    public boolean isForFinishing() {
+    public boolean getIsForFinishing() {
         return this.isForFinishing;
     }
 
-    public void setForFinishing(boolean forFinishing) {
+    public void setIsForFinishing(boolean forFinishing) {
         isForFinishing = forFinishing;
     }
 
@@ -196,4 +198,11 @@ public class MontageOrderBindingModel {
     }
 
 
+    public String getOther() {
+        return this.other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
 }

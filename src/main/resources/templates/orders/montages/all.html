@@ -27,7 +27,7 @@
         <tr class="table-active" th:each="order, iter:${montages}" th:object="${order}">
             <th scope="row" th:text="${iter.index+1}"></th>
             <td th:text="*{orderDate}"></td>
-            <td th:text="*{montageType.displayName}"></td>
+            <td th:unless="*{montageType == null}" th:text="*{montageType.displayName}"></td>
             <td>
                 <p th:each="product:*{airConditioners}" th:object="${product.key}"
                    th:text="|*{brand} *{model}|"></p>

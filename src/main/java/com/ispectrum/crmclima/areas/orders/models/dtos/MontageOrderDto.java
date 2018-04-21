@@ -18,6 +18,8 @@ public class MontageOrderDto {
 
     private MontageType montageType;
 
+    private ProductType productType;
+
     private Map<AirConditionerDto, Integer> airConditioners;
 
     private Integer count;
@@ -30,6 +32,8 @@ public class MontageOrderDto {
 
     private Double deposit;
 
+    private Double discount;
+
     private Double forPayment;
 
     private String comment;
@@ -37,6 +41,18 @@ public class MontageOrderDto {
     private LocalDate scheduleDate;
 
     private String status;
+
+    private String other;
+
+    private boolean isMarked;
+    private boolean isFinished;
+    private boolean isWithInvoice;
+    private boolean isPayed;
+    private boolean isDeferred;
+    private boolean isWaiting;
+    private boolean isWarranty;
+    private boolean isForFinishing;
+
 
 
     public MontageOrderDto() {
@@ -145,5 +161,93 @@ public class MontageOrderDto {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public ProductType getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public String getOther() {
+        return this.other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+    public boolean getIsMarked() {
+        return this.isMarked;
+    }
+
+    public void setIsMarked(boolean marked) {
+        isMarked = marked;
+    }
+
+    public boolean getIsFinished() {
+        return this.isFinished;
+    }
+
+    public void setIsFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public boolean getIsWithInvoice() {
+        return this.isWithInvoice;
+    }
+
+    public void setIsWithInvoice(boolean withInvoice) {
+        isWithInvoice = withInvoice;
+    }
+
+    public boolean getIsPayed() {
+        return this.isPayed;
+    }
+
+    public void setIsPayed(boolean payed) {
+        isPayed = payed;
+    }
+
+    public boolean getIsDeferred() {
+        return this.isDeferred;
+    }
+
+    public void setIsDeferred(boolean deferred) {
+        isDeferred = deferred;
+    }
+
+    public boolean getIsWaiting() {
+        return this.isWaiting;
+    }
+
+    public void setIsWaiting(boolean waiting) {
+        isWaiting = waiting;
+    }
+
+    public boolean getIsWarranty() {
+        return this.isWarranty;
+    }
+
+    public void setIsWarranty(boolean warranty) {
+        isWarranty = warranty;
+    }
+
+    public boolean getIsForFinishing() {
+        return this.isForFinishing;
+    }
+
+    public void setIsForFinishing(boolean forFinishing) {
+        isForFinishing = forFinishing;
+    }
+
+    public Double getDiscount() {
+        return this.discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 }
