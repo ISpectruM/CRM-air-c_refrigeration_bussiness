@@ -15,6 +15,8 @@ public class AirConditionerDto {
 
     private AircType aircType;
 
+    private String productType;
+
     private Condition productCondition;
 
     public AirConditionerDto() {
@@ -66,5 +68,13 @@ public class AirConditionerDto {
 
     public void setProductCondition(Condition productCondition) {
         this.productCondition = productCondition;
+    }
+
+    public String getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

@@ -37,9 +37,9 @@
         <div class="form-group col-md-3">
             <label for="productType">Продукт:</label>
             <select id="productType" name="productType" class="form-control">
-                <option th:unless="${montage.productType == null}"
-                        th:value="${montage.productType.displayName}"
-                        th:text="${montage.productType.displayName}"></option>
+                <option th:unless="*{productType == null}"
+                        th:value="*{productType}"
+                        th:text="*{productType}"></option>
                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                         th:value="${product}" th:text="${product.displayName}"></option>
             </select>

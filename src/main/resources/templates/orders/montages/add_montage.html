@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" th:object="${bindingModel}">
 <th:block th:object="${client}">
     <div class="form-row m-2 card-header">
         <h4 class="col-sm-4">Нова заявка за клиент: </h4>
@@ -18,42 +18,57 @@
     <div class="form-group row m-2">
         <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
         <div class="col-md-3">
-            <input type="date" class="form-control" id="orderDate" name="orderDate"
-                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
-                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
+            <input type="date" class="form-control" id="orderDate" name="orderDate">
         </div>
     </div>
 
     <h5 class="card-header">Вид заявка</h5>
     <div class="form-group row m-2">
         <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <select class="col-sm-3" id="montageType" name="montageType">
+        <select class="col-sm-3" id="montageType" name="montageType"
+                th:classappend="${#fields.hasErrors('montageType')}? 'is-invalid':'is-valid'"
+                th:field="*{montageType}">
+            <option value="">- Избери услуга -</option>
             <option class="form-control"
                     th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
                     th:value="${type}" th:text="${type.displayName}"></option>
         </select>
+        <th:block th:each="error:${#fields.errors('montageType')}">
+            <div class="invalid-feedback" th:text="${error}"></div>
+        </th:block>
     </div>
 
     <h5 class="card-header">Продукт</h5>
     <div class="form-group row m-2">
         <div class="form-group col-md-3">
             <label for="productType">Продукт:</label>
-            <select id="productType" name="productType" class="form-control">
-                <option value="0">- Select -</option>
+            <select id="productType" name="productType" class="form-control"
+                    th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':'is-valid'"
+                    th:field="*{productType}">
+                <option value="">- Избери -</option>
                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                         th:value="${product}" th:text="${product.displayName}"></option>
             </select>
+            <th:block th:each="error:${#fields.errors('productType')}">
+                <div class="invalid-feedback" th:text="${error}"></div>
+            </th:block>
         </div>
         <div class="form-group col-md-2">
             <label for="brand">Марка:</label>
-            <select id="brand" class="form-control">
-                <option value="0">- Select -</option>
+            <select id="brand" class="form-control" name="brand"
+                    th:classappend="${#fields.hasErrors('brand')}? 'is-invalid':'is-valid'"
+                    th:field="*{brand}">
+                <option value="">- Избери -</option>
             </select>
+            <th:block th:each="error:${#fields.errors('brand')}">
+                <div class="invalid-feedback" th:text="${error}"></div>
+            </th:block>
+
         </div>
         <div class="form-group col-md-3">
             <label for="product">Модел:</label>
             <select id="product" name="product" class="form-control">
-                <option value="0">- Select -</option>
+                <option value="0">- Избери -</option>
             </select>
         </div>
         <div class="form-group col-md-3">
@@ -65,7 +80,12 @@
         <div class="form-group col-md-1">
             <label for="count">Брой:</label>
             <div id="count">
-                <input class="form-control" name="count" placeholder="бр.">
+                <input class="form-control" name="count"
+                       th:classappend="${#fields.hasErrors('count')}? 'is-invalid':'is-valid'"
+                       th:field="*{count}">
+                <th:block th:each="error:${#fields.errors('count')}">
+                    <div class="invalid-feedback" th:text="${error}"></div>
+                </th:block>
             </div>
         </div>
     </div>
@@ -86,11 +106,21 @@
     <div class="form-group row m-2">
         <label for="price" class="col-sm-1 col-form-label">Цена:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="price" name="price" placeholder="цена">
+            <input type="number" class="form-control" id="price" name="price" placeholder="цена"
+                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':'is-valid'"
+                   th:field="*{price}">
+            <th:block th:each="error:${#fields.errors('price')}">
+                <div class="invalid-feedback" th:text="${error}"></div>
+            </th:block>
         </div>
         <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро">
+            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
+                   th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':'is-valid'"
+                   th:field="*{deposit}">
+            <th:block th:each="error:${#fields.errors('deposit')}">
+                <div class="invalid-feedback" th:text="${error}"></div>
+            </th:block>
         </div>
         <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
         <div class="col-sm-2">

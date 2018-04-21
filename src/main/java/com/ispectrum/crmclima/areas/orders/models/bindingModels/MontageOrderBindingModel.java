@@ -2,6 +2,9 @@ package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class MontageOrderBindingModel {
@@ -9,20 +12,25 @@ public class MontageOrderBindingModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
+    @NotEmpty(message = "Изберете вид услуга.")
     private String montageType;
 
     private String product;
 
+    @NotEmpty(message = "Изберете вид продукт.")
     private String productType;
 
+    @Min(value = 0, message = "Брой не може да бъде отрицателна стойност.")
     private Integer count;
 
     private String city;
 
     private String address;
 
+    @Min(value = 0, message = "Цената не може да бъде отрицателна стойност.")
     private Double price;
 
+    @Min(value = 0, message = "Капарото не може да бъде отрицателна стойност.")
     private Double deposit;
 
     private Double discount;

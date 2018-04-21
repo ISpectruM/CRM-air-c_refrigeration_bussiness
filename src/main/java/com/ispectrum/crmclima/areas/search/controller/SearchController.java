@@ -6,9 +6,7 @@ import com.ispectrum.crmclima.areas.search.SearchService;
 import com.ispectrum.crmclima.areas.search.models.SearchBindingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +25,7 @@ public class SearchController extends BaseController{
 
     @GetMapping("/search")
     public ModelAndView showSearchResults(){
-        return this.view();
+        return this.getMav();
     }
 
     @PostMapping("/search")

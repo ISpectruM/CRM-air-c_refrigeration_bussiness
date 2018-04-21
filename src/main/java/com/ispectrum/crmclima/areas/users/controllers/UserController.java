@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/users")
 public class UserController extends BaseController{
@@ -17,7 +15,7 @@ public class UserController extends BaseController{
         if (error != null){
             return this.addViewAndObject("error", error,"users/login");
         }
-        return this.view("users/login");
+        return this.setView("users/login");
     }
 
 }

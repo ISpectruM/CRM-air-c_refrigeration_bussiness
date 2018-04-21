@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
+import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
@@ -39,7 +40,12 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     public void addMontage(String clientId,MontageOrderBindingModel model) {
         MontageOrder newOrder = this.mapper.map(model, MontageOrder.class);
 
-        newOrder.setOrderDate(dateToLocaldate(model.getOrderDate()));
+        Date orderDate = model.getOrderDate();
+        LocalDate localDate = LocalDate.now();
+        if (orderDate != null){
+            localDate = dateToLocaldate(orderDate);
+        }
+        newOrder.setOrderDate(localDate);
 
         if (model.getScheduleDate() != null){
             newOrder.setScheduleDate(dateToLocaldate(model.getScheduleDate()));
@@ -51,33 +57,6 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         addProductToOrder(newOrder, model);
 
         this.montageOrderRepository.saveAndFlush(newOrder);
-    }
-
-    private Location getLocation(MontageOrderBindingModel model) {
-        Location location = new Location();
-        location.setCity(model.getCity());
-        location.setAddress(model.getAddress());
-        return location;
-    }
-
-    private Client getClient(String clientId) {
-        return this.clientService.getPureClientById(clientId);
-    }
-
-    private LocalDate dateToLocaldate(Date date) {
-        return date.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-    }
-
-    private void addProductToOrder(MontageOrder newOrder, MontageOrderBindingModel model) {
-        if(model.getProductType().equals("AIRCONDS")){
-            Map<AirConditioner, Integer> airConditioners = new HashMap<>();
-            AirConditioner airc = this.airConditionService.getByModel(model.getProduct());
-            airConditioners.put(airc,1);
-            newOrder.setAirConditioners(airConditioners);
-        }
-//        TODO: Add other equipment
     }
 
     @Override
@@ -102,37 +81,60 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     @Override
     public void editMontage(String id, MontageOrderBindingModel model) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        MontageOrder editedOrder = this.mapper.map(model, MontageOrder.class);
+        editedOrder.setId(id);
+
+        Client client = montage.getClient();
+        editedOrder.setClient(client);
+
 
         LocalDate orderDate = dateToLocaldate(model.getOrderDate());
-        if(!montage.getOrderDate().equals(orderDate)){
-            montage.setOrderDate(orderDate);
-        }
+        editedOrder.setOrderDate(orderDate);
 
         LocalDate scheduleDate = dateToLocaldate(model.getScheduleDate());
-        if (!montage.getScheduleDate().equals(scheduleDate)){
-            montage.setScheduleDate(scheduleDate);
-        }
+        editedOrder.setScheduleDate(scheduleDate);
 
-        if (!montage.getLocation().getAddress().equals(model.getAddress())){
-            Location location = getLocation(model);
-            montage.setLocation(location);
-        }
+        Location location = getLocation(model);
+        editedOrder.setLocation(location);
 
-        if(!montage.getAirConditioners().isEmpty()){
-            montage.getAirConditioners().clear();
-        }
-        addProductToOrder(montage, model);
-
-        this.montageOrderRepository.saveAndFlush(montage);
-
+        addProductToOrder(editedOrder, model);
+        this.montageOrderRepository.saveAndFlush(editedOrder);
     }
 
     @Override
     public Set<MontageOrderDto> getAllUnfinishedOrders() {
         Set<MontageOrder> allUnFinished = this.montageOrderRepository.findAllByIsFinished(false);
-        Type setType = new TypeToken<Set<MontageOrderDto>>(){}.getType();
-        Set<MontageOrderDto> dtos = this.mapper.map(allUnFinished, setType);
-        return dtos;
+        Set<MontageOrderDto> montageOrderDtos = ModelMappingUtil.convertSet(allUnFinished, MontageOrderDto.class);
+        return montageOrderDtos;
     }
+
+    private Client getClient(String clientId) {
+        return this.clientService.getPureClientById(clientId);
+    }
+
+    private LocalDate dateToLocaldate(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    private void addProductToOrder(MontageOrder newOrder, MontageOrderBindingModel model) {
+        if(model.getProductType().equals("AIRCONDS")){
+            Map<AirConditioner, Integer> airConditioners = new HashMap<>();
+            AirConditioner airc = this.airConditionService.getByModel(model.getProduct());
+            airConditioners.put(airc,model.getCount());
+            newOrder.setAirConditioners(airConditioners);
+        }
+//        TODO: Add other equipment
+    }
+
+    private Location getLocation(MontageOrderBindingModel model) {
+        Location location = new Location();
+        location.setCity(model.getCity());
+        location.setAddress(model.getAddress());
+        return location;
+    }
+
+
 
 }

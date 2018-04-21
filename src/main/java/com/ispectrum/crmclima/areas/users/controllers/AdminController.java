@@ -1,10 +1,8 @@
 package com.ispectrum.crmclima.areas.users.controllers;
 
 import com.ispectrum.crmclima.areas.BaseController;
-import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.EditUserBindingModel;
-import com.ispectrum.crmclima.areas.users.models.dtos.RoleDto;
 import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -32,7 +29,7 @@ public class AdminController extends BaseController{
 
     @GetMapping("/add")
     public ModelAndView addUser(){
-        return this.view("admin/add");
+        return this.setView("admin/add");
     }
 
     @PostMapping("/add")
@@ -74,7 +71,7 @@ public class AdminController extends BaseController{
 
     @GetMapping("/unauthorized")
     public ModelAndView unauthorized(){
-        return this.view( "users/unauthorized");
+        return this.setView( "users/unauthorized");
     }
 
 

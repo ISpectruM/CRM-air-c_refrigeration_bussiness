@@ -8,9 +8,12 @@ import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.MontageOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -33,15 +36,26 @@ public class MontageOrderController extends BaseController{
 
     @GetMapping("/add/{clientId}")
     public ModelAndView addOrder(@PathVariable String clientId){
+        this.setView("orders/montages/add_montage");
         ClientDto client = this.clientService.getClientById(clientId);
-        return this.addViewAndObject("client",client,"orders/montages/add_montage");
+        this.addObject("bindingModel",new MontageOrderBindingModel());
+        return this.addObject("client",client);
     }
 
 
     @PostMapping("/add/{id}")
-    public ModelAndView addOrderAction(@PathVariable String id,
-            MontageOrderBindingModel model){
-        this.montageOrderService.addMontage(id, model);
+    public ModelAndView addOrderAction(
+            @PathVariable String id,
+            @Valid @ModelAttribute(name = "bindingModel") MontageOrderBindingModel bindingModel,
+            BindingResult bindingResult){
+
+            if (bindingResult.hasErrors()){
+                Map<String, Object> model = bindingResult.getModel();
+                ClientDto client = this.clientService.getClientById(id);
+                model.put("client",client);
+                return this.addViewAndObjectsMap("orders/montages/add_montage",model);
+            }
+        this.montageOrderService.addMontage(id, bindingModel);
         return this.redirect("/orders/montages/all");
     }
 

@@ -1,10 +1,9 @@
 package com.ispectrum.crmclima.areas.products.entities;
 
+import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class BaseProduct {
@@ -22,6 +21,9 @@ public abstract class BaseProduct {
     private String model;
 
     private Double price;
+
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
 
     public BaseProduct() {
@@ -59,4 +61,11 @@ public abstract class BaseProduct {
         this.price = price;
     }
 
+    public ProductType getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
 }

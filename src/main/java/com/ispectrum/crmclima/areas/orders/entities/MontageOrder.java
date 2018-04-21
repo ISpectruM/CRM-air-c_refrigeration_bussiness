@@ -97,15 +97,20 @@ public class MontageOrder extends BaseOrder{
     @Override
     public Double getForPayment() {
         Double percent = 0D;
+        Double total = 0D;
         if(this.getDiscount() != null){
             percent = this.getDiscount()/100;
         }
-        Double total = this.getPrice();
 
-        if (percent!=0){
-            total -= total * percent;
+        if(this.getPrice() != null){
+            total = this.getPrice();
+            if (percent!=0){
+                total -= total * percent;
+            }
+            total -= this.getDeposit();
         }
-        return total - this.getDeposit();
+
+        return total;
     }
 
     public ProductType getProductType() {

@@ -4,7 +4,6 @@ import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
-import com.ispectrum.crmclima.areas.search.models.SearchBindingModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +36,7 @@ public class ClientController extends BaseController{
 
     @GetMapping("/add")
     public ModelAndView addClient(){
-        return this.view("clients/add");
+        return this.setView("clients/add");
     }
 
     @PostMapping("/add")

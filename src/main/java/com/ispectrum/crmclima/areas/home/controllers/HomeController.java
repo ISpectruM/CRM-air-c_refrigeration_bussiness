@@ -10,6 +10,6 @@ public class HomeController extends BaseController {
 
     @GetMapping("/")
     public ModelAndView homePage(){
-        return this.view("home/home");
+        return this.setView("home/home");
     }
 }
