@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web){
-        web.ignoring().antMatchers("/css/**","/js/**");
+        web.ignoring().antMatchers("/css/**","/js/**", "/img/**");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/logout").permitAll()
                     .antMatchers("/schedule/**").authenticated()
-                    .antMatchers("/clients/**").hasAnyRole("SELLER", "ADMIN")
+                    .antMatchers("/clients/**", "/","/orders/**","/search","/airconds/search/**").hasAnyRole("SELLER", "ADMIN")
                     .antMatchers("/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()

@@ -26,7 +26,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public Set<ClientDto> getClientByPhone(String phone) {
-        Set<Client> clients = this.clientRepository.findClientsByPhone(phone);
+        Set<Client> clients = this.clientRepository.findClientsByPhoneContaining(phone);
         Type setDtoType = this.getSetDtoType();
         return this.mapper.map(clients,setDtoType);
     }

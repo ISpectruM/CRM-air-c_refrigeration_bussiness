@@ -6,21 +6,14 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasAnyRole('ADMIN','SELLER')">
-            <a th:href="@{/clients/all}" class="nav-link navlinks-color my-2 my-sm-0">All clients</a>
-        </div>
-        <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasAnyRole('ADMIN','SELLER')">
-            <a th:href="@{/orders/montages/all}" class="nav-link navlinks-color my-2 my-sm-0">All montages</a>
-        </div>
-        <div class="my-2 my-lg-0 mr-5 ml-auto" sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/admin/all}" class="nav-link navlinks-color my-2 my-sm-0">All users</a>
-        </div>
-        <div class="brand-color" sec:authorize="isAuthenticated()">
+        <div class="brand-color ml-auto" sec:authorize="isAuthenticated()">
             Welcome,
             <a class="nav-item brand-color my-2 my-lg-0" sec:authentication="name"></a>
         </div>
-        <div>
-            <img src="">
+        <div class="ml-3 mr-3">
+            <img sec:authorize="hasRole('ADMIN')" src="/img/admin_logo.png" width="128"/>
+            <img sec:authorize="hasRole('INSTALLER')" src="/img/installer.png" width="64"/>
+            <img sec:authorize="hasRole('SELLER')" src="/img/seller.png" width="64"/>
         </div>
 
         <form class="form-inline my-2 my-lg-0 ml-auto" sec:authorize="isAnonymous()">
@@ -32,4 +25,18 @@
             <button class="nav-link navlinks-color nav-button my-2 my-lg-0">Logout</button>
         </form>
     </div>
+
 </nav>
+<ul class="nav row btn-dark">
+    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/clients/all}">All clients</a>
+    </li>
+    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/montages/all}">All montages</a>
+    </li>
+    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/admin/all}">All users</a>
+    </li>
+    <li class="navlinks-color ml-auto mr-3" sec:authorize="isAuthenticated()" th:text="${ordersInfo}">
+    </li>
+</ul>

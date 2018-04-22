@@ -31,7 +31,7 @@ public class ClientController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView clientDetails(@PathVariable String id){
         ClientDto clientDto = this.clientService.getClientById(id);
-        return this.addViewAndObject("client",clientDto,"clients/details");
+        return this.addViewAndObject("client",clientDto,"clients/details/details");
     }
 
     @GetMapping("/add")

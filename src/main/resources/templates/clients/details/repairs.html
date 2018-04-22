@@ -1,8 +1,10 @@
-<h5 class="card-header">Ремонти</h5>
-<div class="button mt-3 mb-3">
-    <button th:href="@{/orders/repairs/add/{id}(id=${client.id})}">Нов ремонт</button>
+<div class="row card-header">
+    <h5 class="col-sm-2">Ремонти</h5>
+    <div class="col-sm-2 ml-auto">
+        <button class="btn btn-success" th:href="@{/orders/repairs/add/{id}(id=${client.id})}">Нов ремонт</button>
+    </div>
 </div>
-<table class="table table-stripes mt-5">
+<table class="table table-striped mt-2">
     <thead>
     <tr>
         <th scope="col">Дата</th>
@@ -30,7 +32,7 @@
             <p th:unless="*{isFinished()} AND *{isWaiting()}">В изпълнение</p>
         </td>
         <td>
-            <a th:href="@{/orders/repairs/{id}(id=${repair.id})}">Детайли</a>
+            <a type="button" class="btn btn-info" th:href="@{/orders/repairs/{id}(id=${repair.id})}">Детайли</a>
         </td>
     </tr>
     </tbody>

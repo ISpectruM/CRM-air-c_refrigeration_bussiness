@@ -48,8 +48,11 @@ public class OrderInfoInterceptor extends HandlerInterceptorAdapter {
     private String getResult(Integer montageCount){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Незавършени монтажи:")
-                .append(montageCount).append(System.lineSeparator());
+        sb
+            .append("Монтажи: ")
+            .append(montageCount).append(" | ")
+            .append(" Ремонти: 0").append(" | ")
+            .append(" Профилактики: 0 ");
         return sb.toString();
     }
 

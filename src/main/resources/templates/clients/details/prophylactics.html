@@ -1,8 +1,10 @@
-<h5 class="card-header">Профилактики</h5>
-<div class="button mt-3 mb-3">
-    <button th:href="@{/orders/prophylactics/add/{id}(id=${client.id})}">Нов ремонт</button>
+<div class="row card-header">
+    <h5 class="col-sm-3">Профилактики</h5>
+    <div class="col-sm-2 ml-auto">
+        <button class="btn btn-success" th:href="@{/orders/prophylactics/add/{id}(id=${client.id})}">Нова профилактика</button>
+    </div>
 </div>
-<table class="table table-stripes mt-5">
+<table class="table table-striped mt-2">
     <thead>
     <tr>
         <th scope="col">Дата</th>
@@ -17,7 +19,7 @@
     </thead>
     <tbody>
     <tr class="table-active" th:each="prophylactic, iter:${client.getProphylacticOrders()}"
-                                                                th:object="${prophylactic}">
+        th:object="${prophylactic}">
         <th scope="row" th:text="${iter.index+1}"></th>
         <td th:text="*{orderDate}"></td>
         <td th:text="*{prophylacticType}"></td>
@@ -31,7 +33,7 @@
             <p th:unless="*{isFinished()} AND *{isWaiting()}">В изпълнение</p>
         </td>
         <td>
-            <a th:href="@{/orders/prophylactics/details/{id}(id=${prophylactic.id})}">Детайли</a>
+            <a type="button" class="btn btn-info" th:href="@{/orders/prophylactics/details/{id}(id=${prophylactic.id})}">Детайли</a>
         </td>
     </tr>
     </tbody>

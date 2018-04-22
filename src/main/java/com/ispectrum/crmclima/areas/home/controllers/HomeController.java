@@ -10,6 +10,6 @@ public class HomeController extends BaseController {
 
     @GetMapping("/")
     public ModelAndView homePage(){
-        return this.setView("home/home");
+        return this.redirect("/clients/all");
     }
 }

@@ -1,21 +1,20 @@
 <form class="form-inline" th:action="@{/search}" th:method="POST">
-    <div class="form-group mb-2">
-        <label for="label">Търсене на клиент:</label>
-        <input type="text" readonly class="form-control-plaintext" id="label">
+    <div class="form-group mb-2 ml-auto">
+        <input type="text" readonly class="form-control-plaintext" id="label" value="Търсене на клиент:">
     </div>
     <fieldset class="form-group">
         <div class="form-check">
-            <label class="form-check-label">
+            <label class="form-check-label m-2">
                 <input class="form-check-input"
                        type="radio" name="criteria" value="isPhoneSearch">
                 Телефон
             </label>
-            <label class="form-check-label">
+            <label class="form-check-label m-2">
                 <input class="form-check-input"
                        type="radio" name="criteria" value="isAddressSearch">
                 Адрес
             </label>
-            <label class="form-check-label">
+            <label class="form-check-label m-2">
                 <input class="form-check-input"
                        type="radio" name="criteria" value="isNameSearch">
                 Име

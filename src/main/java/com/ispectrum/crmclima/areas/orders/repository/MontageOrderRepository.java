@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Repository
 public interface MontageOrderRepository extends JpaRepository<MontageOrder,String>{
-    Set<MontageOrder> findAllBy();
+    Set<MontageOrder> findAllByOrderByOrderDateAsc();
 
     MontageOrder findFirstById(String id);
 

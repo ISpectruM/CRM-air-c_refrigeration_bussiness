@@ -61,7 +61,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
     @Override
     public Set<MontageOrderDto> getAllMontages() {
-        Set<MontageOrder> montages = this.montageOrderRepository.findAllBy();
+        Set<MontageOrder> montages = this.montageOrderRepository.findAllByOrderByOrderDateAsc();
         Type setType = new TypeToken<Set<MontageOrderDto>>(){}.getType();
         return this.mapper.map(montages,setType);
     }

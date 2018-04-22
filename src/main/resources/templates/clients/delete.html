@@ -1,43 +1,50 @@
-<h3 class="card-header">Изтриване на клиент</h3>
-<form class="form-horizontal" th:action="@{/clients/delete/{id}(id=${client.id})}" th:method="POST">
-    <div class="form-group">
-        <label for="name" class="col-sm-2 col-form-label">Име и фамилия</label>
-        <div class="col-sm-10">
-            <input type="text" th:value="${client.name}" class="form-control" id="name" name="name"  disabled="disabled">
+<div class="container">
+    <h3 class="card-header">Изтриване на клиент</h3>
+    <form class="form-horizontal m-5" th:action="@{/clients/delete/{id}(id=${client.id})}" th:method="POST">
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Име и фамилия</label>
+            <div class="col-sm-6">
+                <input type="text" th:value="${client.name}" class="form-control" id="name" name="name"
+                       disabled="disabled">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="city" class="col-sm-2 col-form-label">Град</label>
-        <div class="col-sm-10">
-            <input type="text" th:value="${client.city}" class="form-control" id="city" name="city"  disabled="disabled">
+        <div class="form-group row">
+            <label for="city" class="col-sm-2 col-form-label">Град</label>
+            <div class="col-sm-6">
+                <input type="text" th:value="${client.city}" class="form-control" id="city" name="city"
+                       disabled="disabled">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="address" class="col-sm-2 col-form-label">Адрес</label>
-        <div class="col-lg-12">
-            <input type="text" th:value="${client.address}" class="form-control" id="address" name="address"  disabled="disabled">
+        <div class="form-group row">
+            <label for="address" class="col-sm-2 col-form-label">Адрес</label>
+            <div class="col-lg-6">
+                <input type="text" th:value="${client.address}" class="form-control" id="address" name="address"
+                       disabled="disabled">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="email" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-lg-12">
-            <input type="text" th:value="${client.email}" class="form-control" id="email" name="email"  disabled="disabled">
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-lg-6">
+                <input type="text" th:value="${client.email}" class="form-control" id="email" name="email"
+                       disabled="disabled">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="phone" class="col-sm-2 col-form-label">Телефон</label>
-        <div class="col-lg-12">
-            <input type="text" th:value="${client.phone}" class="form-control" id="phone" name="phone"  disabled="disabled">
+        <div class="form-group row">
+            <label for="phone" class="col-sm-2 col-form-label">Телефон</label>
+            <div class="col-lg-6">
+                <input type="text" th:value="${client.phone}" class="form-control" id="phone" name="phone"
+                       disabled="disabled">
+            </div>
         </div>
-    </div>
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
-    <div class="form-group">
-        <div class="col-lg-12 col-lg-offset-2">
-            <a type="button" th:href="@{/clients/all}" class="btn btn-default">Откажи</a>
-            <button type="submit" class="btn btn-primary">Изтрий</button>
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <div class="col-sm-10 ml-auto mr-2">
+                <a type="button" th:href="@{/clients/all}" class="btn btn-dark">Откажи</a>
+                <button type="submit" class="btn btn-danger">Изтрий</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

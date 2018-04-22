@@ -14,7 +14,7 @@ public interface ClientRepository extends JpaRepository<Client, String>{
 
     Client findFirstById(String id);
 
-    Set<Client> findClientsByPhone(String phone);
+    Set<Client> findClientsByPhoneContaining(String phone);
 
     Set<Client> findClientsByAddressContaining(String address);
 

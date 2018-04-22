@@ -1,0 +1,34 @@
+<div class="form-group col-md-3">
+    <label for="productType">Продукт:</label>
+    <select id="productType" name="productType" class="form-control">
+        <option th:unless="*{productType == null}"
+                th:value="*{productType}"
+                th:text="*{productType}"></option>
+        <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
+                th:value="${product}" th:text="${product.displayName}"></option>
+    </select>
+</div>
+<div class="form-group col-md-2">
+    <label for="brand">Марка:</label>
+    <select id="brand" class="form-control">
+        <option th:value="*{brand}" th:text="*{brand}"></option>
+    </select>
+</div>
+<div class="form-group col-md-3">
+    <label for="product">Модел:</label>
+    <select id="product" name="product" class="form-control">
+        <option th:value="*{model}" th:text="*{model}"></option>
+    </select>
+</div>
+<div class="form-group col-md-3">
+    <label for="other">Друго:</label>
+    <div id="other">
+        <input class="form-control" name="other" th:value="${montage.other}">
+    </div>
+</div>
+<div class="form-group col-md-1">
+    <label for="count">Брой:</label>
+    <div id="count">
+        <input class="form-control" name="count" th:value="${montage.count}">
+    </div>
+</div>

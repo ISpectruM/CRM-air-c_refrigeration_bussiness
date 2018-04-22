@@ -1,44 +1,46 @@
-<h3 class="card-header">Добавяне на нов клиент</h3>
-<form class="form-horizontal" th:action="@{/clients/add}" th:method="POST">
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Име и фамилия</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control has-danger" id="name" name="name" placeholder="име и фамилия">
+<div class="container">
+    <h3 class="card-header">Добавяне на нов клиент</h3>
+    <form class="form-horizontal m-5" th:action="@{/clients/add}" th:method="POST">
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Име и фамилия</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control has-danger" id="name" name="name" placeholder="име и фамилия">
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="city" class="col-sm-2 col-form-label">Град</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="city" name="city" placeholder="град">
+        <div class="form-group row">
+            <label for="city" class="col-sm-2 col-form-label">Град</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="city" name="city" placeholder="град">
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="address" class="col-sm-2 col-form-label">Адрес</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="address" name="address" placeholder="адрес">
+        <div class="form-group row">
+            <label for="address" class="col-sm-2 col-form-label">Адрес</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="address" name="address" placeholder="адрес">
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="email" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="email" name="email" placeholder="електронна поща">
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="email" name="email" placeholder="електронна поща">
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="phone" class="col-sm-2 col-form-label">Телефон</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="phone" name="phone" placeholder="телефон">
+        <div class="form-group row">
+            <label for="phone" class="col-sm-2 col-form-label">Телефон</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="телефон">
+            </div>
         </div>
-    </div>
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
-    <div class="form-group">
-        <div class="col-lg-12 col-lg-offset-2">
-            <button type="reset" class="btn btn-default">Изчисти</button>
-            <a type="button" class="btn btn-default" th:href="@{/clients/all}">Откажи</a>
-            <button type="submit" class="btn btn-primary">Запиши</button>
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <div class="col-sm-10 ml-auto mr-2">
+                <button type="reset" class="btn">Изчисти</button>
+                <a type="button" class="btn btn-dark" th:href="@{/clients/all}">Откажи</a>
+                <button type="submit" class="btn btn-success">Запиши</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

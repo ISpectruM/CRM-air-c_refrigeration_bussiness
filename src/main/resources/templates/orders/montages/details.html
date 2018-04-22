@@ -1,6 +1,6 @@
 <div class="container" th:object="${montage}">
     <div class="form-row m-2 card-header">
-        <h4 class="col-sm-4">Заявка за монтаж за клиент: </h4>
+        <h4 class="col-sm-4">Детайли на заявка за монтаж </h4>
         <label for="name" class="col-sm-1 col-form-label">Име:</label>
         <div class="form-group col-md-4">
             <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{client.name}">
@@ -133,9 +133,9 @@
             th:value="${_csrf.token}"/>
     <div class="form-group">
         <div class="col-lg-12 col-lg-offset-2">
-            <a th:href="@{/orders/montages/details/{id}(id=*{id})}" class="btn btn-default">Обратно</a>
-            <a th:href="@{/orders/montages/edit/{id}(id=*{id})}" class="btn btn-warning">Редактирай</a>
-            <a th:href="@{/orders/montages/delete/{id}(id=*{id})}" class="btn btn-danger">Изтрий</a>
+            <a type="button" th:href="@{/orders/montages/all}" class="btn btn-success">Обратно</a>
+            <a type="button" th:href="@{/orders/montages/edit/{id}(id=*{id})}" class="btn btn-warning">Редактирай</a>
+            <a type="button" th:href="@{/orders/montages/delete/{id}(id=*{id})}" class="btn btn-danger">Изтрий</a>
         </div>
     </div>
 </div>
