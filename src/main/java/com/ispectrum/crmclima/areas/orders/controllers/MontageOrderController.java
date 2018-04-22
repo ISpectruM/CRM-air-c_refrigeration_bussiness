@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class MontageOrderController extends BaseController{
 
     @GetMapping("/all")
     public ModelAndView getAllMontages(){
-        Set<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages();
+        List<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages();
         return this.addViewAndObject("montages",allMontages,"orders/montages/all");
     }
 

@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.users.service;
 
+import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.users.entities.Role;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
@@ -8,14 +9,12 @@ import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.repository.RoleRepository;
 import com.ispectrum.crmclima.areas.users.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -55,15 +54,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<UserDto> getAllUsers() {
         Set<User> allUsers = this.userRepository.findAllBy();
-
-        Type setDtoType = new TypeToken<Set<UserDto>>(){}.getType();
-        return this.modelMapper.map(allUsers, setDtoType);
+        return ModelMappingUtil.convertSet(allUsers,UserDto.class);
     }
 
     @Override
     public UserDto getUserById(String userId) {
         User user = this.userRepository.findUserById(userId);
-        return this.modelMapper.map(user,UserDto.class);
+        return ModelMappingUtil.convertClass(user,UserDto.class);
     }
 
     @Override

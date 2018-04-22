@@ -1,15 +1,14 @@
 package com.ispectrum.crmclima.areas.clients.service;
 
+import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.repository.ClientRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.Set;
 
 @Service
@@ -33,15 +32,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Set<ClientDto> getAllClients() {
         Set<Client> clients = this.clientRepository.findAllBy();
-        Type setDtoType = new TypeToken<Set<ClientDto>>(){}.getType();
-        return this.modelMapper.map(clients,setDtoType);
+        return ModelMappingUtil.convertSet(clients,ClientDto.class);
     }
 
     @Override
     public ClientDto getClientById(String id) {
 //        TODO Error handling if not found
         Client client = this.clientRepository.findFirstById(id);
-        return this.modelMapper.map(client,ClientDto.class);
+        return ModelMappingUtil.convertClass(client,ClientDto.class);
     }
 
     @Override

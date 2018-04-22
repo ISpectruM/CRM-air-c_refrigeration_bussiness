@@ -11,11 +11,9 @@ import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -60,16 +58,15 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public Set<MontageOrderDto> getAllMontages() {
-        Set<MontageOrder> montages = this.montageOrderRepository.findAllByOrderByOrderDateAsc();
-        Type setType = new TypeToken<Set<MontageOrderDto>>(){}.getType();
-        return this.mapper.map(montages,setType);
+    public List<MontageOrderDto> getAllMontages() {
+        List<MontageOrder> montages = this.montageOrderRepository.findAllByOrderByOrderDateAsc();
+        return ModelMappingUtil.convertList(montages,MontageOrderDto.class);
     }
 
     @Override
     public MontageOrderDto getMontageById(String id) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
-        return this.mapper.map(montage,MontageOrderDto.class);
+        return ModelMappingUtil.convertClass(montage,MontageOrderDto.class);
     }
 
     @Override

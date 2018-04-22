@@ -1,15 +1,14 @@
 package com.ispectrum.crmclima.areas.search;
 
+import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.repository.ClientRepository;
 import com.ispectrum.crmclima.areas.search.models.SearchBindingModel;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.Set;
 
 @Service
@@ -27,22 +26,19 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public Set<ClientDto> getClientByPhone(String phone) {
         Set<Client> clients = this.clientRepository.findClientsByPhoneContaining(phone);
-        Type setDtoType = this.getSetDtoType();
-        return this.mapper.map(clients,setDtoType);
+        return ModelMappingUtil.convertSet(clients,ClientDto.class);
     }
 
     @Override
     public Set<ClientDto> getClientsByAddress(String address) {
         Set<Client> clients = this.clientRepository.findClientsByAddressContaining(address);
-        Type setDtoType = this.getSetDtoType();
-        return this.mapper.map(clients,setDtoType);
+        return ModelMappingUtil.convertSet(clients,ClientDto.class);
     }
 
     @Override
     public Set<ClientDto> getClientsByName(String name) {
         Set<Client> clients = this.clientRepository.findClientsByNameContaining(name);
-        Type setDtoType = this.getSetDtoType();
-        return this.mapper.map(clients,setDtoType);
+        return ModelMappingUtil.convertSet(clients,ClientDto.class);
     }
 
     @Override
@@ -57,9 +53,5 @@ public class SearchServiceImpl implements SearchService {
                 return this.getClientByPhone(model.getSearchString());
         }
         return null;
-    }
-
-    private Type getSetDtoType(){
-        return new TypeToken<Set<ClientDto>>(){}.getType();
     }
 }
