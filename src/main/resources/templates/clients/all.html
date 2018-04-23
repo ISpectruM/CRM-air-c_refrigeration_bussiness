@@ -1,13 +1,16 @@
-<div class="ml-5 mr-5 mt-3">
-    <div class="row card-header mb-3">
-        <div class="col-sm-4 mt-3 mb-3">
+<div class="ml-5 mr-5" th:with="currentPage=${#conversions.convert(#request.getParameter('page'),'Integer')}">
+    <div class="row card-header mb-1">
+        <h3 class="col-sm-12">Всички клиенти</h3>
+        <div class="col-sm-4">
             <a type="button" class="btn btn-success" th:href="@{/clients/add}">Добави клиент</a>
         </div>
-        <div class="col-sm-7 mt-3 mb-3 inline ml-auto" th:include="~{fragments/search}"></div>
+        <div class="col-sm-7 inline ml-auto" th:include="~{fragments/search}"></div>
     </div>
-    <h3>Всички клиенти</h3>
-    <table class="table table-striped mt-3">
-        <thead>
+    <!--pagination-->
+    <div class="row" th:include="~{fragments/page_nav}"></div>
+    <!--content-->
+    <table class="table table-striped">
+        <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Име</th>
@@ -20,7 +23,7 @@
         </thead>
         <tbody>
         <tr th:each="client, iter:${clients}" th:object="${client}">
-            <th scope="row" th:text="${iter.index+1}"></th>
+            <th scope="row" th:text="${currentPage*12 + iter.index+1}"></th>
             <td th:text="*{name}"></td>
             <td th:text="*{address}"></td>
             <td th:text="*{email}"></td>
@@ -38,4 +41,6 @@
         </tr>
         </tbody>
     </table>
+    <!--pagination-->
+    <div class="row" th:include="~{fragments/page_nav}"></div>
 </div>

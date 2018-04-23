@@ -5,7 +5,6 @@ import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.repository.ClientRepository;
 import com.ispectrum.crmclima.areas.search.models.SearchBindingModel;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,10 @@ import java.util.Set;
 public class SearchServiceImpl implements SearchService {
 
     private final ClientRepository clientRepository;
-    private final ModelMapper mapper;
 
     @Autowired
-    public SearchServiceImpl(ClientRepository clientRepository, ModelMapper mapper) {
+    public SearchServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.mapper = mapper;
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.ispectrum.crmclima.areas.users.models.bindingModels.EditUserBindingMo
 import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 import com.ispectrum.crmclima.areas.users.repository.RoleRepository;
 import com.ispectrum.crmclima.areas.users.repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,14 +23,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUser(String id, EditUserBindingModel editModel) {
-        User user = this.modelMapper.map(editModel, User.class);
+        User user = ModelMappingUtil.convertClass(editModel, User.class);
 
         String password = this.bCryptPasswordEncoder.encode(editModel.getPassword());
         user.setPassword(password);

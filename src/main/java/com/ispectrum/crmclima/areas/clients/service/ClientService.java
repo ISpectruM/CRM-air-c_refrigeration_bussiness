@@ -3,13 +3,16 @@ package com.ispectrum.crmclima.areas.clients.service;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Set;
 
 public interface ClientService {
     void addClient(AddClientModel model);
 
-    Set<ClientDto> getAllClients();
+    Page<ClientDto> getAllClients(Pageable pageable);
 
     ClientDto getClientById(String id);
 
@@ -18,4 +21,6 @@ public interface ClientService {
     void deleteClient(String id);
 
     Client getPureClientById(String id);
+
+    List<Client> getAllClients();
 }

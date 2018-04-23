@@ -4,6 +4,9 @@ import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +26,8 @@ public class ClientController extends BaseController{
     }
 
     @GetMapping("/all")
-    public ModelAndView allClients(){
-        Set<ClientDto> allClients = this.clientService.getAllClients();
+    public ModelAndView allClients(@PageableDefault(size = 12) Pageable pageable){
+        Page<ClientDto> allClients = this.clientService.getAllClients(pageable);
         return this.addViewAndObject("clients",allClients,"clients/all");
     }
 
@@ -42,7 +45,7 @@ public class ClientController extends BaseController{
     @PostMapping("/add")
     public ModelAndView addClientAction(AddClientModel model){
         this.clientService.addClient(model);
-        return this.redirect("/clients/all");
+        return this.redirect("/clients/all?page=0");
     }
 
     @GetMapping("/edit/{id}")
@@ -66,7 +69,7 @@ public class ClientController extends BaseController{
     @PostMapping("/delete/{id}")
     public ModelAndView deleteClientAction(@PathVariable String id){
         this.clientService.deleteClient(id);
-        return this.redirect("/clients/all");
+        return this.redirect("/clients/all?page=0");
     }
 
 }

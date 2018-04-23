@@ -29,7 +29,7 @@
 </nav>
 <ul class="nav row btn-dark">
     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
-        <a type="button" class="btn btn-sm btn-dark" th:href="@{/clients/all}">Клиенти</a>
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/clients/all?page=0}">Клиенти</a>
     </li>
     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
         <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/montages/all}">Монтажи</a>

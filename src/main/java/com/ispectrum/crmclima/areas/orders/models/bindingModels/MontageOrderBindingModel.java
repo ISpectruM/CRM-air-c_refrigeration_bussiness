@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
+import com.ispectrum.crmclima.constants.ErrorMessages;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
@@ -12,25 +13,25 @@ public class MontageOrderBindingModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
-    @NotEmpty(message = "Изберете вид услуга.")
+    @NotEmpty(message = ErrorMessages.CHOOSE_SERVICE)
     private String montageType;
 
     private String product;
 
-    @NotEmpty(message = "Изберете вид продукт.")
+    @NotEmpty(message = ErrorMessages.CHOOSE_PRODUCT)
     private String productType;
 
-    @Min(value = 0, message = "Брой не може да бъде отрицателна стойност.")
+    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Integer count;
 
     private String city;
 
     private String address;
 
-    @Min(value = 0, message = "Цената не може да бъде отрицателна стойност.")
+    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double price;
 
-    @Min(value = 0, message = "Капарото не може да бъде отрицателна стойност.")
+    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
 
     private Double discount;

@@ -10,7 +10,6 @@ import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBind
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,21 +21,22 @@ import java.util.*;
 public class MontageOrderServiceImpl implements MontageOrderService {
     private final ClientService clientService;
     private final AirConditionService airConditionService;
-    private final ModelMapper mapper;
     private final MontageOrderRepository montageOrderRepository;
 
 
     @Autowired
-    public MontageOrderServiceImpl(ClientService clientService, AirConditionService airConditionService, ModelMapper mapper, MontageOrderRepository montageOrderRepository) {
+    public MontageOrderServiceImpl(
+            ClientService clientService,
+            AirConditionService airConditionService,
+            MontageOrderRepository montageOrderRepository) {
         this.clientService = clientService;
         this.airConditionService = airConditionService;
-        this.mapper = mapper;
         this.montageOrderRepository = montageOrderRepository;
     }
 
     @Override
     public void addMontage(String clientId,MontageOrderBindingModel model) {
-        MontageOrder newOrder = this.mapper.map(model, MontageOrder.class);
+        MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
         Date orderDate = model.getOrderDate();
         LocalDate localDate = LocalDate.now();
@@ -54,7 +54,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
         addProductToOrder(newOrder, model);
 
-        this.montageOrderRepository.saveAndFlush(newOrder);
+        this.montageOrderRepository.save(newOrder);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     @Override
     public void editMontage(String id, MontageOrderBindingModel model) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
-        MontageOrder editedOrder = this.mapper.map(model, MontageOrder.class);
+        MontageOrder editedOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
         editedOrder.setId(id);
 
         Client client = montage.getClient();
@@ -95,7 +95,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         editedOrder.setLocation(location);
 
         addProductToOrder(editedOrder, model);
-        this.montageOrderRepository.saveAndFlush(editedOrder);
+        this.montageOrderRepository.save(editedOrder);
     }
 
     @Override

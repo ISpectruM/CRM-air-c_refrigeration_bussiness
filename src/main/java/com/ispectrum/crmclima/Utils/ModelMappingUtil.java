@@ -1,18 +1,17 @@
 package com.ispectrum.crmclima.Utils;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-
-import java.lang.reflect.Type;
+import org.springframework.data.domain.Page;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hibernate.query.criteria.internal.ValueHandlerFactory.convert;
-
 public final class ModelMappingUtil {
+
+    private final ModelMapper modelMapper;
     private ModelMappingUtil() {
+        this.modelMapper = new ModelMapper();
     }
 
     public static <S, D> D convertClass(S source, Class<D> destinationClass) {
@@ -36,6 +35,16 @@ public final class ModelMappingUtil {
             D d = convertClass(s, destinationClass);
             resultList.add(d);
         }
+        return resultList;
+    }
+
+    public static <S, D> Page<D> convertPage(Page<S> source, Class<D> destinationClass) {
+        Page<D> resultList = source.map(s -> {
+            ModelMapper mapper = new ModelMapper();
+            D d = mapper.map(s, destinationClass);
+            return d;
+        });
+
         return resultList;
     }
 
