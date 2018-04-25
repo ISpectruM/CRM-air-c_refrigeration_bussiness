@@ -28,7 +28,8 @@ public class ClientController extends BaseController{
     @GetMapping("/all")
     public ModelAndView allClients(@PageableDefault(size = 12) Pageable pageable){
         Page<ClientDto> allClients = this.clientService.getAllClients(pageable);
-        return this.addViewAndObject("clients",allClients,"clients/all");
+        this.addViewAndObject("objects",allClients,"clients/all");
+        return this.addObject("area","clients");
     }
 
     @GetMapping("/details/{id}")
@@ -71,5 +72,4 @@ public class ClientController extends BaseController{
         this.clientService.deleteClient(id);
         return this.redirect("/clients/all?page=0");
     }
-
 }

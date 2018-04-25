@@ -7,15 +7,16 @@ import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBind
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.MontageOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/orders/montages")
@@ -30,9 +31,10 @@ public class MontageOrderController extends BaseController{
     }
 
     @GetMapping("/all")
-    public ModelAndView getAllMontages(){
-        List<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages();
-        return this.addViewAndObject("montages",allMontages,"orders/montages/all");
+    public ModelAndView getAllMontages(@PageableDefault Pageable pageable){
+        Page<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages(pageable);
+        this.addViewAndObject("objects",allMontages,"orders/montages/all");
+        return this.addObject("area", "montages");
     }
 
     @GetMapping("/add/{clientId}")
@@ -57,7 +59,7 @@ public class MontageOrderController extends BaseController{
                 return this.addViewAndObjectsMap("orders/montages/add_montage",model);
             }
         this.montageOrderService.addMontage(id, bindingModel);
-        return this.redirect("/orders/montages/all");
+        return this.redirect("/orders/montages/all?page=0");
     }
 
     @GetMapping("/details/{id}")
@@ -88,7 +90,7 @@ public class MontageOrderController extends BaseController{
     @PostMapping("/delete/{id}")
     public ModelAndView deleteOrderAction(@PathVariable String id){
         this.montageOrderService.deleteOrder(id);
-        return this.redirect("/orders/montages/all");
+        return this.redirect("/orders/montages/all?page=0");
     }
 
 

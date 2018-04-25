@@ -58,3 +58,14 @@ footer {
     /*border is optional*/
     cursor: pointer;
 }
+
+.red-bold-font {
+    color:  red;
+    font-weight: bold;
+}
+
+
+.green-bold-font {
+    color:  #34ce57;
+    font-weight: bold;
+}

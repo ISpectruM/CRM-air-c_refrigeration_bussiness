@@ -18,7 +18,9 @@
     <div class="form-group row m-2">
         <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
         <div class="col-md-3">
-            <input type="date" class="form-control" id="orderDate" name="orderDate">
+            <input type="date" class="form-control" id="orderDate" name="orderDate"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
+                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
         </div>
     </div>
 
@@ -134,6 +136,11 @@
             <label class="form-check-label" for="isWaiting">В изчакване</label>
         </div>
         <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
+                   th:checked="*{isForFinishing}">
+            <label class="form-check-label" for="isForFinishing">За довършване</label>
+        </div>
+        <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed">
             <label class="form-check-label" for="isPayed">Платена</label>
         </div>
@@ -159,9 +166,7 @@
         </div>
         <div class="col-sm-6">
             <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-            <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate"
-                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
-                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
+            <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate">
         </div>
     </div>
 
@@ -172,7 +177,7 @@
     <div class="form-group">
         <div class="col-lg-12 col-lg-offset-2">
             <button type="reset" class="btn btn-default">Изчисти</button>
-            <a type="button" class="btn btn-default" th:href="@{/orders/montages/all}">Откажи</a>
+            <a type="button" class="btn btn-default" th:href="@{/orders/montages/all?page=0}">Откажи</a>
             <button type="submit" class="btn btn-primary">Запиши</button>
         </div>
     </div>

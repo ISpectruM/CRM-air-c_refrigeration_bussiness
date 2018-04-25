@@ -9,7 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
+import java.util.List;
 
 @Component
 public class OrderInfoInterceptor extends HandlerInterceptorAdapter {
@@ -21,7 +21,7 @@ public class OrderInfoInterceptor extends HandlerInterceptorAdapter {
     }
 
     private Integer getOrdersCount(){
-        Set<MontageOrderDto> unfinishedMontages = this.montageOrderService.getAllUnfinishedOrders();
+        List<MontageOrderDto> unfinishedMontages = this.montageOrderService.getAllUnfinishedMontagesDtos();
         return unfinishedMontages.size();
     }
 

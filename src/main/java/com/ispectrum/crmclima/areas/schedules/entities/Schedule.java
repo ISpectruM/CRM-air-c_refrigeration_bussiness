@@ -6,6 +6,7 @@ import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,8 @@ public class Schedule {
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
+
+    private LocalDate scheduleDate;
 
     @OneToMany(targetEntity = MontageOrder.class)
     private Set<MontageOrder> montageOrders;
@@ -64,5 +67,13 @@ public class Schedule {
 
     public void setProphylacticOrders(Set<ProphylacticOrder> prophylacticOrders) {
         this.prophylacticOrders = prophylacticOrders;
+    }
+
+    public LocalDate getScheduleDate() {
+        return this.scheduleDate;
+    }
+
+    public void setScheduleDate(LocalDate scheduleDate) {
+        this.scheduleDate = scheduleDate;
     }
 }

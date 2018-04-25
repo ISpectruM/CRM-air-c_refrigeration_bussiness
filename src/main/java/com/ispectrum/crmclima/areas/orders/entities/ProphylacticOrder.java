@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Entity
 public class ProphylacticOrder extends BaseOrder{
 
+    private final String service = "prophylactic";
+
     @ManyToOne(targetEntity = Client.class)
     private Client client;
 
@@ -20,8 +22,6 @@ public class ProphylacticOrder extends BaseOrder{
     private Location location;
 
     private String product;
-
-    private String comments;
 
 
     public ProphylacticOrder() { }
@@ -51,19 +51,15 @@ public class ProphylacticOrder extends BaseOrder{
         this.product = product;
     }
 
-    public String getComments() {
-        return this.comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public ProphylacticType getProphylacticType() {
         return this.prophylacticType;
     }
 
     public void setProphylacticType(ProphylacticType prophylacticType) {
         this.prophylacticType = prophylacticType;
+    }
+
+    public String getService() {
+        return this.service;
     }
 }

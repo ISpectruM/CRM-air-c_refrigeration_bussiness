@@ -5,16 +5,20 @@ import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
+import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -41,12 +45,12 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         Date orderDate = model.getOrderDate();
         LocalDate localDate = LocalDate.now();
         if (orderDate != null){
-            localDate = dateToLocaldate(orderDate);
+            localDate = dateToLocaleDate(orderDate);
         }
         newOrder.setOrderDate(localDate);
 
         if (model.getScheduleDate() != null){
-            newOrder.setScheduleDate(dateToLocaldate(model.getScheduleDate()));
+            newOrder.setScheduleDate(dateToLocaleDate(model.getScheduleDate()));
         }
 
         newOrder.setClient(getClient(clientId));
@@ -58,9 +62,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public List<MontageOrderDto> getAllMontages() {
-        List<MontageOrder> montages = this.montageOrderRepository.findAllByOrderByOrderDateAsc();
-        return ModelMappingUtil.convertList(montages,MontageOrderDto.class);
+    public Page<MontageOrderDto> getAllMontages(Pageable pageable) {
+        Page<MontageOrder> montages = this.montageOrderRepository.findAll(pageable);
+        return ModelMappingUtil.convertPage(montages,MontageOrderDto.class);
     }
 
     @Override
@@ -85,10 +89,10 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         editedOrder.setClient(client);
 
 
-        LocalDate orderDate = dateToLocaldate(model.getOrderDate());
+        LocalDate orderDate = dateToLocaleDate(model.getOrderDate());
         editedOrder.setOrderDate(orderDate);
 
-        LocalDate scheduleDate = dateToLocaldate(model.getScheduleDate());
+        LocalDate scheduleDate = dateToLocaleDate(model.getScheduleDate());
         editedOrder.setScheduleDate(scheduleDate);
 
         Location location = getLocation(model);
@@ -99,17 +103,48 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public Set<MontageOrderDto> getAllUnfinishedOrders() {
-        Set<MontageOrder> allUnFinished = this.montageOrderRepository.findAllByIsFinished(false);
-        Set<MontageOrderDto> montageOrderDtos = ModelMappingUtil.convertSet(allUnFinished, MontageOrderDto.class);
-        return montageOrderDtos;
+    public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
+        List<MontageOrder> allUnFinished = this.montageOrderRepository.findAllByIsFinished(false);
+        return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
     }
+
+    @Override
+    public List<MontageOrder> getAllUnfinishedMontages() {
+        return this.montageOrderRepository.findAllByIsFinished(false);
+    }
+
+    @Override
+    public void saveMontageChanges(OrderSaveModel model) {
+        String id = model.getId();
+        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+//        Set new status
+        montage.setIsDeferred(model.getStatus().getIsDeferred());
+        montage.setIsFinished(model.getStatus().getIsFinished());
+        montage.setIsForFinishing(model.getStatus().getIsForFinishing());
+        montage.setIsMarked(model.getStatus().getIsMarked());
+        montage.setIsPayed(model.getStatus().getIsPayed());
+        montage.setIsWaiting(model.getStatus().getIsWaiting());
+        montage.setIsWithInvoice(model.getStatus().getIsWithInvoice());
+
+        if (montage.getIsFinished()){
+            montage.setEndDate(LocalDate.now());
+        }
+
+        //        set new schedule date
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern(
+                "yyyy-MM-dd", Locale.getDefault());
+        LocalDate date = LocalDate.parse(model.getScheduleDate(), formatter);
+        montage.setScheduleDate(date);
+
+        this.montageOrderRepository.save(montage);
+    }
+
 
     private Client getClient(String clientId) {
         return this.clientService.getPureClientById(clientId);
     }
 
-    private LocalDate dateToLocaldate(Date date) {
+    private LocalDate dateToLocaleDate(Date date) {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();

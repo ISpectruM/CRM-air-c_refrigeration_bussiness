@@ -13,6 +13,8 @@ import java.util.*;
 @Entity
 public class MontageOrder extends BaseOrder{
 
+    private final String service = "montage";
+
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
@@ -29,7 +31,6 @@ public class MontageOrder extends BaseOrder{
     private MontageType montageType;
 
     @ElementCollection(targetClass = java.lang.Integer.class)
-//    @ManyToMany(targetEntity = AirConditioner.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "montages_conditioners_count",
             joinColumns = @JoinColumn(name = "morder_id")
@@ -119,5 +120,9 @@ public class MontageOrder extends BaseOrder{
 
     public void setProductType(ProductType productType) {
         this.productType = productType;
+    }
+
+    public String getService() {
+        return this.service;
     }
 }

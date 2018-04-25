@@ -1,11 +1,10 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
-import com.ispectrum.crmclima.constants.ErrorMessages;
+import com.ispectrum.crmclima.constants.Messages;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class MontageOrderBindingModel {
@@ -13,25 +12,25 @@ public class MontageOrderBindingModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
-    @NotEmpty(message = ErrorMessages.CHOOSE_SERVICE)
+    @NotEmpty(message = Messages.CHOOSE_SERVICE)
     private String montageType;
 
     private String product;
 
-    @NotEmpty(message = ErrorMessages.CHOOSE_PRODUCT)
+    @NotEmpty(message = Messages.CHOOSE_PRODUCT)
     private String productType;
 
-    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Integer count;
 
     private String city;
 
     private String address;
 
-    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double price;
 
-    @Min(value = 0, message = ErrorMessages.NEGATIVE_NUMBERS_NOT_ALLOWED)
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
 
     private Double discount;

@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Entity
 public class RepairOrder extends BaseOrder{
 
+    private final String service = "repair";
+
     @ManyToOne(targetEntity = Client.class)
     private Client client;
 
@@ -65,5 +67,9 @@ public class RepairOrder extends BaseOrder{
 
     public void setRepairType(RepairType repairType) {
         this.repairType = repairType;
+    }
+
+    public String getService() {
+        return this.service;
     }
 }

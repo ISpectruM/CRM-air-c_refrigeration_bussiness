@@ -1,16 +1,17 @@
-<div class="ml-5 mr-5" th:with="currentPage=${#conversions.convert(#request.getParameter('page'),'Integer')}">
-    <div class="row card-header mb-1">
-        <h3 class="col-sm-12">Всички клиенти</h3>
+<div class="ml-5 mr-5">
+    <div class="row card-header mb-3">
+        <h5>Търсене</h5>
+    </div>
+    <div class="row card-header mb-3">
+        <h5>Търси и избери клиент или добави нов, за да създадеш нова заявка:</h5>
         <div class="col-sm-4">
             <a type="button" class="btn btn-success" th:href="@{/clients/add}">Добави клиент</a>
         </div>
         <div class="col-sm-7 inline ml-auto" th:include="~{fragments/search}"></div>
     </div>
-    <!--pagination-->
-    <div class="row" th:include="~{fragments/page_nav}"></div>
-    <!--content-->
-    <table class="table table-striped">
-        <thead class="thead-dark">
+    <h5>Резултати</h5>
+    <table class="table table-hover mt-1">
+        <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Име</th>
@@ -22,17 +23,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="client, iter:${objects}" th:object="${client}">
-            <th scope="row" th:text="${currentPage*12 + iter.index+1}"></th>
+        <tr class="table" th:each="client, iter:${results}" th:object="${client}">
+            <th scope="row" th:text="${iter.index+1}"></th>
             <td th:text="*{name}"></td>
             <td th:text="*{address}"></td>
             <td th:text="*{email}"></td>
             <td th:text="*{phone}"></td>
             <td>
-                <a type="button" class="btn btn-sm btn-success" th:href="@{/orders/montages/add/{id}(id=${client.id})}">Монтаж</a>
-                <a type="button" class="btn btn-sm btn-success" th:href="@{/orders/repairs/add/{id}(id=${client.id})}">Ремонт</a>
+                <a type="button" class="btn btn-sm btn-success" th:href="@{/orders/montages/add/{id}(id=${client.id})}">монтаж</a>
+                <a type="button" class="btn btn-sm btn-success" th:href="@{/orders/repairs/add/{id}(id=${client.id})}">поправка</a>
                 <a type="button" class="btn btn-sm btn-success"
-                   th:href="@{/orders/prophylactics/add/{id}(id=${client.id})}">Профилактика</a>
+                   th:href="@{/orders/prophylactics/add/{id}(id=${client.id})}">профилактика</a>
             </td>
             <td>
                 <a type="button" class="btn btn-sm btn-info"
@@ -41,6 +42,3 @@
         </tr>
         </tbody>
     </table>
-    <!--pagination-->
-    <div class="row" th:include="~{fragments/page_nav}"></div>
-</div>

@@ -11,9 +11,9 @@ import java.util.Set;
 
 @Repository
 public interface MontageOrderRepository extends PagingAndSortingRepository<MontageOrder,String> {
-    List<MontageOrder> findAllByOrderByOrderDateAsc();
+//    List<MontageOrder> findAllByOrderDateAsc();
 
     MontageOrder findFirstById(String id);
 
-    Set<MontageOrder> findAllByIsFinished(boolean isFinished);
+    List<MontageOrder> findAllByIsFinished(boolean isFinished);
 }

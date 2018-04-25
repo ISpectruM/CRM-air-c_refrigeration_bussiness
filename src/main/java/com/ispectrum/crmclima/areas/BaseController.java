@@ -8,10 +8,6 @@ import java.util.Map;
 public abstract class BaseController {
     private ModelAndView modelAndView;
 
-    protected ModelAndView getMav() {
-        return this.modelAndView;
-    }
-
     protected ModelAndView setView(String htmlPage){
         this.modelAndView = new ModelAndView("index");
         this.modelAndView.addObject("view",htmlPage);

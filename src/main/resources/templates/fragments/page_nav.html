@@ -1,35 +1,35 @@
 <h6 class="col-sm-6 mb-0 p-2 text-right" style="color: #6c757d"
-    th:text="|- ${currentPage+1} от ${clients.getTotalPages()} -|"></h6>
+    th:text="|- ${currentPage+1} от ${objects.getTotalPages()} -|" xmlns:th="http://www.w3.org/1999/xhtml"></h6>
 <nav class="col-sm-6 ml-auto">
     <ul class="pagination pagination-sm justify-content-end mb-1">
         <!--Prev buttons-->
         <li class="page-item" th:classappend="${currentPage==0}?'disabled'">
-            <a class="page-link" th:href="@{'/clients/all?page=0'}">First</a>
+            <a class="page-link" th:href="@{/{route}/all?page=0(route=${area})}">First</a>
         </li>
         <li class="page-item" th:classappend="${currentPage<1}?'disabled'">
-            <a class="page-link" th:href="@{'/clients/all?page=' + ${currentPage-1}}" tabindex="-1">Previous</a>
+            <a class="page-link" th:href="@{'/{route}/all?page=' + ${currentPage-1}(route=${area})}" tabindex="-1">Previous</a>
         </li>
         <!--Pages-->
         <li class="page-item">
             <a class="page-link plc" th:text="${currentPage<2 ? 1 : currentPage}"
-               th:href="@{'/clients/all?page=' + ${currentPage<2 ? 0 : currentPage-1}}"></a>
+               th:href="@{'/{route}/all?page=' + ${currentPage<2 ? 0 : currentPage-1}(route=${area})}"></a>
         </li>
         <li class="page-item">
             <a class="page-link plc" th:text="${currentPage<2 ? 2 : currentPage+1}"
-               th:href="@{'/clients/all?page=' + ${currentPage<2 ? 1 : currentPage}}"></a>
+               th:href="@{'/{route}/all?page=' + ${currentPage<2 ? 1 : currentPage}(route=${area})}"></a>
         </li>
-        <li class="page-item" th:classappend="${currentPage+2>clients.getTotalPages()}?'disabled'">
+        <li class="page-item" th:classappend="${currentPage+2>objects.getTotalPages()}?'disabled'">
             <a class="page-link plc"
-               th:text="${currentPage+2>clients.getTotalPages()? '...' : currentPage<2 ? 3 : currentPage+2}"
-               th:href="@{'/clients/all?page=' + ${currentPage<2 ? 2 : currentPage+1}}"></a>
+               th:text="${currentPage+2>objects.getTotalPages()? '...' : currentPage<2 ? 3 : currentPage+2}"
+               th:href="@{'/{route}/all?page=' + ${currentPage<2 ? 2 : currentPage+1}(route=${area})}"></a>
         </li>
         <!--Next/Last buttons-->
-        <li class="page-item" th:classappend="${currentPage+2>clients.getTotalPages()}?'disabled'">
-            <a class="page-link" th:href="@{'/clients/all?page=' + ${currentPage+1}}"
+        <li class="page-item" th:classappend="${currentPage+2>objects.getTotalPages()}?'disabled'">
+            <a class="page-link" th:href="@{'/{route}/all?page=' + ${currentPage+1}(route=${area})}"
                tabindex="+1">Next</a>
         </li>
-        <li class="page-item" th:classappend="${currentPage+2>clients.getTotalPages()}?'disabled'">
-            <a class="page-link" th:href="@{'/clients/all?page=' + ${clients.getTotalPages()-1}}"
+        <li class="page-item" th:classappend="${currentPage+2>objects.getTotalPages()}?'disabled'">
+            <a class="page-link" th:href="@{'/{route}/all?page=' + ${objects.getTotalPages()-1}(route=${area})}"
             >Last</a>
         </li>
     </ul>

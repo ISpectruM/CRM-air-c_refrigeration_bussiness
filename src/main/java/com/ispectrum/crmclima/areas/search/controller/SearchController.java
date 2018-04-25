@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 @Controller
@@ -25,13 +26,13 @@ public class SearchController extends BaseController{
 
     @GetMapping("/search")
     public ModelAndView showSearchResults(){
-        return this.getMav();
+        return this.addViewAndObject("results",new ArrayList<>(),"fragments/search");
     }
 
     @PostMapping("/search")
     public ModelAndView search(SearchBindingModel searchBindingModel){
         Set<ClientDto> results = this.searchService.getSearchResults(searchBindingModel);
-        this.addViewAndObject("results",results,"clients/results");
+        this.addViewAndObject("results",results,"search/results");
         return this.redirect("/search");
     }
 }

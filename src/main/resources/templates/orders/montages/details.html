@@ -133,7 +133,7 @@
             th:value="${_csrf.token}"/>
     <div class="form-group">
         <div class="col-lg-12 col-lg-offset-2">
-            <a type="button" th:href="@{/orders/montages/all}" class="btn btn-success">Обратно</a>
+            <a type="button" th:href="@{/orders/montages/all?page=0}" class="btn btn-success">Обратно</a>
             <a type="button" th:href="@{/orders/montages/edit/{id}(id=*{id})}" class="btn btn-warning">Редактирай</a>
             <a type="button" th:href="@{/orders/montages/delete/{id}(id=*{id})}" class="btn btn-danger">Изтрий</a>
         </div>
