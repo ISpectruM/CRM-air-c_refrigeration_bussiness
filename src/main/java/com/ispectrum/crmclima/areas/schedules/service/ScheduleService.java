@@ -1,9 +1,17 @@
 package com.ispectrum.crmclima.areas.schedules.service;
 
+import com.ispectrum.crmclima.areas.schedules.models.bindingModels.AddScheduleBindingModel;
+import com.ispectrum.crmclima.areas.schedules.models.dtos.CreateScheduleDto;
 import com.ispectrum.crmclima.areas.schedules.models.dtos.ScheduleDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ScheduleService {
-    List<ScheduleDto> getAllUnfinishedOrders();
+    List<CreateScheduleDto> getAllUnfinishedOrders();
+
+    String addSchedule(AddScheduleBindingModel model);
+
+    ScheduleDto getScheduleById(String id);
+
 }

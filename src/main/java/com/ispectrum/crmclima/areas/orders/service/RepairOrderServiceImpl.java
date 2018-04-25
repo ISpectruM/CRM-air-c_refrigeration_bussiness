@@ -6,7 +6,9 @@ import com.ispectrum.crmclima.areas.orders.repository.RepairOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RepairOrderServiceImpl implements RepairOrderService {
@@ -25,5 +27,10 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     @Override
     public List<RepairOrder> getUnfinishedRepairs() {
         return this.repairOrderRepository.findAll();
+    }
+
+    @Override
+    public Set<RepairOrder> getRepairsByDate(LocalDate scheduleDate) {
+        return this.repairOrderRepository.findAllByScheduleDate(scheduleDate);
     }
 }

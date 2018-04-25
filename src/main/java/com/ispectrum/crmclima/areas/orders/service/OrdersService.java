@@ -5,7 +5,9 @@ import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public interface OrdersService {
     List<MontageOrder> getAllUnfinishedMontages();
@@ -15,4 +17,10 @@ public interface OrdersService {
     List<ProphylacticOrder> getAllUnfinishedProphylactics();
 
     void saveOrder(OrderSaveModel model);
+
+    Set<MontageOrder> getMontagesByScheduleDate(LocalDate scheduleDate);
+
+    Set<RepairOrder> getRepairsByScheduleDate(LocalDate scheduleDate);
+
+    Set<ProphylacticOrder> getProphylacticsByScheduleDate(LocalDate scheduleDate);
 }

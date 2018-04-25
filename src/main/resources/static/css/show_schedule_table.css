@@ -1,0 +1,37 @@
+.schedule-sch {
+    table-layout: fixed;
+    width: 100%;
+    font-size: smaller;
+}
+.schedule-sch td {
+    padding: 5px;
+}
+
+/* Column widths are based on these cells */
+.col-index-sch {
+    width: 2%;
+}
+.col-order-sch {
+    width: 6%;
+}
+.col-count-sch {
+    width: 2%;
+}
+.col-product-sch {
+    width: 15%;
+}
+.col-client-sch {
+      width: 8%;
+}
+.col-address-sch {
+    width: 17%;
+}
+.col-details-sch {
+    width: 20%;
+}
+.col-comment-sch {
+    width: 20%;
+}
+.col-phone-sch {
+    width: 10%;
+}

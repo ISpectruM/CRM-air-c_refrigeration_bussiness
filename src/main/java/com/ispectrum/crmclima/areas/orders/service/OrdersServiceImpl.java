@@ -7,7 +7,9 @@ import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -54,6 +56,21 @@ public class OrdersServiceImpl implements OrdersService {
                 this.editProphylactic(model);
                 break;
         }
+    }
+
+    @Override
+    public Set<MontageOrder> getMontagesByScheduleDate(LocalDate scheduleDate) {
+        return this.montageOrderService.getMontagesByDate(scheduleDate);
+    }
+
+    @Override
+    public Set<RepairOrder> getRepairsByScheduleDate(LocalDate scheduleDate) {
+        return this.repairOrderService.getRepairsByDate(scheduleDate);
+    }
+
+    @Override
+    public Set<ProphylacticOrder> getProphylacticsByScheduleDate(LocalDate scheduleDate) {
+        return null;
     }
 
     private void editProphylactic(OrderSaveModel model) {

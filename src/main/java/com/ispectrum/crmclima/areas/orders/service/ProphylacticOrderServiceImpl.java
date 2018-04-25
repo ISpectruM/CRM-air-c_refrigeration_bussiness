@@ -6,7 +6,9 @@ import com.ispectrum.crmclima.areas.orders.repository.ProphylacticOrderRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
@@ -27,5 +29,10 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     @Override
     public List<ProphylacticOrder> getUnfinishedProphylactics() {
         return this.prophylacticRepository.findAllByIsFinished(false);
+    }
+
+    @Override
+    public Set<ProphylacticOrder> getProphylacticsByDate(LocalDate scheduleDate) {
+        return this.prophylacticRepository.findAllByScheduleDate(scheduleDate);
     }
 }

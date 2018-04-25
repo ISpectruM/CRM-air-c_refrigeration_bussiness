@@ -7,6 +7,7 @@ import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBind
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -28,5 +29,6 @@ public interface MontageOrderService {
 
     void saveMontageChanges(OrderSaveModel model);
 
+    Set<MontageOrder> getMontagesByDate(LocalDate scheduleDate);
 
 }

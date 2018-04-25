@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
+import com.ispectrum.crmclima.Utils.DateToLocalDate;
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
@@ -17,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -45,12 +45,12 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         Date orderDate = model.getOrderDate();
         LocalDate localDate = LocalDate.now();
         if (orderDate != null){
-            localDate = dateToLocaleDate(orderDate);
+            localDate = DateToLocalDate.convert(orderDate);
         }
         newOrder.setOrderDate(localDate);
 
         if (model.getScheduleDate() != null){
-            newOrder.setScheduleDate(dateToLocaleDate(model.getScheduleDate()));
+            newOrder.setScheduleDate(DateToLocalDate.convert(model.getScheduleDate()));
         }
 
         newOrder.setClient(getClient(clientId));
@@ -89,10 +89,10 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         editedOrder.setClient(client);
 
 
-        LocalDate orderDate = dateToLocaleDate(model.getOrderDate());
+        LocalDate orderDate = DateToLocalDate.convert(model.getOrderDate());
         editedOrder.setOrderDate(orderDate);
 
-        LocalDate scheduleDate = dateToLocaleDate(model.getScheduleDate());
+        LocalDate scheduleDate = DateToLocalDate.convert(model.getScheduleDate());
         editedOrder.setScheduleDate(scheduleDate);
 
         Location location = getLocation(model);
@@ -139,15 +139,14 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         this.montageOrderRepository.save(montage);
     }
 
+    @Override
+    public Set<MontageOrder> getMontagesByDate(LocalDate scheduleDate) {
+        return this.montageOrderRepository.findAllByScheduleDate(scheduleDate);
+    }
+
 
     private Client getClient(String clientId) {
         return this.clientService.getPureClientById(clientId);
-    }
-
-    private LocalDate dateToLocaleDate(Date date) {
-        return date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
     }
 
     private void addProductToOrder(MontageOrder newOrder, MontageOrderBindingModel model) {

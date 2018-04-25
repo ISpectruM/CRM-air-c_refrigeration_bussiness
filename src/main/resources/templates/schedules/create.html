@@ -1,10 +1,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <div class="ml-5 mr-5">
-    <form th:action="/schedules/add" th:method="POST">
+    <form th:action="@{/schedule/add}" th:method="POST">
         <div class="row card-header mb-1">
             <h3 class="col-sm-12">Създаване на график за дата:</h3>
-            <input type="date" th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"/>
+            <input type="date" name="scheduleDate" th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"/>
             <button type="submit" class="btn btn-success">Създай</button>
         </div>
     </form>

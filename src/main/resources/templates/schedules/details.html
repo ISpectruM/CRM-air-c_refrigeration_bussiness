@@ -1,0 +1,61 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="ml-5 mr-5">
+        <div class="row card-header mb-1">
+            <h3 class="col-sm-12" th:text="|График за дата: ${schedule.scheduleDate}|"></h3>
+        </div>
+    <h5 class="row card-header mb-1">Монтажи</h5>
+    <!--content-->
+    <table class="table table-striped schedule-sch">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="col-index-sch">#</th>
+            <th scope="col" class="col-order-sch">Заявка</th>
+            <th scope="col" class="col-product-sch">Продукт</th>
+            <th scope="col" class="col-count-sch">Бр.</th>
+            <th scope="col" class="col-client-sch">Клиент</th>
+            <th scope="col" class="col-address-sch">Адрес</th>
+            <th scope="col" class="col-address-sch">Телефон</th>
+            <th scope="col" class="col-details-sch">Детайли</th>
+            <th scope="col" class="col-comment-sch">Забележка</th>
+        </tr>
+        </thead>
+
+        <tbody class="table-bordered">
+        <tr th:colspan="9">Поморие, Сарафово, Бургас</tr>
+        <tr class="table" th:each="montage, iter:${schedule.montageOrders}" th:object="${montage}">
+            <!--index-->
+            <td scope="row" th:text="${iter.index+1}"></td>
+            <!--service Type-->
+            <td id="serviceType">
+                <p th:unless="*{montageType == null}" th:text="*{montageType.displayName}"></p>
+                <p th:unless="*{repairType == null}" th:text="*{repairType.displayName}"></p>
+                <p th:unless="*{prophylacticType==null}" th:text="*{prophylacticType.displayName}"></p>
+            </td>
+            <!--product-->
+            <td>
+                <th:block th:each="product:*{airConditioners}" th:object="${product.key}">
+                    <p id="brand-model" th:text="|*{brand} *{model}|"></p>
+                </th:block>
+                <p id="other" th:placeholder="*{other}">
+            </td>
+            <!--count-->
+            <td th:text="*{count}"></td>
+            <!--client-->
+            <td th:text="*{client.name}"></td>
+            <!--address-->
+            <td th:text="|*{location.city}, *{location.address}|"></td>
+            <!--phone-->
+            <td th:text="*{client.phone}"></td>
+            <!--description-->
+            <td th:text="*{description}"></td>
+            <!--comments-->
+            <td th:text="*{comment}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"/>
+</div>
