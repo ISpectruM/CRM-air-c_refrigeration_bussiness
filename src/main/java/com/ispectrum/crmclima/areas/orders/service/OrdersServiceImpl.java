@@ -60,7 +60,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Set<MontageOrder> getMontagesByScheduleDate(LocalDate scheduleDate) {
-        return this.montageOrderService.getMontagesByDate(scheduleDate);
+        return this.montageOrderService.getMontagesByDateNotFinished(scheduleDate);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Set<ProphylacticOrder> getProphylacticsByScheduleDate(LocalDate scheduleDate) {
-        return null;
+        return this.prophylacticOrderService.getProphylacticsByDate(scheduleDate);
     }
 
     private void editProphylactic(OrderSaveModel model) {

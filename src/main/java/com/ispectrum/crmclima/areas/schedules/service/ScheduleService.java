@@ -14,4 +14,6 @@ public interface ScheduleService {
 
     ScheduleDto getScheduleById(String id);
 
+    List<ScheduleDto> getAllSchedules();
+
 }

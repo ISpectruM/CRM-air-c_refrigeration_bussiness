@@ -20,16 +20,24 @@ public class Schedule {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
+    @Column(unique = true)
     private LocalDate scheduleDate;
 
-    @OneToMany(targetEntity = MontageOrder.class)
+    @ManyToMany(targetEntity = MontageOrder.class)
     private Set<MontageOrder> montageOrders;
 
-    @OneToMany(targetEntity = RepairOrder.class)
+    @ManyToMany(targetEntity = RepairOrder.class)
     private Set<RepairOrder> repairOrders;
 
-    @OneToMany(targetEntity = ProphylacticOrder.class)
+    @ManyToMany(targetEntity = ProphylacticOrder.class)
     private Set<ProphylacticOrder> prophylacticOrders;
+
+    @Transient
+    private Integer montagesAmount;
+    @Transient
+    private Integer repairsAmount;
+    @Transient
+    private Integer prophylacticsAmount;
 
     public Schedule() {
         this.montageOrders = new HashSet<>();
@@ -75,5 +83,29 @@ public class Schedule {
 
     public void setScheduleDate(LocalDate scheduleDate) {
         this.scheduleDate = scheduleDate;
+    }
+
+    public Integer getMontagesAmount() {
+        return this.montageOrders.size();
+    }
+
+    public void setMontagesAmount(Integer montagesAmount) {
+        this.montagesAmount = montagesAmount;
+    }
+
+    public Integer getRepairsAmount() {
+        return this.repairOrders.size();
+    }
+
+    public void setRepairsAmount(Integer repairsAmount) {
+        this.repairsAmount = repairsAmount;
+    }
+
+    public Integer getProphylacticsAmount() {
+        return this.prophylacticOrders.size();
+    }
+
+    public void setProphylacticsAmount(Integer prophylacticsAmount) {
+        this.prophylacticsAmount = prophylacticsAmount;
     }
 }

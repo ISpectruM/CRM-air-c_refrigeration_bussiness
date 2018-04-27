@@ -49,11 +49,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         newSchedule.setMontageOrders(
                 this.baseOrderService.getMontagesByScheduleDate(date));
         newSchedule.setRepairOrders(
-                this.baseOrderService.getRepairsByScheduleDate(date)
-        );
+                this.baseOrderService.getRepairsByScheduleDate(date));
         newSchedule.setProphylacticOrders(
-                this.baseOrderService.getProphylacticsByScheduleDate(date)
-        );
+                this.baseOrderService.getProphylacticsByScheduleDate(date));
 
         Schedule schedule = this.scheduleRepository.saveAndFlush(newSchedule);
         return schedule.getId();
@@ -63,6 +61,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleDto getScheduleById(String id) {
         Schedule schedule = this.scheduleRepository.findFirstById(id);
         return ModelMappingUtil.convertClass(schedule,ScheduleDto.class);
+    }
+
+    @Override
+    public List<ScheduleDto> getAllSchedules() {
+        List<Schedule> all = this.scheduleRepository.findAll();
+        return ModelMappingUtil.convertList(all,ScheduleDto.class);
     }
 
     private List<CreateScheduleDto> getAllProphylactics() {

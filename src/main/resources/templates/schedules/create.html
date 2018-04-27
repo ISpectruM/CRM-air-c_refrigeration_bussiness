@@ -1,13 +1,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <div class="ml-5 mr-5">
-    <form th:action="@{/schedule/add}" th:method="POST">
-        <div class="row card-header mb-1">
-            <h3 class="col-sm-12">Създаване на график за дата:</h3>
-            <input type="date" name="scheduleDate" th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"/>
-            <button type="submit" class="btn btn-success">Създай</button>
-        </div>
-    </form>
+    <div class="row card-header mb-1">
+        <h3 class="col-sm-12">Създаване на график за дата:</h3>
+        <form class="form-inline" th:action="@{/schedule/add}" th:method="POST">
+            <input class="form-control-sm" type="date" name="scheduleDate"
+                   th:value="${currentDate}"/>
+            <button type="submit" class="btn btn-success btn-sm p-2 ml-2">Създай</button>
+        </form>
+    </div>
     <!--content-->
     <table class="table table-striped schedule">
         <thead class="thead-dark">
@@ -56,49 +57,56 @@
             <!--comments-->
             <td th:text="*{comment}"></td>
             <!--status-->
-            <td>
+            <td class="changeEvent">
                 <form>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished"
-                               th:checked="*{isFinished}"/>
-                        <label class="form-check-label" for="isFinished">Приключена</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox"  name="isFinished"
+                                   th:checked="*{isFinished}"/>
+                            Приключена</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting"
-                               th:checked="*{isWaiting}"/>
-                        <label class="form-check-label" for="isWaiting">В изчакване</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isWaiting"
+                                   th:checked="*{isWaiting}"/>
+                            В изчакване</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
-                               th:checked="*{isForFinishing}"/>
-                        <label class="form-check-label" for="isForFinishing">За довършване</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isForFinishing"
+                                   th:checked="*{isForFinishing}"/>
+                            За довършване</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed"
-                               th:checked="*{isPayed}"/>
-                        <label class="form-check-label" for="isPayed">Платена</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isPayed"
+                                   th:checked="*{isPayed}"/>
+                            Платена</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred"
-                               th:checked="*{isDeferred}"/>
-                        <label class="form-check-label" for="isDeferred">Разсрочено</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isDeferred"
+                                   th:checked="*{isDeferred}"/>
+                            Разсрочено</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice"
-                               th:checked="*{isWithInvoice}"/>
-                        <label class="form-check-label" for="isWithInvoice">С фактура</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isWithInvoice"
+                                   th:checked="*{isWithInvoice}"/>
+                            С фактура</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked"
-                               th:checked="*{isMarked}"/>
-                        <label class="form-check-label" for="isMarked">Маркирана</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="isMarked"
+                                   th:checked="*{isMarked}"/>
+                            Маркирана</label>
                     </div>
                 </form>
             </td>
             <!--schedule date-->
-            <td>
-                <input class="form-control" type="date" id="scheduleDate" th:value="*{scheduleDate}"/>
-                <p id="message m-3"></p>
+            <td class="changeEvent">
+                <input class="form-control-sm" type="date" id="scheduleDate" th:value="*{scheduleDate}"/>
+                <p class="message m-3"></p>
             </td>
             <!--actions-->
             <td>
@@ -111,8 +119,4 @@
         </tr>
         </tbody>
     </table>
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
 </div>

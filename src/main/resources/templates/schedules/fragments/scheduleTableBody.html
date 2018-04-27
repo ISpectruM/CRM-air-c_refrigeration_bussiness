@@ -1,0 +1,33 @@
+<!--index-->
+<td scope="row" th:text="${iter.index+1}"></td>
+<!--service Type-->
+<td id="serviceType">
+    <p th:unless="*{montageType == null}" th:text="*{montageType.displayName}"></p>
+    <p th:unless="*{repairType == null}" th:text="*{repairType.displayName}"></p>
+    <p th:unless="*{prophylacticType==null}" th:text="*{prophylacticType.displayName}"></p>
+</td>
+<!--product-->
+<td>
+    <th:block
+            th:unless="*{airConditioners == null}"
+            th:each="product:*{airConditioners}" th:object="${product.key}">
+        <p id="brand-model" th:text="|*{brand} *{model}|"></p>
+    </th:block>
+    <p id="other" th:placeholder="*{other}">
+</td>
+<!--count-->
+<td th:text="*{count}"></td>
+<!--client-->
+<td th:text="*{client.name}"></td>
+<!--address-->
+<td th:text="|*{location.city}, *{location.address}|"></td>
+<!--phone-->
+<td th:text="*{client.phone}"></td>
+<!--deposit-->
+<td th:text="*{deposit}"></td>
+<!--for payment-->
+<td th:text="*{forPayment}"></td>
+<!--description-->
+<td th:text="*{description}"></td>
+<!--comments-->
+<td th:text="*{comment}"></td>

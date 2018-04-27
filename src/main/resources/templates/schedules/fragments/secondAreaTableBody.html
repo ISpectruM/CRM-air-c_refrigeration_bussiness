@@ -1,0 +1,8 @@
+<tr class="table"
+    th:if="${#strings.equalsIgnoreCase(city,'несебър')} or
+                    ${#strings.equalsIgnoreCase(city,'сл.бряг')} or
+                    ${#strings.equalsIgnoreCase(city,'равда')} or
+                    ${#strings.equalsIgnoreCase(city,'влас')} or
+                    ${#strings.equalsIgnoreCase(city,'ахелой')}">
+    <th:block th:include="~{schedules/fragments/scheduleTableBody}"></th:block>
+</tr>

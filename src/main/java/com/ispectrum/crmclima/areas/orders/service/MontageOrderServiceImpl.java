@@ -140,8 +140,8 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public Set<MontageOrder> getMontagesByDate(LocalDate scheduleDate) {
-        return this.montageOrderRepository.findAllByScheduleDate(scheduleDate);
+    public Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate) {
+        return this.montageOrderRepository.findAllByScheduleDateAndIsFinished(scheduleDate,false);
     }
 
 

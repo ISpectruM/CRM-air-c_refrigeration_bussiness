@@ -7,12 +7,17 @@
     padding: 5px;
 }
 
+.table-center-text{
+    text-align: center;
+    font-weight: bold ;
+}
+
 /* Column widths are based on these cells */
 .col-index-sch {
     width: 2%;
 }
 .col-order-sch {
-    width: 6%;
+    width: 8%;
 }
 .col-count-sch {
     width: 2%;
@@ -24,7 +29,7 @@
       width: 8%;
 }
 .col-address-sch {
-    width: 17%;
+    width: 19%;
 }
 .col-details-sch {
     width: 20%;
@@ -33,5 +38,5 @@
     width: 20%;
 }
 .col-phone-sch {
-    width: 10%;
+    width: 6%;
 }

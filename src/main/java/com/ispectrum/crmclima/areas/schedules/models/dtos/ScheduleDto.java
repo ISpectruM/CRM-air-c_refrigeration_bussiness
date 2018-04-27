@@ -1,8 +1,5 @@
 package com.ispectrum.crmclima.areas.schedules.models.dtos;
 
-import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
-import com.ispectrum.crmclima.areas.orders.models.dtos.ProphylacticOrderDto;
-import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -12,11 +9,15 @@ public class ScheduleDto {
 
     private LocalDate scheduleDate;
 
-    private Set<ScheduleDto> montageOrders;
+    private Set<CreateScheduleDto> montageOrders;
 
-    private Set<ScheduleDto> repairOrders;
+    private Set<CreateScheduleDto> repairOrders;
 
-    private Set<ScheduleDto> prophylacticOrders;
+    private Set<CreateScheduleDto> prophylacticOrders;
+
+    private Integer montagesAmount;
+    private Integer repairsAmount;
+    private Integer prophylacticsAmount;
 
 
     public ScheduleDto() {
@@ -39,27 +40,51 @@ public class ScheduleDto {
         this.scheduleDate = scheduleDate;
     }
 
-    public Set<ScheduleDto> getMontageOrders() {
+    public Set<CreateScheduleDto> getMontageOrders() {
         return this.montageOrders;
     }
 
-    public void setMontageOrders(Set<ScheduleDto> montageOrders) {
+    public void setMontageOrders(Set<CreateScheduleDto> montageOrders) {
         this.montageOrders = montageOrders;
     }
 
-    public Set<ScheduleDto> getRepairOrders() {
+    public Set<CreateScheduleDto> getRepairOrders() {
         return this.repairOrders;
     }
 
-    public void setRepairOrders(Set<ScheduleDto> repairOrders) {
+    public void setRepairOrders(Set<CreateScheduleDto> repairOrders) {
         this.repairOrders = repairOrders;
     }
 
-    public Set<ScheduleDto> getProphylacticOrders() {
+    public Set<CreateScheduleDto> getProphylacticOrders() {
         return this.prophylacticOrders;
     }
 
-    public void setProphylacticOrders(Set<ScheduleDto> prophylacticOrders) {
+    public void setProphylacticOrders(Set<CreateScheduleDto> prophylacticOrders) {
         this.prophylacticOrders = prophylacticOrders;
+    }
+
+    public Integer getMontagesAmount() {
+        return this.montagesAmount;
+    }
+
+    public void setMontagesAmount(Integer montagesAmount) {
+        this.montagesAmount = montagesAmount;
+    }
+
+    public Integer getRepairsAmount() {
+        return this.repairsAmount;
+    }
+
+    public void setRepairsAmount(Integer repairsAmount) {
+        this.repairsAmount = repairsAmount;
+    }
+
+    public Integer getProphylacticsAmount() {
+        return this.prophylacticsAmount;
+    }
+
+    public void setProphylacticsAmount(Integer prophylacticsAmount) {
+        this.prophylacticsAmount = prophylacticsAmount;
     }
 }

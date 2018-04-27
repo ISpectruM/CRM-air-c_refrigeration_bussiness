@@ -31,19 +31,26 @@ public class ScheduleController extends BaseController{
     public ModelAndView createSchedule(){
         List<CreateScheduleDto> allUnfinishedOrders =
                 this.scheduleService.getAllUnfinishedOrders();
-        return this.addViewAndObject("orders",allUnfinishedOrders,"schedules/create");
+        this.addViewAndObject("orders",allUnfinishedOrders,"schedules/create");
+        return this.addObject("currentDate",LocalDate.now());
     }
 
     @PostMapping("/add")
     public ModelAndView addSchedule(AddScheduleBindingModel model){
         String id = this.scheduleService.addSchedule(model);
-        return this.redirect("/details/"+id);
+        return this.redirect("/schedule/details/"+id);
     }
 
     @GetMapping("/details/{id}")
     public ModelAndView showScheduleDetails(@PathVariable String id){
         ScheduleDto scheduleDto =
                 this.scheduleService.getScheduleById(id);
-        return this.addViewAndObject("schedule",scheduleDto,"schedule/details");
+        return this.addViewAndObject("schedule",scheduleDto,"schedules/details");
+    }
+
+    @GetMapping("/all")
+    public ModelAndView showSchedules(){
+        List<ScheduleDto> allSchedules = this.scheduleService.getAllSchedules();
+        return this.addViewAndObject("schedules", allSchedules,"schedules/all");
     }
 }

@@ -29,6 +29,6 @@ public interface MontageOrderService {
 
     void saveMontageChanges(OrderSaveModel model);
 
-    Set<MontageOrder> getMontagesByDate(LocalDate scheduleDate);
+    Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate);
 
 }
