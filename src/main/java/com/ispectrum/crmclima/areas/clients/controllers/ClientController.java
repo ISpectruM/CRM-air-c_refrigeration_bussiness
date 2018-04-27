@@ -1,9 +1,12 @@
 package com.ispectrum.crmclima.areas.clients.controllers;
 
 import com.ispectrum.crmclima.areas.BaseController;
+import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
+import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotAddedException;
+import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Set;
 
 @Controller
 @RequestMapping("/clients")
@@ -35,6 +36,9 @@ public class ClientController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView clientDetails(@PathVariable String id){
         ClientDto clientDto = this.clientService.getClientById(id);
+        if (clientDto == null){
+            throw new ClientNotFoundException();
+        }
         return this.addViewAndObject("client",clientDto,"clients/details/details");
     }
 
@@ -45,25 +49,37 @@ public class ClientController extends BaseController{
 
     @PostMapping("/add")
     public ModelAndView addClientAction(AddClientModel model){
-        this.clientService.addClient(model);
+        Client client = this.clientService.addClient(model);
+        if (client == null){
+            throw new ClientNotAddedException();
+        }
         return this.redirect("/clients/all?page=0");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editModel(@PathVariable String id){
         ClientDto client = this.clientService.getClientById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
         return this.addViewAndObject("client",client,"clients/edit");
     }
 
     @PostMapping("/edit/{id}")
     public ModelAndView editClientAction(@PathVariable String id, AddClientModel model){
-        this.clientService.editClient(id,model);
+        Client client = this.clientService.editClient(id, model);
+        if(client == null){
+            throw new ClientNotFoundException();
+        }
         return this.redirect("/clients/details/"+id);
     }
 
     @GetMapping("/delete/{id}")
     public ModelAndView deleteClient(@PathVariable String id){
         ClientDto client = this.clientService.getClientById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
         return this.addViewAndObject("client",client,"clients/delete");
     }
 

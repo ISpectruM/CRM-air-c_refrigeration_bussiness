@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface ClientService {
-    void addClient(AddClientModel model);
+    Client addClient(AddClientModel model);
 
     Page<ClientDto> getAllClients(Pageable pageable);
 
     ClientDto getClientById(String id);
 
-    void editClient(String id, AddClientModel model);
+    Client editClient(String id, AddClientModel model);
 
     void deleteClient(String id);
 

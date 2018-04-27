@@ -1,6 +1,8 @@
 package com.ispectrum.crmclima.areas.users.service;
 
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
+import com.ispectrum.crmclima.areas.error_handling.exception.RoleNotFound;
+import com.ispectrum.crmclima.areas.error_handling.exception.UserNotFound;
 import com.ispectrum.crmclima.areas.users.entities.Role;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import com.ispectrum.crmclima.areas.users.models.bindingModels.AddUserBindingModel;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +38,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userRepository.findUserByUsername(username);
+        User userByUsername = this.userRepository.findUserByUsername(username);
+        if (userByUsername == null){
+            throw new UserNotFound();
+        }
+        return userByUsername;
     }
 
     @Override
@@ -43,6 +50,9 @@ public class UserServiceImpl implements UserService {
         User user = createUser(model);
 
         Role role = this.roleRepository.findFirstByAuthority(model.getRole());
+        if (role == null){
+            throw new RoleNotFound();
+        }
         List<Role> authorities = new ArrayList<>();
         authorities.add(role);
         user.setAuthorities(authorities);
@@ -59,6 +69,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(String userId) {
         User user = this.userRepository.findUserById(userId);
+        if (user == null){
+            throw new UserNotFound();
+        }
         return ModelMappingUtil.convertClass(user,UserDto.class);
     }
 
@@ -70,7 +83,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
 
         List<Role> authorities = new ArrayList<>();
-        authorities.add(this.roleRepository.findFirstByAuthority(editModel.getRole()));
+        Role authority = this.roleRepository.findFirstByAuthority(editModel.getRole());
+        if (authority == null){
+            throw new RoleNotFound();
+        }
+        authorities.add(authority);
         user.setAuthorities(authorities);
 
         this.userRepository.saveAndFlush(user);
@@ -98,6 +115,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userId) {
         User user = this.userRepository.findUserById(userId);
+        if (user == null){
+            throw new UserNotFound();
+        }
         this.userRepository.delete(user);
     }
 

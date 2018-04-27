@@ -2,7 +2,7 @@ $(document).ready(function () {
     let csrfHeader = $("meta[name='_csrf_header']").attr("content");
     let csrfToken = $("meta[name='_csrf']").attr("content");
     let saveButton = $('a[name="save"]');
-    let errMessageField = $("#error-message");
+    let errMessageField = $("#exception-message");
     let table = $('table');
 
     saveButton.click(function (event) {

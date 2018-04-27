@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.schedules.service;
 
 import com.ispectrum.crmclima.Utils.DateToLocalDate;
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
+import com.ispectrum.crmclima.areas.error_handling.exception.ScheduleNotFound;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
@@ -60,6 +61,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto getScheduleById(String id) {
         Schedule schedule = this.scheduleRepository.findFirstById(id);
+        if (schedule == null){
+            throw new ScheduleNotFound();
+        }
         return ModelMappingUtil.convertClass(schedule,ScheduleDto.class);
     }
 

@@ -14,7 +14,6 @@ public class AirConditionServiceImpl implements AirConditionService {
         this.airConditionRepository = airConditionRepository;
     }
 
-
     @Override
     public AirConditioner getByModel(String model) {
         return this.airConditionRepository.findFirstByModel(model);

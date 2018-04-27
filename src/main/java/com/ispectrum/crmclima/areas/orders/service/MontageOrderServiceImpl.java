@@ -4,6 +4,7 @@ import com.ispectrum.crmclima.Utils.DateToLocalDate;
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
+import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundException;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
@@ -70,24 +71,32 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     @Override
     public MontageOrderDto getMontageById(String id) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        if(montage == null){
+            throw new MontageNotFoundException();
+        }
         return ModelMappingUtil.convertClass(montage,MontageOrderDto.class);
     }
 
     @Override
     public void deleteOrder(String id) {
         MontageOrder order = this.montageOrderRepository.findFirstById(id);
+        if(order == null){
+            throw new MontageNotFoundException();
+        }
         this.montageOrderRepository.delete(order);
     }
 
     @Override
     public void editMontage(String id, MontageOrderBindingModel model) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        if (montage == null){
+            throw new MontageNotFoundException();
+        }
         MontageOrder editedOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
         editedOrder.setId(id);
 
         Client client = montage.getClient();
         editedOrder.setClient(client);
-
 
         LocalDate orderDate = DateToLocalDate.convert(model.getOrderDate());
         editedOrder.setOrderDate(orderDate);
@@ -117,6 +126,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     public void saveMontageChanges(OrderSaveModel model) {
         String id = model.getId();
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        if (montage == null){
+            throw new MontageNotFoundException();
+        }
 //        Set new status
         montage.setIsDeferred(model.getStatus().getIsDeferred());
         montage.setIsFinished(model.getStatus().getIsFinished());

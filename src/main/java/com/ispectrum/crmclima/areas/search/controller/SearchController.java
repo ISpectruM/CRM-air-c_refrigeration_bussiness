@@ -24,15 +24,15 @@ public class SearchController extends BaseController{
         this.searchService = searchService;
     }
 
-    @GetMapping("/search")
-    public ModelAndView showSearchResults(){
-        return this.addViewAndObject("results",new ArrayList<>(),"fragments/search");
-    }
+//    @GetMapping("/search")
+//    public ModelAndView showSearchResults(){
+//        return this.addViewAndObject("results",new ArrayList<>(),"fragments/search");
+//    }
 
     @PostMapping("/search")
     public ModelAndView search(SearchBindingModel searchBindingModel){
         Set<ClientDto> results = this.searchService.getSearchResults(searchBindingModel);
-        this.addViewAndObject("results",results,"search/results");
-        return this.redirect("/search");
+        return this.addViewAndObject("results",results,"search/results");
+
     }
 }

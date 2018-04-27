@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -25,9 +24,9 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public void addClient(AddClientModel model) {
+    public Client addClient(AddClientModel model) {
         Client client = ModelMappingUtil.convertClass(model,Client.class);
-        this.clientRepository.save(client);
+       return this.clientRepository.save(client);
     }
 
     @Override
@@ -44,10 +43,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void editClient(String id, AddClientModel model) {
+    public Client editClient(String id, AddClientModel model) {
         Client client = ModelMappingUtil.convertClass(model, Client.class);
         client.setId(id);
-        this.clientRepository.save(client);
+        return this.clientRepository.save(client);
     }
 
     @Override

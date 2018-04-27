@@ -6,25 +6,12 @@
     </thead>
     <tbody class="table-bordered">
     <tr th:colspan="11">Поморие, Сарафово, Бургас</tr>
-    <th:block th:each="prophylactic, iter:${schedule.prophylacticOrders}" th:object="${prophylactic}">
-        <tr class="table"
-            th:if="${#strings.equalsIgnoreCase(*{location.city},'поморие')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'бургас')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'capaфово')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'каменар')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'каблешково')}">
-            <th:block th:include="~{schedules/fragments/scheduleTableBody}"></th:block>
-        </tr>
+    <th:block th:each="prophylactic, iter:${schedule.prophylacticOrders}" th:object="${prophylactic}" th:with="city=*{location.city}">
+        <th:block th:include="~{schedules/fragments/firstAreaTableBody}"></th:block>
     </th:block>
     <tr th:colspan="11">Несебър, Сл.Бряг, Равда, Влас</tr>
-    <th:block th:each="prophylactic, iter:${schedule.prophylacticOrders}" th:object="${prophylactic}">
-        <tr class="table" th:if="${#strings.equalsIgnoreCase(*{location.city},'несебър')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'сл.бряг')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'равда')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'влас')} or
-                    ${#strings.containsIgnoreCase(*{location.city},'ахелой')}">
-            <th:block th:include="~{schedules/fragments/scheduleTableBody}"></th:block>
-        </tr>
+    <th:block th:each="prophylactic, iter:${schedule.prophylacticOrders}" th:object="${prophylactic}" th:with="city=*{location.city}">
+        <th:block th:include="~{schedules/fragments/secondAreaTableBody}"></th:block>
     </th:block>
     </tbody>
 </table>

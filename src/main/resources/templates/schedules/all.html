@@ -25,8 +25,10 @@
             <td th:text="*{prophylacticsAmount}"></td>
             <td >
                 <a class="btn btn-sm btn-info" th:href="@{/schedule/details/{id}(id=${schedule.id})}">Детайли</a>
-                <a class="btn btn-sm btn-warning" th:href="@{/schedule/check/{id}(id=${schedule.id})}">Провери</a>
-                <a class="btn btn-sm btn-danger" th:href="@{/schedule/delete/{id}(id=${schedule.id})}">Изтрий</a>
+                <a class="btn btn-sm btn-warning" th:href="@{/schedule/check/{id}(id=${schedule.id})}"
+                   sec:authorize="hasAnyRole('ADMIN','SELLER')">Провери</a>
+                <a class="btn btn-sm btn-danger" th:href="@{/schedule/delete/{id}(id=${schedule.id})}"
+                   sec:authorize="hasAnyRole('ADMIN')">Изтрий</a>
             </td>
         </tr>
         </tbody>
