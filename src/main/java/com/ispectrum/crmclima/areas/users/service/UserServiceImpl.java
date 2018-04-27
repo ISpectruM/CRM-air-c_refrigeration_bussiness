@@ -93,6 +93,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository.saveAndFlush(user);
     }
 
+    @Override
+    public UserDto findUserByName(String name) {
+        User userByUsername = this.userRepository.findUserByUsername(name);
+        return ModelMappingUtil.convertClass(userByUsername,UserDto.class);
+    }
+
     private User createUser(AddUserBindingModel model) {
         String password = model.getPassword();
         String encodedPassword = this.bCryptPasswordEncoder.encode(password);

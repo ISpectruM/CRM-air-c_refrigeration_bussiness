@@ -22,4 +22,6 @@ public interface UserService extends UserDetailsService{
     UserDto getUserById(String userId);
 
     void editUser(String id,EditUserBindingModel editModel);
+
+    UserDto findUserByName(String name);
 }
