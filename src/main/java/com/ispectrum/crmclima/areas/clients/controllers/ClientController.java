@@ -36,9 +36,6 @@ public class ClientController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView clientDetails(@PathVariable String id){
         ClientDto clientDto = this.clientService.getClientById(id);
-        if (clientDto == null){
-            throw new ClientNotFoundException();
-        }
         return this.addViewAndObject("client",clientDto,"clients/details/details");
     }
 
@@ -49,37 +46,25 @@ public class ClientController extends BaseController{
 
     @PostMapping("/add")
     public ModelAndView addClientAction(AddClientModel model){
-        Client client = this.clientService.addClient(model);
-        if (client == null){
-            throw new ClientNotAddedException();
-        }
+        this.clientService.addClient(model);
         return this.redirect("/clients/all?page=0");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editModel(@PathVariable String id){
         ClientDto client = this.clientService.getClientById(id);
-        if (client == null){
-            throw new ClientNotFoundException();
-        }
         return this.addViewAndObject("client",client,"clients/edit");
     }
 
     @PostMapping("/edit/{id}")
     public ModelAndView editClientAction(@PathVariable String id, AddClientModel model){
-        Client client = this.clientService.editClient(id, model);
-        if(client == null){
-            throw new ClientNotFoundException();
-        }
+        this.clientService.editClient(id, model);
         return this.redirect("/clients/details/"+id);
     }
 
     @GetMapping("/delete/{id}")
     public ModelAndView deleteClient(@PathVariable String id){
         ClientDto client = this.clientService.getClientById(id);
-        if (client == null){
-            throw new ClientNotFoundException();
-        }
         return this.addViewAndObject("client",client,"clients/delete");
     }
 

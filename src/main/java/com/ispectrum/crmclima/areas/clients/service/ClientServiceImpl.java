@@ -5,6 +5,7 @@ import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.repository.ClientRepository;
+import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,32 +38,47 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDto getClientById(String id) {
-//        TODO Error handling if not found
         Client client = this.clientRepository.findFirstById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
         return ModelMappingUtil.convertClass(client,ClientDto.class);
     }
 
     @Override
     public Client editClient(String id, AddClientModel model) {
-        Client client = ModelMappingUtil.convertClass(model, Client.class);
-        client.setId(id);
+        Client client = this.clientRepository.findFirstById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
+        client.setAddress(model.getAddress());
+        client.setCity(model.getCity());
+        client.setEmail(model.getEmail());
+        client.setPhone(model.getPhone());
+        client.setName(model.getName());
         return this.clientRepository.save(client);
     }
 
     @Override
     public void deleteClient(String id) {
         Client client = this.clientRepository.findFirstById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
         this.clientRepository.delete(client);
     }
 
     @Override
     public Client getPureClientById(String id) {
-        return this.clientRepository.findFirstById(id);
+        Client client = this.clientRepository.findFirstById(id);
+        if (client == null){
+            throw new ClientNotFoundException();
+        }
+        return client;
     }
 
     @Override
     public List<Client> getAllClients() {
         return this.clientRepository.findAllBy();
     }
-
-}
+  }
