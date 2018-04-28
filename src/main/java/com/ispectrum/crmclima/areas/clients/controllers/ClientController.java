@@ -11,11 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/clients")
@@ -41,12 +44,20 @@ public class ClientController extends BaseController{
 
     @GetMapping("/add")
     public ModelAndView addClient(){
-        return this.setView("clients/add");
+        return this.addViewAndObject(
+                "addClientBindingModel",new AddClientModel(),
+                "clients/add");
     }
 
     @PostMapping("/add")
-    public ModelAndView addClientAction(AddClientModel model){
-        this.clientService.addClient(model);
+    public ModelAndView addClientAction(
+            @Valid @ModelAttribute(name = "addClientBindingModel") AddClientModel addClientBindingModel,
+            BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            Map<String, Object> bindingResultModel = bindingResult.getModel();
+            return this.addViewAndObjectsMap("clients/add", bindingResultModel);
+        }
+        this.clientService.addClient(addClientBindingModel);
         return this.redirect("/clients/all?page=0");
     }
 

@@ -17,6 +17,6 @@ public class GlobalExceptionController extends BaseController {
                 e.getClass().isAnnotationPresent(ResponseStatus.class)
                 ? e.getClass().getAnnotation(ResponseStatus.class).reason()
                         : Messages.DEFAULT_ERROR_MESSAGE;
-        return this.addViewAndObject("exception",errorMessage,"exception/error_page");
+        return this.addViewAndObject("exception",errorMessage,"error/error_page");
     }
 }
