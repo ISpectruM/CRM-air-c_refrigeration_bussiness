@@ -14,6 +14,8 @@ public abstract class BaseOrder {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
+    private Long orderNumber;
+
     private LocalDate orderDate;
 
     private Integer count;
@@ -34,7 +36,7 @@ public abstract class BaseOrder {
 
     private String status;
 
-    private String other;
+    private String otherProduct;
 
     private boolean isMarked;
     private boolean isFinished;
@@ -208,11 +210,19 @@ public abstract class BaseOrder {
         isForFinishing = forFinishing;
     }
 
-    public String getOther() {
-        return this.other;
+    public String getOtherProduct() {
+        return this.otherProduct;
     }
 
-    public void setOther(String other) {
-        this.other = other;
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
+    }
+
+    public Long getOrderNumber() {
+        return this.orderNumber;
+    }
+
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }

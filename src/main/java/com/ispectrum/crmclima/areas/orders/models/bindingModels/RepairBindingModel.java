@@ -7,23 +7,19 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
-public class MontageOrderBindingModel {
+public class RepairBindingModel {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
     @NotEmpty(message = Messages.CHOOSE_SERVICE)
-    private String montageType;
-
-    private String product;
-
-    @NotEmpty(message = Messages.CHOOSE_PRODUCT)
-    private String productType;
+    private String repairType;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     @NotEmpty(message = Messages.FIELD_CANT_BE_EMPTY)
     private Integer count;
 
+    @NotEmpty(message = Messages.FIELD_CANT_BE_EMPTY)
     private String city;
 
     private String address;
@@ -38,7 +34,9 @@ public class MontageOrderBindingModel {
 
     private String comment;
 
-    private String other;
+    private String Description;
+
+    private String otherProduct;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
@@ -51,7 +49,7 @@ public class MontageOrderBindingModel {
     private boolean isDeferred;
     private boolean isWaiting;
 
-    public MontageOrderBindingModel() {
+    public RepairBindingModel() {
     }
 
     public Date getOrderDate() {
@@ -158,22 +156,6 @@ public class MontageOrderBindingModel {
         this.isWaiting = waiting;
     }
 
-    public String getMontageType() {
-        return this.montageType;
-    }
-
-    public void setMontageType(String montageType) {
-        this.montageType = montageType;
-    }
-
-    public String getProduct() {
-        return this.product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
     public String getAddress() {
         return this.address;
     }
@@ -198,20 +180,27 @@ public class MontageOrderBindingModel {
         this.city = city;
     }
 
-    public String getProductType() {
-        return this.productType;
+    public String getRepairType() {
+        return this.repairType;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setRepairType(String repairType) {
+        this.repairType = repairType;
     }
 
-
-    public String getOther() {
-        return this.other;
+    public String getOtherProduct() {
+        return this.otherProduct;
     }
 
-    public void setOther(String other) {
-        this.other = other;
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
+    }
+
+    public String getDescription() {
+        return this.Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 }

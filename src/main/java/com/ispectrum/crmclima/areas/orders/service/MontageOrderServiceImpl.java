@@ -43,6 +43,13 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     public void addMontage(String clientId,MontageOrderBindingModel model) {
         MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
+        Long orderNumber = this.montageOrderRepository
+                .findTopByOrderByOrderNumberDesc().getOrderNumber();
+        if (orderNumber == null){
+            orderNumber=0L;
+        }
+        newOrder.setOrderNumber(orderNumber+1);
+
         Date orderDate = model.getOrderDate();
         LocalDate localDate = LocalDate.now();
         if (orderDate != null){

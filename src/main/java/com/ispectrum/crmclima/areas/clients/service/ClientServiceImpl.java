@@ -32,7 +32,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Page<ClientDto> getAllClients(Pageable pageable) {
-        Page<Client> clients = this.clientRepository.findAll(pageable);
+        Page<Client> clients = this.clientRepository.findAllByOrderByEnterDateDesc(pageable);
         return ModelMappingUtil.convertPage(clients,ClientDto.class);
     }
 

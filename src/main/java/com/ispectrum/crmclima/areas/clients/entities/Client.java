@@ -6,6 +6,7 @@ import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,8 @@ public class Client {
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
+
+    private LocalDate enterDate;
 
     private String name;
 
@@ -112,5 +115,13 @@ public class Client {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public LocalDate getEnterDate() {
+        return this.enterDate;
+    }
+
+    public void setEnterDate(LocalDate enterDate) {
+        this.enterDate = enterDate;
     }
 }

@@ -19,4 +19,6 @@ public interface MontageOrderRepository extends PagingAndSortingRepository<Monta
     List<MontageOrder> findAllByIsFinished(boolean isFinished);
 
     Set<MontageOrder> findAllByScheduleDateAndIsFinished(LocalDate scheduleDate, boolean isFinished);
+
+    MontageOrder findTopByOrderByOrderNumberDesc();
 }

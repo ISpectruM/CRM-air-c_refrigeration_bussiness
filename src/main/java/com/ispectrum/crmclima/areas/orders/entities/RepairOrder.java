@@ -17,10 +17,8 @@ public class RepairOrder extends BaseOrder{
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Location location;
-
-    private String product;
 
     private String description;
 
@@ -43,14 +41,6 @@ public class RepairOrder extends BaseOrder{
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public String getProduct() {
-        return this.product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
     }
 
     public String getDescription() {

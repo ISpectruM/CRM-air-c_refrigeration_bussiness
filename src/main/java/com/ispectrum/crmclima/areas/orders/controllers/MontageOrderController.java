@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
@@ -42,9 +43,9 @@ public class MontageOrderController extends BaseController{
         this.setView("orders/montages/add_montage");
         ClientDto client = this.clientService.getClientById(clientId);
         this.addObject("bindingModel",new MontageOrderBindingModel());
+        this.addObject("currentDate", LocalDate.now());
         return this.addObject("client",client);
     }
-
 
     @PostMapping("/add/{id}")
     public ModelAndView addOrderAction(

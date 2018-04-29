@@ -23,4 +23,6 @@ public interface ClientRepository extends PagingAndSortingRepository<Client, Str
     Set<Client> findClientsByAddressContaining(String address);
 
     Set<Client> findClientsByNameContaining(String name);
+
+    Page<Client> findAllByOrderByEnterDateDesc(Pageable pageable);
 }

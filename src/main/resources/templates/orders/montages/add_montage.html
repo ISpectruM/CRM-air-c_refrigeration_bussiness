@@ -1,7 +1,7 @@
 <div class="container" th:object="${bindingModel}">
 <th:block th:object="${client}">
     <div class="form-row m-2 card-header">
-        <h4 class="col-sm-4">Нова заявка за клиент: </h4>
+        <h4 class="col-sm-4">Нова заявка за монтаж на клиент: </h4>
         <label for="name" class="col-sm-1 col-form-label">Име:</label>
         <div class="form-group col-md-4">
             <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
@@ -19,16 +19,16 @@
         <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
         <div class="col-md-3">
             <input type="date" class="form-control" id="orderDate" name="orderDate"
-                   th:value="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"
-                   th:placeholder="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}">
+                   th:value="${currentDate}">
         </div>
     </div>
 
     <h5 class="card-header">Вид заявка</h5>
     <div class="form-group row m-2">
         <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <select class="col-sm-3" id="montageType" name="montageType"
-                th:classappend="${#fields.hasErrors('montageType')}? 'is-invalid':'is-valid'"
+        <div class="col-sm-3">
+        <select class="form-control" id="montageType" name="montageType"
+                th:classappend="${#fields.hasErrors('montageType')}? 'is-invalid':''"
                 th:field="*{montageType}">
             <option value="">- Избери услуга -</option>
             <option class="form-control"
@@ -36,8 +36,9 @@
                     th:value="${type}" th:text="${type.displayName}"></option>
         </select>
         <th:block th:each="error:${#fields.errors('montageType')}">
-            <div class="invalid-feedback" th:text="${error}"></div>
+            <small class="invalid-feedback text-danger" th:text="${error}"></small>
         </th:block>
+        </div>
     </div>
 
     <h5 class="card-header">Продукт</h5>
@@ -45,14 +46,14 @@
         <div class="form-group col-md-3">
             <label for="productType">Продукт:</label>
             <select id="productType" name="productType" class="form-control"
-                    th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':'is-valid'"
+                    th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':''"
                     th:field="*{productType}">
                 <option value="">- Избери -</option>
                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                         th:value="${product}" th:text="${product.displayName}"></option>
             </select>
             <th:block th:each="error:${#fields.errors('productType')}">
-                <div class="invalid-feedback" th:text="${error}"></div>
+                <small class="invalid-feedback text-danger" th:text="${error}"></small>
             </th:block>
         </div>
         <div class="form-group col-md-2">
@@ -68,19 +69,19 @@
             </select>
         </div>
         <div class="form-group col-md-3">
-            <label for="other">Друго:</label>
-            <div id="other">
-                <input class="form-control" name="other" placeholder="Друг продукт">
+            <label for="otherProduct">Друго:</label>
+            <div id="otherProduct">
+                <input class="form-control" name="otherProduct" placeholder="Друг продукт">
             </div>
         </div>
         <div class="form-group col-md-1">
             <label for="count">Брой:</label>
-            <div>
-                <input id="count"class="form-control" name="count"
-                       th:classappend="${#fields.hasErrors('count')}? 'is-invalid':'is-valid'"
+            <div class="">
+                <input id="count" class="form-control" name="count"
+                       th:classappend="${#fields.hasErrors('count')}? 'is-invalid':''"
                        th:field="*{count}">
                 <th:block th:each="error:${#fields.errors('count')}">
-                    <div class="invalid-feedback" th:text="${error}"></div>
+                    <small class="invalid-feedback text-danger" th:text="${error}"></small>
                 </th:block>
             </div>
         </div>
@@ -90,11 +91,11 @@
     <div class="form-group row m-2">
         <label for="city" class="col-sm-1 col-form-label">Град:</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="city" name="city" placeholder="град">
+            <input type="text" class="form-control" id="city" name="city" placeholder="обл. / гр.">
         </div>
         <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
         <div class="col-sm-7">
-            <input type="text" class="form-control" id="address" name="address" placeholder="адрес">
+            <input type="text" class="form-control" id="address" name="address" placeholder="ул. / бл. / № / вх. /ет. ...">
         </div>
     </div>
 
@@ -103,19 +104,19 @@
         <label for="price" class="col-sm-1 col-form-label">Цена:</label>
         <div class="col-sm-2">
             <input type="number" class="form-control" id="price" name="price" placeholder="цена"
-                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':'is-valid'"
+                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
                    th:field="*{price}">
             <th:block th:each="error:${#fields.errors('price')}">
-                <div class="invalid-feedback" th:text="${error}"></div>
+                <small class="invalid-feedback text-danger" th:text="${error}"></small>
             </th:block>
         </div>
         <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
         <div class="col-sm-2">
             <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
-                   th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':'is-valid'"
+                   th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
                    th:field="*{deposit}">
             <th:block th:each="error:${#fields.errors('deposit')}">
-                <div class="invalid-feedback" th:text="${error}"></div>
+                <small class="invalid-feedback text-danger" th:text="${error}"></small>
             </th:block>
         </div>
         <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
