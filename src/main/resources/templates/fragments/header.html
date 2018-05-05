@@ -35,10 +35,10 @@
         <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/montages/all?page=0}">Монтажи</a>
     </li>
     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
-        <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/repairs/all}">Ремонти</a>
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/repairs/all?page=0}">Ремонти</a>
     </li>
     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
-        <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/prophylactics/all}">Профилактики</a>
+        <a type="button" class="btn btn-sm btn-dark" th:href="@{/orders/prophylactics/all?page=0}">Профилактики</a>
     </li>
     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SELLER')">
         <a type="button" class="btn btn-sm btn-dark" th:href="@{/schedule/create}">Нов график</a>

@@ -9,6 +9,7 @@ import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotAddedExcep
 import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,7 +31,10 @@ public class ClientController extends BaseController{
     }
 
     @GetMapping("/all")
-    public ModelAndView allClients(@PageableDefault(size = 12) Pageable pageable){
+    public ModelAndView allClients(@PageableDefault(
+                            size = 12,
+                            sort = {"enterDate"},
+                            direction = Sort.Direction.DESC) Pageable pageable){
         Page<ClientDto> allClients = this.clientService.getAllClients(pageable);
         this.addViewAndObject("objects",allClients,"clients/all");
         return this.addObject("area","clients");

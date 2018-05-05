@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.orders.models.dtos;
 
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
+import com.ispectrum.crmclima.areas.orders.entities.enums.RepairType;
 
 import java.time.LocalDate;
 
@@ -12,27 +13,38 @@ public class RepairOrderDto {
 
     private LocalDate orderDate;
 
-    private String repairType;
+    private RepairType repairType;
 
     private String product;
 
     private Integer count;
 
-    private ClientDto clientDto;
+    private ClientDto client;
 
-    private LocationDto locationDto;
+    private LocationDto location;
 
     private Double price;
+
+    private Double deposit;
+
+    private Double forPayment;
 
     private boolean isFinished;
 
     private boolean isWaiting;
 
+    private boolean isForFinishing;
+
+    private boolean isWithInvoice;
+
+    private boolean isPayed;
+
     private String comment;
 
     private LocalDate scheduleDate;
 
-    private LocalDate endDate;
+    private String status;
+
 
     public RepairOrderDto() {
     }
@@ -45,14 +57,6 @@ public class RepairOrderDto {
         this.orderDate = orderDate;
     }
 
-    public String getRepairType() {
-        return this.repairType;
-    }
-
-    public void setRepairType(String repairType) {
-        this.repairType = repairType;
-    }
-
     public String getProduct() {
         return this.product;
     }
@@ -61,20 +65,20 @@ public class RepairOrderDto {
         this.product = product;
     }
 
-    public ClientDto getClientDto() {
-        return this.clientDto;
+    public ClientDto getClient() {
+        return this.client;
     }
 
-    public void setClientDto(ClientDto clientDto) {
-        this.clientDto = clientDto;
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 
-    public LocationDto getLocationDto() {
-        return this.locationDto;
+    public LocationDto getLocation() {
+        return this.location;
     }
 
-    public void setLocationDto(LocationDto locationDto) {
-        this.locationDto = locationDto;
+    public void setLocation(LocationDto location) {
+        this.location = location;
     }
 
     public Double getPrice() {
@@ -85,19 +89,19 @@ public class RepairOrderDto {
         this.price = price;
     }
 
-    public boolean isFinished() {
+    public boolean getIsFinished() {
         return this.isFinished;
     }
 
-    public void setFinished(boolean finished) {
+    public void setIsFinished(boolean finished) {
         isFinished = finished;
     }
 
-    public boolean isWaiting() {
+    public boolean getIsWaiting() {
         return this.isWaiting;
     }
 
-    public void setWaiting(boolean waiting) {
+    public void setIsWaiting(boolean waiting) {
         isWaiting = waiting;
     }
 
@@ -117,14 +121,6 @@ public class RepairOrderDto {
         this.scheduleDate = scheduleDate;
     }
 
-    public LocalDate getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public Integer getCount() {
         return this.count;
     }
@@ -139,5 +135,61 @@ public class RepairOrderDto {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean getIsForFinishing() {
+        return this.isForFinishing;
+    }
+
+    public void setIsForFinishing(boolean forFinishing) {
+        isForFinishing = forFinishing;
+    }
+
+    public boolean getIsWithInvoice() {
+        return this.isWithInvoice;
+    }
+
+    public void setIsWithInvoice(boolean withInvoice) {
+        isWithInvoice = withInvoice;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public RepairType getRepairType() {
+        return this.repairType;
+    }
+
+    public void setRepairType(RepairType repairType) {
+        this.repairType = repairType;
+    }
+
+    public Double getDeposit() {
+        return this.deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
+
+    public Double getForPayment() {
+        return this.forPayment;
+    }
+
+    public void setForPayment(Double forPayment) {
+        this.forPayment = forPayment;
+    }
+
+    public boolean getIsPayed() {
+        return this.isPayed;
+    }
+
+    public void setIsPayed(boolean payed) {
+        isPayed = payed;
     }
 }

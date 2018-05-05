@@ -34,7 +34,7 @@
 
     <h5 class="card-header">Продукт</h5>
     <div class="form-group row m-2" th:each="aircon:*{airConditioners}" th:object="${aircon.key}"
-         th:include="~{orders/montages/fragments/products}">
+         th:include="~{orders/montages/fragments/productsAddForm}">
     </div>
     <div class="form-group row m-2" th:unless="*{airConditioners} == null">
         <div class="form-group col-md-3">

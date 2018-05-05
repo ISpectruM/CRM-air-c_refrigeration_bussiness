@@ -1,186 +1,208 @@
 <div class="container" th:object="${bindingModel}">
-<th:block th:object="${client}">
-    <div class="form-row m-2 card-header">
-        <h4 class="col-sm-4">Нова заявка за монтаж на клиент: </h4>
-        <label for="name" class="col-sm-1 col-form-label">Име:</label>
-        <div class="form-group col-md-4">
-            <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
-        </div>
-        <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
-        <div class="form-group col-sm-2">
-            <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{phone}">
-        </div>
-    </div>
-</th:block>
-<hr/>
-<form class="form-horizontal" th:action="@{/orders/montages/add/{id}(id=${client.id})}" th:method="POST">
-    <h5 class="card-header">Дата</h5>
-    <div class="form-group row m-2">
-        <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
-        <div class="col-md-3">
-            <input type="date" class="form-control" id="orderDate" name="orderDate"
-                   th:value="${currentDate}">
-        </div>
-    </div>
-
-    <h5 class="card-header">Вид заявка</h5>
-    <div class="form-group row m-2">
-        <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <div class="col-sm-3">
-        <select class="form-control" id="montageType" name="montageType"
-                th:classappend="${#fields.hasErrors('montageType')}? 'is-invalid':''"
-                th:field="*{montageType}">
-            <option value="">- Избери услуга -</option>
-            <option class="form-control"
-                    th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
-                    th:value="${type}" th:text="${type.displayName}"></option>
-        </select>
-        <th:block th:each="error:${#fields.errors('montageType')}">
-            <small class="invalid-feedback text-danger" th:text="${error}"></small>
-        </th:block>
-        </div>
-    </div>
-
-    <h5 class="card-header">Продукт</h5>
-    <div class="form-group row m-2">
-        <div class="form-group col-md-3">
-            <label for="productType">Продукт:</label>
-            <select id="productType" name="productType" class="form-control"
-                    th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':''"
-                    th:field="*{productType}">
-                <option value="">- Избери -</option>
-                <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
-                        th:value="${product}" th:text="${product.displayName}"></option>
-            </select>
-            <th:block th:each="error:${#fields.errors('productType')}">
-                <small class="invalid-feedback text-danger" th:text="${error}"></small>
-            </th:block>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="brand">Марка:</label>
-            <select id="brand" class="form-control" name="brand">
-                <option value="">- Избери -</option>
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="product">Модел:</label>
-            <select id="product" name="product" class="form-control">
-                <option value="">- Избери -</option>
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="otherProduct">Друго:</label>
-            <div id="otherProduct">
-                <input class="form-control" name="otherProduct" placeholder="Друг продукт">
+    <th:block th:object="${client}">
+        <div class="form-row m-2 card-header">
+            <h4 class="col-sm-4">Нова заявка за монтаж на клиент: </h4>
+            <label for="name" class="col-sm-1 col-form-label">Име:</label>
+            <div class="form-group col-md-4">
+                <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
+            </div>
+            <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
+            <div class="form-group col-sm-2">
+                <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{phone}">
             </div>
         </div>
-        <div class="form-group col-md-1">
-            <label for="count">Брой:</label>
-            <div class="">
-                <input id="count" class="form-control" name="count"
-                       th:classappend="${#fields.hasErrors('count')}? 'is-invalid':''"
-                       th:field="*{count}">
-                <th:block th:each="error:${#fields.errors('count')}">
+    </th:block>
+    <hr/>
+    <form class="form-horizontal" th:action="@{/orders/montages/add/{id}(id=${client.id})}" th:method="POST">
+        <h5 class="card-header">Дата</h5>
+        <div class="form-group row m-2">
+            <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="orderDate" name="orderDate"
+                       th:value="${currentDate}">
+            </div>
+        </div>
+
+        <h5 class="card-header">Вид заявка</h5>
+        <div class="form-group row m-2">
+            <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
+            <div class="col-sm-3">
+                <select class="form-control" id="montageType" name="montageType"
+                        th:classappend="${#fields.hasErrors('montageType')}? 'is-invalid':''"
+                        th:field="*{montageType}">
+                    <option value="">- Избери услуга -</option>
+                    <option class="form-control"
+                            th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
+                            th:value="${type}" th:text="${type.displayName}"></option>
+                </select>
+                <th:block th:each="error:${#fields.errors('montageType')}">
                     <small class="invalid-feedback text-danger" th:text="${error}"></small>
                 </th:block>
             </div>
         </div>
-    </div>
 
-    <h5 class="card-header">Адрес</h5>
-    <div class="form-group row m-2">
-        <label for="city" class="col-sm-1 col-form-label">Град:</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="city" name="city" placeholder="обл. / гр.">
-        </div>
-        <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="address" name="address" placeholder="ул. / бл. / № / вх. /ет. ...">
-        </div>
-    </div>
+        <div id="productTypeContainer" class="col-12">
+            <div class="row">
+                <h5 id="productHeader" class="card-header col-12">Продукт</h5>
+                <h5 id="descriptionHeader" class="card-header col-12">Описание</h5>
+            </div>
+            <div class="form-group row mt-2">
+                <div class="col-11">
+                    <div id="descriptionContainer" class="form-group row">
+                        <div class="col-12">
+                            <label for="description">Описание:</label>
+                            <input id="description" class="form-control" name="description"/>
+                        </div>
+                    </div>
+                    <div id="productContainer" class="row">
+                        <div class="form-group col-md-3">
+                            <label for="productType">Продукт:</label>
+                            <select id="productType" name="productType" class="form-control"
+                                    th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':''"
+                                    th:field="*{productType}">
+                                <option value="">- Избери -</option>
+                                <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
+                                        th:value="${product}" th:text="${product.displayName}"></option>
+                            </select>
+                            <th:block th:each="error:${#fields.errors('productType')}">
+                                <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                            </th:block>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="brand">Марка:</label>
+                            <select id="brand" class="form-control" name="brand">
+                                <option value="">- Избери -</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="product">Модел:</label>
+                            <select id="product" name="product" class="form-control">
+                                <option value="">- Избери -</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="otherProduct">Друго:</label>
+                            <div id="otherProduct">
+                                <input class="form-control" name="otherProduct" placeholder="Друг продукт">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="count">Брой:</label>
+                    <div class="">
+                        <input id="count" class="form-control" name="count"
+                               th:classappend="${#fields.hasErrors('count')}? 'is-invalid':''"
+                               th:field="*{count}">
+                        <th:block th:each="error:${#fields.errors('count')}">
+                            <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h5 class="card-header col-12">Цена</h5>
+            </div>
+            <div class="form-group row mt-2">
+                <div class="col-12">
+                    <div class="row">
+                        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="price" name="price" placeholder="цена"
+                                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
+                                   th:field="*{price}">
+                            <th:block th:each="error:${#fields.errors('price')}">
+                                <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                            </th:block>
+                        </div>
+                        <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
+                                   th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
+                                   th:field="*{deposit}">
+                            <th:block th:each="error:${#fields.errors('deposit')}">
+                                <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                            </th:block>
+                        </div>
+                        <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="discount" name="discount"
+                                   placeholder="Отстъпка">
+                        </div>
+                    </div>
+                </div>
 
-    <h5 class="card-header">Цена</h5>
-    <div class="form-group row m-2">
-        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="price" name="price" placeholder="цена"
-                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
-                   th:field="*{price}">
-            <th:block th:each="error:${#fields.errors('price')}">
-                <small class="invalid-feedback text-danger" th:text="${error}"></small>
-            </th:block>
-        </div>
-        <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
-                   th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
-                   th:field="*{deposit}">
-            <th:block th:each="error:${#fields.errors('deposit')}">
-                <small class="invalid-feedback text-danger" th:text="${error}"></small>
-            </th:block>
-        </div>
-        <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="discount" name="discount" placeholder="Отстъпка">
+            </div>
         </div>
 
-    </div>
+        <h5 class="card-header">Адрес</h5>
+        <div class="form-group row m-2">
+            <label for="city" class="col-sm-1 col-form-label">Град:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="city" name="city" placeholder="обл. / гр.">
+            </div>
+            <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="address" name="address"
+                       placeholder="ул. / бл. / № / вх. /ет. ...">
+            </div>
+        </div>
 
-    <h5 class="card-header">Статус</h5>
-    <div class="form-group row m-2 ">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished">
-            <label class="form-check-label" for="isFinished">Приключена</label>
+        <h5 class="card-header">Статус</h5>
+        <div class="form-group row m-2 ">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished">
+                <label class="form-check-label" for="isFinished">Приключена</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting">
+                <label class="form-check-label" for="isWaiting">В изчакване</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
+                       th:checked="*{isForFinishing}">
+                <label class="form-check-label" for="isForFinishing">За довършване</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed">
+                <label class="form-check-label" for="isPayed">Платена</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred">
+                <label class="form-check-label" for="isDeferred">Разсрочено</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice">
+                <label class="form-check-label" for="isWithInvoice">С фактура</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked">
+                <label class="form-check-label" for="isMarked">Маркирана</label>
+            </div>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting">
-            <label class="form-check-label" for="isWaiting">В изчакване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
-                   th:checked="*{isForFinishing}">
-            <label class="form-check-label" for="isForFinishing">За довършване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed">
-            <label class="form-check-label" for="isPayed">Платена</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred">
-            <label class="form-check-label" for="isDeferred">Разсрочено</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice">
-            <label class="form-check-label" for="isWithInvoice">С фактура</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked">
-            <label class="form-check-label" for="isMarked">Маркирана</label>
-        </div>
-    </div>
 
-    <h5 class="card-header">Особености/бележки</h5>
-    <div class="form-group row m-2">
-        <div class="col-sm-6">
-            <label for="comment">Особености/бележки:</label>
-            <textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
+        <h5 class="card-header">Особености/бележки</h5>
+        <div class="form-group row m-2">
+            <div class="col-sm-6">
+                <label for="comment">Особености/бележки:</label>
+                <textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
+            </div>
+            <div class="col-sm-6">
+                <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
+                <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate">
+            </div>
         </div>
-        <div class="col-sm-6">
-            <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-            <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate">
-        </div>
-    </div>
 
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
-    <div class="form-group">
-        <div class="col-lg-12 col-lg-offset-2">
-            <button type="reset" class="btn btn-default">Изчисти</button>
-            <a type="button" class="btn btn-default" th:href="@{/orders/montages/all?page=0}">Откажи</a>
-            <button type="submit" class="btn btn-primary">Запиши</button>
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <div class="col-lg-12 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Изчисти</button>
+                <a type="button" class="btn btn-default" th:href="@{/orders/montages/all?page=0}">Откажи</a>
+                <button type="submit" class="btn btn-primary">Запиши</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>

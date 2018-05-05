@@ -15,118 +15,115 @@
     <div class="form-group row m-2">
         <label for="orderDate" class="col-md-2 col-form-label">От дата:</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="orderDate" th:placeholder="*{orderDate}" disabled="disabled">
+            <input type="text" class="form-control" id="orderDate" th:placeholder="*{orderDate}" readonly>
         </div>
     </div>
 
     <h5 class="card-header">Вид заявка</h5>
     <div class="form-group row m-2">
         <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <input class="col-sm-3" id="montageType" name="montageType" th:placeholder="*{montageType.displayName}" disabled="disabled">
+        <input class="col-sm-3" id="montageType" name="montageType" th:placeholder="*{montageType.displayName}" readonly>
     </div>
 
     <h5 class="card-header">Продукт</h5>
-    <div class="form-group row m-2" disabled="disabled">
+    <div class="form-group row m-2" th:each="product:*{airConditioners}" th:object="${product.key}">
         <div class="form-group col-md-3">
             <label for="productType">Продукт:</label>
-            <input id="productType" th:unless="*{productType == null}" th:placeholder="*{productType.displayName}">
-            <p th:each="product:*{airConditioners}" th:object="${product.key}"
-               th:text="|*{brand} *{model}|"></p>
+            <input class="form-control" id="productType" th:placeholder="*{productType.displayName}" readonly>
         </div>
         <div class="form-group col-md-3">
             <label for="brand-model">Марка/модел:</label>
-            <p id="brand-model" th:each="product:*{airConditioners}" th:object="${product.key}"
-               th:text="|*{brand} *{model}|"></p>
+            <input class="form-control" id="brand-model" th:placeholder="|*{brand} *{model}|" readonly>
         </div>
 
         <div class="form-group col-md-3">
-            <label for="otherProduct">Друго:</label>
-            <div id="otherProduct">
-                <input class="form-control" name="otherProduct" th:placeholder="*{otherProduct}">
+            <label for="product">Друго:</label>
+            <div>
+                <input id="product" class="form-control" th:placeholder="${montage.product}" readonly>
             </div>
         </div>
         <div class="form-group col-md-1">
             <label for="count">Брой:</label>
-            <div id="count">
-                <input class="form-control" name="count" th:placeholder="*{count}">
+            <div>
+                <input id="count" class="form-control" name="count" th:placeholder="${montage.count}" readonly>
             </div>
         </div>
     </div>
 
     <h5 class="card-header">Адрес</h5>
-    <div class="form-group row m-2" disabled="disabled">
+    <div class="form-group row m-2">
         <label for="city" class="col-sm-1 col-form-label">Град:</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="city" th:placeholder="*{location.city}">
+            <input type="text" class="form-control" id="city" th:placeholder="*{location.city}" readonly>
         </div>
         <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
         <div class="col-sm-7">
-            <input type="text" class="form-control" id="address" th:placeholder="*{location.address}">
+            <input type="text" class="form-control" id="address" th:placeholder="*{location.address}" readonly>
         </div>
     </div>
 
     <h5 class="card-header">Цена</h5>
-    <div class="form-group row m-2" disabled="disabled">
+    <div class="form-group row m-2">
         <label for="price" class="col-sm-1 col-form-label">Цена:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="price" th:placeholder="*{price}">
+            <input type="number" class="form-control" id="price" th:placeholder="*{price}" readonly>
         </div>
         <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="discount" th:placeholder="*{discount}">
+            <input type="number" class="form-control" id="discount" th:placeholder="*{discount}" readonly>
         </div>
         <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="deposit" th:placeholder="*{deposit}">
+            <input type="number" class="form-control" id="deposit" th:placeholder="*{deposit}" readonly>
         </div>
         <label for="forPayment" class="col-sm-1 col-form-label">Общо:</label>
         <div class="col-sm-2">
-            <input type="number" class="form-control" id="forPayment" th:placeholder="*{forPayment}">
+            <input type="number" class="form-control" id="forPayment" th:placeholder="*{forPayment}" readonly>
         </div>
     </div>
 
     <h5 class="card-header">Статус</h5>
-    <div class="form-group row m-2 " disabled="disabled">
+    <div class="form-group row m-2 " readonly>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}">
+            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}" disabled="disabled">
             <label class="form-check-label" for="isFinished">Приключена</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}">
+            <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}" disabled="disabled">
             <label class="form-check-label" for="isWaiting">В изчакване</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isMarked" th:checked="*{isForFinishing}">
+            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isMarked" th:checked="*{isForFinishing}" disabled="disabled">
             <label class="form-check-label" for="isForFinishing">За довършване</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}">
+            <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}" disabled="disabled">
             <label class="form-check-label" for="isPayed">Платена</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}">
+            <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}" disabled="disabled">
             <label class="form-check-label" for="isDeferred">Разсрочено</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}">
+            <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}" disabled="disabled">
             <label class="form-check-label" for="isWithInvoice">С фактура</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}">
+            <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}" disabled="disabled">
             <label class="form-check-label" for="isMarked">Маркирана</label>
         </div>
     </div>
 
     <h5 class="card-header">Особености/бележки</h5>
-    <div class="form-group row m-2" disabled="disabled">
+    <div class="form-group row m-2">
         <div class="col-sm-6">
             <label for="comment">Особености/бележки:</label>
-            <textarea class="form-control" id="comment" name="comment" rows="4" th:text="*{comment}"></textarea>
+            <textarea class="form-control" id="comment" name="comment" rows="4" th:text="*{comment}" readonly></textarea>
         </div>
         <div class="col-sm-6">
             <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
             <input type="text" class="form-control col-sm-4" id="scheduleDate"
-                   th:placeholder="*{scheduleDate}">
+                   th:placeholder="*{scheduleDate}" readonly>
         </div>
     </div>
 

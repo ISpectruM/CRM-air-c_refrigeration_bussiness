@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.products.models.dtos;
 
 import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
 import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
+import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 
 public class AirConditionerDto {
 
@@ -15,7 +16,7 @@ public class AirConditionerDto {
 
     private AircType aircType;
 
-    private String productType;
+    private ProductType productType;
 
     private Condition productCondition;
 
@@ -70,11 +71,11 @@ public class AirConditionerDto {
         this.productCondition = productCondition;
     }
 
-    public String getProductType() {
+    public ProductType getProductType() {
         return this.productType;
     }
 
-    public void setProductType(String productType) {
+    public void setProductType(ProductType productType) {
         this.productType = productType;
     }
 }

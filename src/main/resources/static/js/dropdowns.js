@@ -1,18 +1,38 @@
 $(document).ready(function(){
+    let orderTypeMenu = $("#montageType");
     let productMenu = $("#productType");
     let brandMenu =$("#brand");
     let modelMenu =$("#product");
-    let productType;
+
+    let productHeader = $("#productHeader");
+    let descriptionHeader = $("#descriptionHeader");
+    let productTypeContainer = $("#productTypeContainer").hide();
+    let productContainer = $("#productContainer").hide();
+    let descriptionContainer = $("#descriptionContainer").hide();
+    let selectedProductType;
+    let selectedOrderType;
+
+    orderTypeMenu.change(function () {
+        selectedOrderType = $(this).val();
+
+        if (selectedOrderType === "MONTAGE"){
+            hideDescriptionInput();
+            showProductMenu();
+        } else {
+            hideProductMenu();
+            showDescriptionInput();
+        }
+    });
 
     productMenu.change(function(){
-        productType = $(this).val().toLowerCase();
+        selectedProductType = $(this).val().toLowerCase();
 
         $.ajax({
-            url: '/'+ productType +'/search/findAllBy',
+            url: '/'+ selectedProductType +'/search/findAllBy',
             type: 'get',
             dataType: 'json',
             success:function(data){
-                let products=data._embedded[productType];
+                let products=data._embedded[selectedProductType];
                 let len = products.length;
 
                 brandMenu.empty();
@@ -30,11 +50,11 @@ $(document).ready(function(){
         let brandName = $(this).val();
 
         $.ajax({
-            url: '/'+ productType +'/search/findAllByBrand?brand=' + brandName,
+            url: '/'+ selectedProductType +'/search/findAllByBrand?brand=' + brandName,
             type: 'get',
             dataType: 'json',
             success:function(data){
-                let products=data._embedded[productType];
+                let products=data._embedded[selectedProductType];
                 let len = products.length;
 
                 modelMenu.empty();
@@ -48,5 +68,28 @@ $(document).ready(function(){
         });
     });
 
+    function showProductMenu() {
+        productHeader.show();
+        productContainer.show();
+        productTypeContainer.show();
+    }
+
+    function showDescriptionInput() {
+        descriptionHeader.show();
+        descriptionContainer.show();
+        productTypeContainer.show();
+    }
+
+    function hideProductMenu() {
+        productHeader.hide();
+        productContainer.hide();
+        productTypeContainer.hide();
+    }
+
+    function hideDescriptionInput() {
+        descriptionHeader.hide();
+        descriptionContainer.hide();
+        productTypeContainer.hide();
+    }
 
 });

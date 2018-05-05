@@ -2,6 +2,9 @@ package com.ispectrum.crmclima.areas.clients.models.bindingModels;
 
 import com.ispectrum.crmclima.constants.Messages;
 import com.ispectrum.crmclima.validation.AtLeastOneFieldNotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @AtLeastOneFieldNotNull(fieldNames = {"name","city","address","phone"},
         message = Messages.FILL_AT_LEAST_ONE_FIELD)
@@ -60,4 +63,5 @@ public class AddClientModel {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }

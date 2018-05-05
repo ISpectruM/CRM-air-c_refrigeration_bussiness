@@ -4,8 +4,13 @@ import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.RepairOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -52,4 +57,20 @@ public class RepairOrderController extends BaseController{
         this.repairOrderService.saveRepairOrder(id,bindingModel);
         return this.redirect("/orders/repairs/all?page=0");
     }
+
+    @GetMapping("/all")
+    public ModelAndView getAllRepairs(
+            @PageableDefault(sort={"orderDate"}, direction = Sort.Direction.DESC) Pageable pageable){
+        Page<RepairOrderDto> allRepairs = this.repairOrderService.getAllRepairs(pageable);
+        this.addViewAndObject("objects",allRepairs,"orders/repairs/all");
+        return this.addObject("area", "repairs");
+    }
+
+    @GetMapping("/details/{id}")
+    public ModelAndView getMontageDetails(@PathVariable String id){
+        RepairOrderDto repair = this.repairOrderService.getRepairById(id);
+        return this.addViewAndObject("order",repair,"orders/details");
+    }
+
+
 }

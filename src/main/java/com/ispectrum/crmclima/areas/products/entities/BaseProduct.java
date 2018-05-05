@@ -62,7 +62,7 @@ public abstract class BaseProduct {
     }
 
     public ProductType getProductType() {
-        return this.productType;
+        return ProductType.AIRCONDS;
     }
 
     public void setProductType(ProductType productType) {

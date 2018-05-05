@@ -18,10 +18,6 @@ public class MontageOrderDto {
 
     private MontageType montageType;
 
-    private ProductType productType;
-
-    private Map<AirConditionerDto, Integer> airConditioners;
-
     private Integer count;
 
     private ClientDto client;
@@ -42,7 +38,9 @@ public class MontageOrderDto {
 
     private String status;
 
-    private String other;
+    private String product;
+
+    private Map<AirConditionerDto, Integer> airConditioners;
 
     private boolean isMarked;
     private boolean isFinished;
@@ -163,20 +161,12 @@ public class MontageOrderDto {
         this.id = id;
     }
 
-    public ProductType getProductType() {
-        return this.productType;
+    public String getProduct() {
+        return this.product;
     }
 
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
-
-    public String getOther() {
-        return this.other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     public boolean getIsMarked() {

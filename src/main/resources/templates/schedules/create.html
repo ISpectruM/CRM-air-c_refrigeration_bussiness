@@ -44,7 +44,7 @@
                 <th:block th:each="product:*{airConditioners}" th:object="${product.key}">
                     <p id="brand-model" th:text="|*{brand} *{model}|"></p>
                 </th:block>
-                <p id="otherProduct" th:placeholder="*{otherProduct}">
+                <p id="otherProduct" th:placeholder="*{other}">
             </td>
             <!--count-->
             <td th:text="*{count}"></td>

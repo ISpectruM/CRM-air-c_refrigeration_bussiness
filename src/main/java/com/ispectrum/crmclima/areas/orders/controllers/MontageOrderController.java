@@ -9,6 +9,7 @@ import com.ispectrum.crmclima.areas.orders.service.MontageOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,7 +33,7 @@ public class MontageOrderController extends BaseController{
     }
 
     @GetMapping("/all")
-    public ModelAndView getAllMontages(@PageableDefault Pageable pageable){
+    public ModelAndView getAllMontages(@PageableDefault(sort={"orderDate"},direction = Sort.Direction.DESC) Pageable pageable){
         Page<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages(pageable);
         this.addViewAndObject("objects",allMontages,"orders/montages/all");
         return this.addObject("area", "montages");
@@ -66,7 +67,7 @@ public class MontageOrderController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView getMontageDetails(@PathVariable String id){
         MontageOrderDto montage = this.montageOrderService.getMontageById(id);
-        return this.addViewAndObject("montage",montage,"orders/montages/details");
+        return this.addViewAndObject("order",montage,"orders/details");
     }
 
     @GetMapping("/edit/{id}")

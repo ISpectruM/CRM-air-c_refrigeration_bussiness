@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class RepairBindingModel {
@@ -16,7 +17,7 @@ public class RepairBindingModel {
     private String repairType;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
-    @NotEmpty(message = Messages.FIELD_CANT_BE_EMPTY)
+    @NotNull(message = Messages.FIELD_CANT_BE_EMPTY)
     private Integer count;
 
     @NotEmpty(message = Messages.FIELD_CANT_BE_EMPTY)

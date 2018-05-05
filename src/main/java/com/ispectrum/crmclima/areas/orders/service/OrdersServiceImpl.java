@@ -19,12 +19,13 @@ public class OrdersServiceImpl implements OrdersService {
 
 
     @Autowired
-    public OrdersServiceImpl(MontageOrderService montageOrderService, RepairOrderService repairOrderService, ProphylacticOrderService prophylacticOrderService){
+    public OrdersServiceImpl(MontageOrderService montageOrderService,
+                             RepairOrderService repairOrderService,
+                             ProphylacticOrderService prophylacticOrderService){
         this.montageOrderService = montageOrderService;
         this.repairOrderService = repairOrderService;
         this.prophylacticOrderService = prophylacticOrderService;
     }
-
 
     @Override
     public List<MontageOrder> getAllUnfinishedMontages() {

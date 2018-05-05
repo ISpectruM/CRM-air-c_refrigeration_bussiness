@@ -1,6 +1,6 @@
 <div class="ml-5 mr-5" th:with="currentPage=${#conversions.convert(#request.getParameter('page'),'Integer')}">
     <div class="row card-header mb-1">
-        <h3 class="col-sm-12">Всички монтажи</h3>
+        <h3 class="col-sm-12">Монтажи</h3>
         <div class="col-sm-4">
             <a type="button" class="btn btn-success" th:href="@{/clients/all?page=0}">Нова заявка</a>
         </div>
@@ -15,7 +15,7 @@
             <th scope="col">#</th>
             <th scope="col">От дата</th>
             <th scope="col">Заявка</th>
-            <th scope="col">Продукт</th>
+            <th scope="col">Продукт (марка->модел)</th>
             <th scope="col">Брой</th>
             <th scope="col">Клиент</th>
             <th scope="col">Адрес</th>
@@ -33,12 +33,12 @@
             <td th:text="*{orderDate}"></td>
             <td th:unless="*{montageType == null}" th:text="*{montageType.displayName}"></td>
             <td>
-                <p th:each="product:*{airConditioners}" th:object="${product.key}"
-                   th:text="|*{brand} *{model}|"></p>
+                <p th:each="product,iter:*{airConditioners}" th:object="${product.key}"
+                   th:text="|${iter.index+1}. *{brand} -> *{model}, ${product.value}бр.|"></p>
             </td>
             <td th:text="*{count}"></td>
             <td th:text="*{client.name}"></td>
-            <td th:text="|*{location.city}, *{location.address}|"></td>
+            <td th:text="|*{location.city} *{location.address}|"></td>
             <td th:text="*{client.phone}"></td>
             <td th:text="*{price}"></td>
             <td th:text="*{deposit}"></td>

@@ -13,11 +13,16 @@ import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBind
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
+import com.ispectrum.crmclima.areas.users.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,20 +32,23 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     private final ClientService clientService;
     private final AirConditionService airConditionService;
     private final MontageOrderRepository montageOrderRepository;
+    private final UserDetailsService userDetailsService;
 
 
     @Autowired
     public MontageOrderServiceImpl(
             ClientService clientService,
             AirConditionService airConditionService,
-            MontageOrderRepository montageOrderRepository) {
+            MontageOrderRepository montageOrderRepository, UserDetailsService userDetailsService) {
         this.clientService = clientService;
         this.airConditionService = airConditionService;
         this.montageOrderRepository = montageOrderRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     public void addMontage(String clientId,MontageOrderBindingModel model) {
+
         MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
         Long orderNumber = this.montageOrderRepository
@@ -66,6 +74,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
         addProductToOrder(newOrder, model);
 
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = this.userDetailsService.loadUserByUsername(principal.getName());
+        newOrder.setUser((User)user);
         this.montageOrderRepository.save(newOrder);
     }
 

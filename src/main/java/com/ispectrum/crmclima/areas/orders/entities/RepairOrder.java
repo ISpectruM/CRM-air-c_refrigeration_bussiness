@@ -20,8 +20,6 @@ public class RepairOrder extends BaseOrder{
     @OneToOne(cascade = CascadeType.ALL)
     private Location location;
 
-    private String description;
-
 
     public RepairOrder() {
     }
@@ -41,14 +39,6 @@ public class RepairOrder extends BaseOrder{
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public RepairType getRepairType() {

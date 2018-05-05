@@ -4,6 +4,7 @@ import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import org.hibernate.annotations.GenericGenerator;
+import org.modelmapper.internal.cglib.core.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -43,6 +44,7 @@ public class Client {
 
 
     public Client() {
+        this.enterDate = LocalDate.now();
     }
 
     public String getId() {

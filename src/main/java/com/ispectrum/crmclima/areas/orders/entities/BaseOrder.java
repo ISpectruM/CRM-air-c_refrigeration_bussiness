@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.entities;
 
+import com.ispectrum.crmclima.areas.users.entities.User;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -38,6 +39,11 @@ public abstract class BaseOrder {
 
     private String otherProduct;
 
+    private String description;
+
+    @ManyToOne(targetEntity = User.class)
+    private User user;
+
     private boolean isMarked;
     private boolean isFinished;
     private boolean isWithInvoice;
@@ -46,6 +52,8 @@ public abstract class BaseOrder {
     private boolean isWaiting;
     private boolean isWarranty;
     private boolean isForFinishing;
+
+
 
     public BaseOrder() {}
 
@@ -224,5 +232,21 @@ public abstract class BaseOrder {
 
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

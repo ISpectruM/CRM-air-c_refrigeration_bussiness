@@ -10,8 +10,11 @@ import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import com.ispectrum.crmclima.areas.orders.entities.enums.RepairType;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.repository.RepairOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,7 +51,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     public RepairOrder saveRepairOrder(String clientId, RepairBindingModel model) {
         RepairOrder newOrder = ModelMappingUtil.convertClass(model, RepairOrder.class);
 
-        if(model.getScheduleDate() != null){
+        if(model.getOrderDate() != null){
             newOrder.setOrderDate(DateToLocalDate.convert(model.getOrderDate()));
         }
 
@@ -66,5 +69,17 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         newOrder.setLocation(location);
 
         return this.repairOrderRepository.save(newOrder);
+    }
+
+    @Override
+    public Page<RepairOrderDto> getAllRepairs(Pageable pageable) {
+        Page<RepairOrder> allRepairs = this.repairOrderRepository.findAllBy(pageable);
+        return ModelMappingUtil.convertPage(allRepairs,RepairOrderDto.class);
+    }
+
+    @Override
+    public RepairOrderDto getRepairById(String id) {
+        RepairOrder firstById = this.repairOrderRepository.findFirstById(id);
+        return ModelMappingUtil.convertClass(firstById,RepairOrderDto.class);
     }
 }
