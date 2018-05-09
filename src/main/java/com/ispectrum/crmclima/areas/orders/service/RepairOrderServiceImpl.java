@@ -5,10 +5,13 @@ import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotFoundException;
+import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundException;
+import com.ispectrum.crmclima.areas.error_handling.exception.RepairNotFoundException;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import com.ispectrum.crmclima.areas.orders.entities.enums.RepairType;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.repository.RepairOrderRepository;
@@ -18,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +77,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
 
     @Override
     public Page<RepairOrderDto> getAllRepairs(Pageable pageable) {
-        Page<RepairOrder> allRepairs = this.repairOrderRepository.findAllBy(pageable);
+        Page<RepairOrder> allRepairs = this.repairOrderRepository.findAllByDeletedOnIsNull(pageable);
         return ModelMappingUtil.convertPage(allRepairs,RepairOrderDto.class);
     }
 
@@ -82,4 +86,55 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         RepairOrder firstById = this.repairOrderRepository.findFirstById(id);
         return ModelMappingUtil.convertClass(firstById,RepairOrderDto.class);
     }
+
+    @Override
+    public RepairOrder editRepair(String id, RepairBindingModel bindingModel) {
+        RepairOrder repair = this.repairOrderRepository.findFirstById(id);
+        if (repair == null){
+            throw new MontageNotFoundException();
+        }
+        RepairOrder editedOrder = ModelMappingUtil.convertClass(bindingModel, RepairOrder.class);
+        editedOrder.setId(id);
+
+        Client client = repair.getClient();
+        editedOrder.setClient(client);
+
+        LocalDate orderDate = DateToLocalDate.convert(bindingModel.getOrderDate());
+        editedOrder.setOrderDate(orderDate);
+
+        Date scheduleDate = bindingModel.getScheduleDate();
+        LocalDate newDate = null;
+        if (scheduleDate != null){
+            newDate = DateToLocalDate.convert(scheduleDate);
+        }
+        editedOrder.setScheduleDate(newDate);
+
+        Location location = this.getLocation(bindingModel);
+        editedOrder.setLocation(location);
+
+        return this.repairOrderRepository.save(editedOrder);
+    }
+
+    @Override
+    public boolean deleteRepair(String id) {
+        RepairOrder repairToDelete = this.repairOrderRepository.findFirstById(id);
+        if (repairToDelete == null){
+            throw new RepairNotFoundException();
+        }
+        try {
+            repairToDelete.setDeletedOn(LocalDate.now());
+            this.repairOrderRepository.save(repairToDelete);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    private Location getLocation(RepairBindingModel model) {
+        Location location = new Location();
+        location.setCity(model.getCity());
+        location.setAddress(model.getAddress());
+        return location;
+    }
+
 }

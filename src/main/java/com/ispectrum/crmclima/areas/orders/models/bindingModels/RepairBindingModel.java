@@ -31,11 +31,9 @@ public class RepairBindingModel {
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
 
-    private Double discount;
-
     private String comment;
 
-    private String Description;
+    private String description;
 
     private String otherProduct;
 
@@ -91,14 +89,6 @@ public class RepairBindingModel {
 
     public void setDeposit(Double deposit) {
         this.deposit = deposit;
-    }
-
-    public Double getDiscount() {
-        return this.discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
     }
 
     public Date getScheduleDate() {
@@ -198,10 +188,10 @@ public class RepairBindingModel {
     }
 
     public String getDescription() {
-        return this.Description;
+        return this.description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 }

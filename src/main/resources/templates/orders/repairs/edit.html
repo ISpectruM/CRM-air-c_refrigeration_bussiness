@@ -23,11 +23,11 @@
 
     <h5 class="card-header">Вид заявка</h5>
     <div class="form-group row m-2">
-        <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <select class="col-sm-3" id="montageType" name="montageType">
-            <option th:value="*{montageType}" th:text="*{montageType.displayName}"></option>
+        <label for="repairType" class="col-sm-2 col-form-label">Вид заявка:</label>
+        <select class="col-sm-3" id="repairType" name="repairType">
+            <option th:value="*{repairType}" th:text="*{repairType.displayName}"></option>
             <option class="form-control"
-                    th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
+                    th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.RepairType.values()}"
                     th:value="${type}" th:text="${type.displayName}"></option>
         </select>
     </div>

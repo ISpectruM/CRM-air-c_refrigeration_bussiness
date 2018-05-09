@@ -1,6 +1,8 @@
 package com.ispectrum.crmclima.areas.orders.repository;
 
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -15,10 +17,12 @@ public interface MontageOrderRepository extends PagingAndSortingRepository<Monta
 //    List<MontageOrder> findAllByOrderDateAsc();
 
     MontageOrder findFirstById(String id);
-
-    List<MontageOrder> findAllByIsFinished(boolean isFinished);
-
+//Used to show the orders for new schedule
+    List<MontageOrder> findAllByIsFinishedAndDeletedOnIsNull(boolean isFinished);
+//Used in creating schedule for a specific date
     Set<MontageOrder> findAllByScheduleDateAndIsFinished(LocalDate scheduleDate, boolean isFinished);
-
+//    Used to get the last order number to assign next;
     MontageOrder findTopByOrderByOrderNumberDesc();
+
+    Page<MontageOrder> findAllByDeletedOnIsNull(Pageable pageable);
 }

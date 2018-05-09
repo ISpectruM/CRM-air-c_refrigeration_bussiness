@@ -3,13 +3,10 @@ package com.ispectrum.crmclima.areas.orders.models.dtos;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
-import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
-import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Set;
 
 public class MontageOrderDto {
     private String id;
@@ -18,7 +15,7 @@ public class MontageOrderDto {
 
     private MontageType montageType;
 
-    private Integer count;
+    private Integer productCount;
 
     private ClientDto client;
 
@@ -39,6 +36,8 @@ public class MontageOrderDto {
     private String status;
 
     private String product;
+
+    private String description;
 
     private Map<AirConditionerDto, Integer> airConditioners;
 
@@ -89,12 +88,12 @@ public class MontageOrderDto {
         this.airConditioners = airConditioners;
     }
 
-    public Integer getCount() {
-        return this.count;
+    public Integer getProductCount() {
+        return this.productCount;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 
     public LocationDto getLocation() {
@@ -239,5 +238,13 @@ public class MontageOrderDto {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

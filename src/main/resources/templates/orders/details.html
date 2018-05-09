@@ -30,6 +30,7 @@
                         th:text="*{prophylacticType.displayName}"></td>
                     <td colspan="4"></td>
                 </tr>
+<!--Products section-->
                 <th:block th:if="${order instanceOf T(com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto)}"
                           th:include="~{fragments/orders/montageProductDetails}"></th:block>
                 <th:block th:if="${order instanceOf T(com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto)}"
@@ -125,6 +126,7 @@
             type="hidden"
             th:name="${_csrf.parameterName}"
             th:value="${_csrf.token}"/>
+    <!--Buttons section-->
     <div class="form-group">
         <th:block th:if="${order instanceOf T(com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto)}"
                   th:include="~{fragments/orders/buttons/montageDetailsButtons}"></th:block>

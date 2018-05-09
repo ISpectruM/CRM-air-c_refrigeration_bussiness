@@ -19,7 +19,6 @@ public class MontageOrderBindingModel {
 
     private String product;
 
-    @NotEmpty(message = Messages.CHOOSE_PRODUCT)
     private String productType;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
@@ -44,6 +43,8 @@ public class MontageOrderBindingModel {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
+
+    private String description;
 
     private boolean isMarked;
     private boolean isFinished;
@@ -215,5 +216,13 @@ public class MontageOrderBindingModel {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

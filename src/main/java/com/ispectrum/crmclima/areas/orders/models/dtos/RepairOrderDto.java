@@ -45,6 +45,8 @@ public class RepairOrderDto {
 
     private String status;
 
+    private String description;
+
 
     public RepairOrderDto() {
     }
@@ -191,5 +193,13 @@ public class RepairOrderDto {
 
     public void setIsPayed(boolean payed) {
         isPayed = payed;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

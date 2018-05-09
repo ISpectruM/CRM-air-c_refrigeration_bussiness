@@ -1,10 +1,15 @@
 <tr th:each="product,iter:*{airConditioners}" th:object="${product.key}">
     <td><em><strong th:text="|Продукт ${iter.index+1}:|"></strong></em></td>
-    <td th:text="|*{productType.displayName}|"></td>
+    <td th:text="*{productType.displayName}"></td>
     <td th:if="*{brand} != null"><em><strong th:text="|Марка/модел:|"></strong></em></td>
     <td th:if="*{brand} != null" th:text="|*{brand} *{model}|"></td>
     <td th:if="${order.product} != null"><em><strong th:text="|Друго:|"></strong></em></td>
     <td th:if="${order.product} != null" th:text="${order.product}"></td>
     <td><em><strong th:text="|Брой:|"></strong></em></td>
-    <td th:text="${order.count}"></td>
+    <td th:text="${order.productCount}"></td>
+</tr>
+<tr th:if="*{description} != null">
+    <td><em><strong th:text="|Описание:|"></strong></em></td>
+    <td th:text="*{description}" colspan="4"></td>
+    <td ></td>
 </tr>

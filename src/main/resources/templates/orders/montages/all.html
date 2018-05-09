@@ -36,7 +36,7 @@
                 <p th:each="product,iter:*{airConditioners}" th:object="${product.key}"
                    th:text="|${iter.index+1}. *{brand} -> *{model}, ${product.value}бр.|"></p>
             </td>
-            <td th:text="*{count}"></td>
+            <td th:text="*{productCount}"></td>
             <td th:text="*{client.name}"></td>
             <td th:text="|*{location.city} *{location.address}|"></td>
             <td th:text="*{client.phone}"></td>

@@ -19,7 +19,7 @@ public interface MontageOrderService {
 
     MontageOrderDto getMontageById(String id);
 
-    void deleteOrder(String id);
+    boolean deleteOrder(String id);
 
     void editMontage(String id,MontageOrderBindingModel model);
 

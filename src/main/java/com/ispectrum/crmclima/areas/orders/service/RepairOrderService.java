@@ -24,4 +24,8 @@ public interface RepairOrderService {
     Page<RepairOrderDto> getAllRepairs(Pageable pageable);
 
     RepairOrderDto getRepairById(String id);
+
+    RepairOrder editRepair(String id,RepairBindingModel bindingModel);
+
+    boolean deleteRepair(String id);
 }

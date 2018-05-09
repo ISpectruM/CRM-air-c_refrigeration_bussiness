@@ -10,7 +10,8 @@ public final class Messages {
     public static final String SCHEDULE_NOT_FOUND = "Графикът не е намерен!";
     public static final String CLIENT_NOT_ADDED =  "Грешка! Клиентът не едобавен!";
     public static final String CLIENT_NOT_FOUND =  "Клиентът не е намерен!";
-    public static final String MONTAGE_NOT_FOUND ="Търсеният монтаж не е намерен!";
+    public static final String MONTAGE_NOT_FOUND ="Търсеният монтаж не бе намерен!";
+    public static final String REPAIR_NOT_FOUND ="Търсеният ремонт не бе намерен!";
     public static final String USER_NOT_FOUND = "Потребителят не е намерен!";
     public static final String ROLE_NOT_FOUND = "Потребителската роля не е намерена!";
     public static final String FILL_AT_LEAST_ONE_FIELD = "Най-малко едно от полетата трябва да бъде попълнено";

@@ -19,7 +19,7 @@ public abstract class BaseOrder {
 
     private LocalDate orderDate;
 
-    private Integer count;
+    private Integer productCount;
 
     private String comment;
 
@@ -53,6 +53,7 @@ public abstract class BaseOrder {
     private boolean isWarranty;
     private boolean isForFinishing;
 
+    private LocalDate deletedOn;
 
 
     public BaseOrder() {}
@@ -74,12 +75,12 @@ public abstract class BaseOrder {
         this.orderDate = orderDate;
     }
 
-    public Integer getCount() {
-        return this.count;
+    public Integer getProductCount() {
+        return this.productCount;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 
     public String getComment() {
@@ -248,5 +249,13 @@ public abstract class BaseOrder {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

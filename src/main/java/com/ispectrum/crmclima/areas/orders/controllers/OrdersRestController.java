@@ -7,10 +7,8 @@ import com.ispectrum.crmclima.constants.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -32,5 +30,10 @@ public class OrdersRestController {
         ResponseMessage message = new ResponseMessage();
         message.setMessage(Messages.SUCCESSFULLY_SAVED);
         return  ResponseEntity.ok(message);
+    }
+
+    @GetMapping("/productsAddForm")
+    public ModelAndView getChooseProductFragment(){
+        return new ModelAndView("orders/montages/fragments/productsAddForm");
     }
 }

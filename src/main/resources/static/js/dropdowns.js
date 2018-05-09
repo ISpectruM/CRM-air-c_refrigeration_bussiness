@@ -6,16 +6,23 @@ $(document).ready(function(){
 
     let productHeader = $("#productHeader");
     let descriptionHeader = $("#descriptionHeader");
-    let productTypeContainer = $("#productTypeContainer").hide();
-    let productContainer = $("#productContainer").hide();
+    let productTypeContainer = $("#productTypeContainer");
+    let productContainer = $("#productContainer");
     let descriptionContainer = $("#descriptionContainer").hide();
+    let productEditBin = $("#productEditBin");
     let selectedProductType;
     let selectedOrderType;
 
-    orderTypeMenu.change(function () {
+    hideDescriptionInput();
+
+    orderTypeMenu.click(function () {
+
+        productEditBin.hide();
+
         selectedOrderType = $(this).val();
 
         if (selectedOrderType === "MONTAGE"){
+            // $("#productTypeContainer").load("/orders/productsAddForm");
             hideDescriptionInput();
             showProductMenu();
         } else {
@@ -83,13 +90,11 @@ $(document).ready(function(){
     function hideProductMenu() {
         productHeader.hide();
         productContainer.hide();
-        productTypeContainer.hide();
     }
 
     function hideDescriptionInput() {
         descriptionHeader.hide();
         descriptionContainer.hide();
-        productTypeContainer.hide();
     }
 
 });

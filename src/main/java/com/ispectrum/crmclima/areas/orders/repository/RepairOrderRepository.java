@@ -17,7 +17,7 @@ public interface RepairOrderRepository extends JpaRepository<RepairOrder, String
 
     Set<RepairOrder> findAllByScheduleDate(LocalDate scheduleDate);
 
-    Page<RepairOrder> findAllBy(Pageable pageable);
+    Page<RepairOrder> findAllByDeletedOnIsNull(Pageable pageable);
 
     RepairOrder findFirstById(String id);
 }

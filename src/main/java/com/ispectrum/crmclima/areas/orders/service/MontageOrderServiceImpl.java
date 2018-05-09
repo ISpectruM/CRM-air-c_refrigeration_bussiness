@@ -14,6 +14,7 @@ import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
 import com.ispectrum.crmclima.areas.users.entities.User;
+import com.ispectrum.crmclima.areas.users.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,14 +33,14 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     private final ClientService clientService;
     private final AirConditionService airConditionService;
     private final MontageOrderRepository montageOrderRepository;
-    private final UserDetailsService userDetailsService;
+    private final UserServiceImpl userDetailsService;
 
 
     @Autowired
     public MontageOrderServiceImpl(
             ClientService clientService,
             AirConditionService airConditionService,
-            MontageOrderRepository montageOrderRepository, UserDetailsService userDetailsService) {
+            MontageOrderRepository montageOrderRepository, UserServiceImpl userDetailsService) {
         this.clientService = clientService;
         this.airConditionService = airConditionService;
         this.montageOrderRepository = montageOrderRepository;
@@ -82,7 +83,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
     @Override
     public Page<MontageOrderDto> getAllMontages(Pageable pageable) {
-        Page<MontageOrder> montages = this.montageOrderRepository.findAll(pageable);
+        Page<MontageOrder> montages = this.montageOrderRepository.findAllByDeletedOnIsNull(pageable);
         return ModelMappingUtil.convertPage(montages,MontageOrderDto.class);
     }
 
@@ -96,12 +97,19 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public void deleteOrder(String id) {
-        MontageOrder order = this.montageOrderRepository.findFirstById(id);
-        if(order == null){
+    public boolean deleteOrder(String id) {
+        MontageOrder montageToDelete = this.montageOrderRepository.findFirstById(id);
+        if(montageToDelete == null){
             throw new MontageNotFoundException();
         }
-        this.montageOrderRepository.delete(order);
+        try {
+            montageToDelete.setDeletedOn(LocalDate.now());
+            this.montageOrderRepository.save(montageToDelete);
+
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -119,8 +127,12 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         LocalDate orderDate = DateToLocalDate.convert(model.getOrderDate());
         editedOrder.setOrderDate(orderDate);
 
-        LocalDate scheduleDate = DateToLocalDate.convert(model.getScheduleDate());
-        editedOrder.setScheduleDate(scheduleDate);
+        Date modelScheduleDate = model.getScheduleDate();
+        LocalDate newScheduleDate=null;
+        if (modelScheduleDate != null){
+            newScheduleDate=DateToLocalDate.convert(model.getScheduleDate());
+        }
+        editedOrder.setScheduleDate(newScheduleDate);
 
         Location location = getLocation(model);
         editedOrder.setLocation(location);
@@ -131,13 +143,14 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
     @Override
     public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
-        List<MontageOrder> allUnFinished = this.montageOrderRepository.findAllByIsFinished(false);
+        List<MontageOrder> allUnFinished =
+                this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
         return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
     }
 
     @Override
     public List<MontageOrder> getAllUnfinishedMontages() {
-        return this.montageOrderRepository.findAllByIsFinished(false);
+        return this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
     }
 
     @Override

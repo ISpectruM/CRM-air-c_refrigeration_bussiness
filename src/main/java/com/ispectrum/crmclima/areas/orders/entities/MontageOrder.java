@@ -86,7 +86,7 @@ public class MontageOrder extends BaseOrder{
     }
 
     @Override
-    public Integer getCount() {
+    public Integer getProductCount() {
         int count = 0;
         Collection<Integer> values = this.getAirConditioners().values();
         if(!values.isEmpty()){
