@@ -3,7 +3,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

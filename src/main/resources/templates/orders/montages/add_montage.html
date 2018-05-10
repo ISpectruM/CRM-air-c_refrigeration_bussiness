@@ -14,7 +14,6 @@
     </th:block>
     <hr/>
     <form class="form-horizontal" th:action="@{/orders/montages/add/{id}(id=${client.id})}" th:method="POST">
-        <h5 class="card-header">Дата</h5>
         <div class="form-group row m-2">
             <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
             <div class="col-md-3">
@@ -23,7 +22,6 @@
             </div>
         </div>
         <!--Order type section-->
-        <h5 class="card-header">Вид заявка</h5>
         <div class="form-group row m-2">
             <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
             <div class="col-sm-3">
@@ -42,36 +40,50 @@
         </div>
         <!--Products section-->
         <div id="productTypeContainer" class="col-12">
-            <!--Chosen products-->
-            <div class="row">
-                <h5 class="card-header col-12" th:text="'Избрани продукти / услуги'"></h5>
+            <div id="allSelectedProducts">
+                <!--Chosen products-->
+                <div class="row">
+                    <h6 class="card-header col-12" th:text="'Избрани продукти / услуги'"></h6>
+                </div>
+                <div class="row" id="selectedProducts">
+                    <div class="form-group col-sm-4 pr-1">
+                        <label for="aircProductsBin" th:text="'Климатици'"></label>
+                        <select multiple class="form-control" id="aircProductsBin" name="aircProductsBin"></select>
+                    </div>
+                    <div class="form-group col p-0 pt-4">
+                        <a href="#" id="aircProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
+                    </div>
+                    <div class="form-group col-sm-3 pr-1">
+                        <label for="coolersProductsBin" th:text="'Изпарителни охладители'"></label>
+                        <select multiple class="form-control" id="coolersProductsBin"
+                                name="coolersProductsBin"></select>
+                    </div>
+                    <div class="form-group col p-0 pt-4">
+                        <a href="#" id="coolersProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
+                    </div>
+                    <div class="form-group col-sm-4 pr-1">
+                        <label for="fridgeProductsBin" th:text="'Хладилна техника'"></label>
+                        <select multiple class="form-control" id="fridgeProductsBin" name="fridgeProductsBin"></select>
+                    </div>
+                    <div class="form-group col p-0 pt-4">
+                        <a href="#" id="fridgeProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label for="description" th:text="'Друго'"></label>
+                        <input class="form-control" id="description" name="description"/>
+                    </div>
+                </div>
             </div>
-            <div class="row" id="selectedProducts">
-                <div class="form-group col-sm-4">
-                    <label for="aircProductsBin" th:text="'Климатици'"></label>
-                    <select multiple class="form-control" id="aircProductsBin" name="aircProductsBin"></select>
-                </div>
-                <div class="form-group col-sm-4">
-                    <label for="coolersProductsBin" th:text="'Изпарителни охладители'"></label>
-                    <select multiple class="form-control" id="coolersProductsBin" name="coolersProductsBin"></select>
-                </div>
-                <div class="form-group col-sm-4">
-                    <label for="fridgeProductsBin" th:text="'Хладилна техника'"></label>
-                    <select multiple class="form-control" id="fridgeProductsBin" name="fridgeProductsBin"></select>
-                </div>
-            </div>
             <div class="row">
-                <div class="form-group col-sm-12">
-                    <label for="description" th:text="'Друго'"></label>
-                    <input class="form-control" id="description" name="description"/>
-                </div>
             </div>
-            <!--Select products section-->
-            <div class="row">
-                <h5 id="productHeader" class="card-header col-12" th:text="'Изобр на продукти'"></h5>
 
-                <h5 id="descriptionHeader" class="card-header col-12">Описание</h5>
+            <!--Select products section-->
+            <!--Headers-->
+            <div class="row">
+                <h6 id="productHeader" class="card-header col-12" th:text="'Изобр на продукти'"></h6>
+                <h6 id="descriptionHeader" class="card-header col-12">Описание</h6>
             </div>
+            <!--Containers-->
             <div class="form-group row mt-2">
                 <div class="col-10">
                     <!--Description section-->
@@ -82,20 +94,15 @@
                         </div>
                     </div>
                     <!--New products section-->
-                    <div id="productContainer" class="row">
+                    <div id="newProductContainer" class="row">
                         <div class="col-md-3">
                             <label for="productType">Продукт:</label>
                             <select id="productType" name="productType" class="form-control">
-                                <!--th:classappend="${#fields.hasErrors('productType')}? 'is-invalid':''"-->
-                                <!--th:field="*{productType}">-->
-
                                 <option value="">- Избери -</option>
                                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                                         th:value="${product}" th:text="${product.displayName}"></option>
                             </select>
-                            <!--<th:block th:each="error:${#fields.errors('productType')}">-->
-                            <!--<small class="invalid-feedback text-danger" th:text="${error}"></small>-->
-                            <!--</th:block>-->
+                            <small id="typeErrorField" class="invalid-feedback text-danger"></small>
                         </div>
                         <div class="col-md-3">
                             <label for="brand">Марка:</label>
@@ -111,9 +118,8 @@
                         </div>
                         <div class="col-md-3">
                             <label for="otherProduct">Друго:</label>
-                            <div id="otherProduct">
-                                <input class="form-control" name="otherProduct" placeholder="Друг продукт">
-                            </div>
+                            <input class="form-control" id="otherProduct" name="otherProduct"
+                                   placeholder="Друг продукт">
                         </div>
                     </div>
                 </div>
@@ -122,26 +128,28 @@
                     <label for="count">Брой:</label>
                     <div class="">
                         <input id="count" class="form-control" name="count">
-                        <small id="errorField" class="invalid-feedback text-danger" th:text="${error}"></small>
+                        <small id="countErrorField" class="invalid-feedback text-danger"></small>
                     </div>
                 </div>
-                <div class="col-sm-1" style="child-align: middle">
-                    <a href="#" id="productAddBtn" type="button" class="btn btn-sm" th:text="'&there4;'"></a>
+                <!--Add product btn-->
+                <div class="col p-0 pt-4" style="text-align: center">
+                    <a href="#" id="productAddBtn" type="button" class="btn btn-sm btn-success"
+                       th:text="'&there4;'" style="text-align-all: justify"></a>
                 </div>
             </div>
             <!--Price section-->
             <div class="row">
-                <h5 class="card-header col-12">Цена</h5>
+                <h6 class="card-header col-12">Цена</h6>
             </div>
             <div class="form-group row mt-2">
                 <div class="col-12">
                     <div class="row">
-                        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
+                        <label for="externalPrice" class="col-sm-1 col-form-label">Цена:</label>
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" id="price" name="price" placeholder="цена"
-                                   th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
-                                   th:field="*{price}">
-                            <th:block th:each="error:${#fields.errors('price')}">
+                            <input type="number" class="form-control" id="externalPrice" name="externalPrice" placeholder="цена"
+                                   th:classappend="${#fields.hasErrors('externalPrice')}? 'is-invalid':''"
+                                   th:field="*{externalPrice}">
+                            <th:block th:each="error:${#fields.errors('externalPrice')}">
                                 <small class="invalid-feedback text-danger" th:text="${error}"></small>
                             </th:block>
                         </div>
@@ -163,8 +171,9 @@
                 </div>
             </div>
         </div>
+
         <!--Address section-->
-        <h5 class="card-header">Адрес</h5>
+        <h6 class="card-header">Адрес</h6>
         <div class="form-group row m-2">
             <label for="city" class="col-sm-1 col-form-label">Град:</label>
             <div class="col-sm-3">
@@ -178,7 +187,7 @@
         </div>
 
         <!--Status section-->
-        <h5 class="card-header">Статус</h5>
+        <h6 class="card-header">Статус</h6>
         <div class="form-group row m-2 ">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished">
@@ -211,7 +220,7 @@
             </div>
         </div>
         <!--Comments-->
-        <h5 class="card-header">Особености/бележки</h5>
+        <h6 class="card-header">Особености/бележки</h6>
         <div class="form-group row m-2">
             <div class="col-sm-6">
                 <label for="comment">Особености/бележки:</label>
@@ -232,7 +241,7 @@
             <div class="col-lg-12 col-lg-offset-2">
                 <button type="reset" class="btn btn-default">Изчисти</button>
                 <a type="button" class="btn btn-default" th:href="@{/orders/montages/all?page=0}">Откажи</a>
-                <button type="submit" class="btn btn-primary">Запиши</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary">Запиши</button>
             </div>
         </div>
     </form>

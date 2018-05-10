@@ -3,7 +3,7 @@ package com.ispectrum.crmclima.areas.orders.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.MontageOrderService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,13 @@
 <div class="row card-header">
     <h5 class="col-sm-2">Монтажи</h5>
     <div class="col-sm-2 ml-auto">
-        <a type="button" class="btn btn-success" th:href="@{/orders/montages/add/{id}(id=${client.id})}">Нов монтаж</a>
+        <a type="button" class="btn btn-sm btn-success" th:href="@{/orders/montages/add/{id}(id=${client.id})}">Нов монтаж</a>
     </div>
 </div>
 <table class="table table-striped mt-2">
     <thead>
     <tr>
+        <th scope="col">#</th>
         <th scope="col">Дата</th>
         <th scope="col">Дейност</th>
         <th scope="col">Продукт</th>
@@ -23,25 +24,23 @@
     <tr class="table-active" th:each="montage, iter:${client.getMontageOrders()}" th:object="${montage}">
         <th scope="row" th:text="${iter.index+1}"></th>
         <td th:text="*{orderDate}"></td>
-        <td th:text="*{orderType}"></td>
+        <td th:text="*{montageType.displayName}"></td>
         <td>
-            <th:block th:each="product,iter:*{airConditioners}" th:object="${product}">
+            <th:block th:each="product,iter:*{airConditioners}" th:object="${product.key}">
                 <p class="text-capitalize"
-                   th:text="|${iter.index+1}. *{brand} *{product}|"></p>
+                   th:text="|${iter.index+1}. *{brand} *{model}, ${product.value}|"></p>
             </th:block>
         </td>
-        <td th:text="${#lists.size(*{airConditioners})}"></td>
+        <td th:text="*{productCount}"></td>
         <td th:text="*{location.getAddress()}"></td>
         <td th:text="*{price}"></td>
         <td th:text="*{deposit}"></td>
         <td th:text="*{comment}"></td>
         <td>
-            <p th:if="*{isFinished()}">Приключена</p>
-            <p th:if="*{isWaiting()}">В изчакване</p>
-            <p th:unless="*{isFinished()} AND *{isWaiting()}">В изпълнение</p>
+            <p th:text="*{status}"></p>
         </td>
         <td>
-            <a type="button" class="btn btn-info" th:href="@{/orders/montages/details/{id}(id=${montage.id})}">Детайли</a>
+            <a type="button" class="btn btn-sm btn-info" th:href="@{/orders/montages/details/{id}(id=${montage.id})}">Детайли</a>
         </td>
     </tr>
 

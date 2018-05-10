@@ -39,6 +39,8 @@ public class MontageOrder extends BaseOrder{
     @Column(name = "count")
     private Map<AirConditioner,Integer> airConditioners;
 
+    private Double externalPrice;
+
 
     public MontageOrder() {
         this.airConditioners = new HashMap<>();
@@ -99,16 +101,21 @@ public class MontageOrder extends BaseOrder{
     public Double getForPayment() {
         Double percent = 0D;
         Double total = 0D;
+
         if(this.getDiscount() != null){
             percent = this.getDiscount()/100;
         }
-
-        if(this.getPrice() != null){
-            total = this.getPrice();
+        Double price = this.getPrice();
+        if( price != null){
+            total += price;
             if (percent!=0){
                 total -= total * percent;
             }
-            total -= this.getDeposit();
+
+            Double deposit = this.getDeposit();
+            if(deposit != null && price>deposit){
+                total -= deposit;
+            }
         }
 
         return total;
@@ -124,5 +131,30 @@ public class MontageOrder extends BaseOrder{
 
     public String getService() {
         return this.service;
+    }
+
+
+    public Double getProductsPrice() {
+        Double price=0D;
+        double aircCost = this.getAirConditioners().entrySet().stream()
+                .mapToDouble(entry ->
+                        entry.getKey().getPrice() * entry.getValue()).sum();
+        return aircCost;
+    }
+
+    public Double getExternalPrice() {
+        return this.externalPrice;
+    }
+
+    public void setExternalPrice(Double externalPrice) {
+        this.externalPrice = externalPrice;
+    }
+
+    @Override
+    public Double getPrice() {
+        if (this.getExternalPrice() == null){
+            return this.getProductsPrice();
+        }
+        return this.getExternalPrice();
     }
 }

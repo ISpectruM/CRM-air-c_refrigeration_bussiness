@@ -9,7 +9,7 @@ import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.MontageOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
