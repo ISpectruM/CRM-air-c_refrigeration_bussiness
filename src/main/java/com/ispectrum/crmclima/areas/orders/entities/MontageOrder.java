@@ -99,18 +99,13 @@ public class MontageOrder extends BaseOrder{
 
     @Override
     public Double getForPayment() {
-        Double percent = 0D;
         Double total = 0D;
-
-        if(this.getDiscount() != null){
-            percent = this.getDiscount()/100;
-        }
         Double price = this.getPrice();
+
         if( price != null){
             total += price;
-            if (percent!=0){
-                total -= total * percent;
-            }
+
+            total = this.getDiscountedPrice(total);
 
             Double deposit = this.getDeposit();
             if(deposit != null && price>deposit){
@@ -133,15 +128,34 @@ public class MontageOrder extends BaseOrder{
         return this.service;
     }
 
-
+//Get the price embedded in the product object
     public Double getProductsPrice() {
         Double price=0D;
-        double aircCost = this.getAirConditioners().entrySet().stream()
-                .mapToDouble(entry ->
-                        entry.getKey().getPrice() * entry.getValue()).sum();
+        if (airConditioners.size() > 0){
+            price = this.getAirConditioners().entrySet().stream()
+                    .mapToDouble(entry -> {
+                        double prodPrice = 0D;
+                        if (entry.getKey().getPrice() != null){
+                            prodPrice = entry.getKey().getPrice() * entry.getValue();
+                        }
+                        return prodPrice;
+                            }).sum();
+        }
+
+        price = getDiscountedPrice(price);
+        return price;
+    }
+
+    private double getDiscountedPrice(double aircCost) {
+        Double discount = this.getDiscount();
+
+        if( discount != null){
+            aircCost -= aircCost * discount/100;
+        }
         return aircCost;
     }
 
+    //    Get the price entered in the price field
     public Double getExternalPrice() {
         return this.externalPrice;
     }
@@ -155,6 +169,7 @@ public class MontageOrder extends BaseOrder{
         if (this.getExternalPrice() == null){
             return this.getProductsPrice();
         }
-        return this.getExternalPrice();
+
+        return this.getDiscountedPrice(this.getExternalPrice());
     }
 }

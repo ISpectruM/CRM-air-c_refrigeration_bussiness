@@ -9,7 +9,7 @@ import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundExce
 import com.ispectrum.crmclima.areas.error_handling.exception.RepairNotFoundException;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.repository.RepairOrderRepository;
@@ -35,7 +35,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     }
 
     @Override
-    public void saveRepairChanges(OrderSaveModel model) {
+    public void saveRepairChanges(RestOrderBindingModel model) {
 //        TODO save changes to DB
     }
 

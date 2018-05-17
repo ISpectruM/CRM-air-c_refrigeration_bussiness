@@ -6,7 +6,7 @@
     <td th:if="${order.product} != null"><em><strong th:text="|Друго:|"></strong></em></td>
     <td th:if="${order.product} != null" th:text="${order.product}"></td>
     <td><em><strong th:text="|Брой:|"></strong></em></td>
-    <td th:text="${order.productCount}"></td>
+    <td th:text="${product.value}"></td>
 </tr>
 <tr th:if="*{description} != null">
     <td><em><strong th:text="|Описание:|"></strong></em></td>

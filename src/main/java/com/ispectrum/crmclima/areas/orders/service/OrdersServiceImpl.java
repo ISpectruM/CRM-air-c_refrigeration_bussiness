@@ -3,7 +3,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void saveOrder(OrderSaveModel model) {
+    public void saveOrder(RestOrderBindingModel model) {
         String service = model.getType();
 
         switch (service){
@@ -74,15 +74,15 @@ public class OrdersServiceImpl implements OrdersService {
         return this.prophylacticOrderService.getProphylacticsByDate(scheduleDate);
     }
 
-    private void editProphylactic(OrderSaveModel model) {
+    private void editProphylactic(RestOrderBindingModel model) {
         this.prophylacticOrderService.saveProphylacticChanges(model);
     }
 
-    private void editRepair(OrderSaveModel model) {
+    private void editRepair(RestOrderBindingModel model) {
         this.repairOrderService.saveRepairChanges(model);
     }
 
-    private void editMontage(OrderSaveModel model) {
-        this.montageOrderService.saveMontageChanges(model);
+    private void editMontage(RestOrderBindingModel model) {
+        this.montageOrderService.saveScheduleMontageChanges(model);
     }
 }

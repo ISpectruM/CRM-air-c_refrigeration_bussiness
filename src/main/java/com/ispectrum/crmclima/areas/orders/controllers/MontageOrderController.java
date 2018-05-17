@@ -4,6 +4,7 @@ import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.MontageOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,11 @@ public class MontageOrderController extends BaseController {
     }
 
     @GetMapping("/all")
-    public ModelAndView getAllMontages(@PageableDefault(sort = {"orderDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public ModelAndView getAllMontages(
+            @PageableDefault(sort = {"orderNumber"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages(pageable);
         this.addViewAndObject("objects", allMontages, "orders/montages/all");
-        return this.addObject("area", "montages");
+        return this.addObject("area", "orders/montages");
     }
 
     @GetMapping("/add/{clientId}")
@@ -48,20 +50,37 @@ public class MontageOrderController extends BaseController {
         return this.addObject("client", client);
     }
 
-    @PostMapping("/add/{id}")
-    public ModelAndView addOrderAction(
+    @PostMapping("/montage/add/{id}")
+    public ModelAndView addMontageAction(
             @PathVariable String id,
             @Valid @ModelAttribute(name = "bindingModel") MontageOrderBindingModel bindingModel,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            Map<String, Object> model = bindingResult.getModel();
-            ClientDto client = this.clientService.getClientById(id);
-            model.put("client", client);
-            return this.addViewAndObjectsMap("orders/montages/add_montage", model);
+            return getErrorsViewModel(id, bindingResult);
         }
         this.montageOrderService.addMontage(id, bindingModel);
         return this.redirect("/orders/montages/all?page=0");
+    }
+
+    @PostMapping("/offer/add/{id}")
+    public ModelAndView addOrderAction(
+            @PathVariable String id,
+            @Valid @ModelAttribute(name = "bindingModel") OfferViewBindingModel bindingModel,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return getErrorsViewModel(id, bindingResult);
+        }
+        this.montageOrderService.addOfferView(id, bindingModel);
+        return this.redirect("/orders/montages/all?page=0");
+    }
+
+    private ModelAndView getErrorsViewModel(@PathVariable String id, BindingResult bindingResult) {
+        Map<String, Object> model = bindingResult.getModel();
+        ClientDto client = this.clientService.getClientById(id);
+        model.put("client", client);
+        return this.addViewAndObjectsMap("orders/montages/add_montage", model);
     }
 
     @GetMapping("/details/{id}")

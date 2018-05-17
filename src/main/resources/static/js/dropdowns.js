@@ -1,5 +1,3 @@
-let montageUrl = '@{/orders/montages/add/{id}(id=${client.id})}';
-let offerViewUrl = '@{/orders/offer/add/{id}(id=${client.id})}';
 $(document).ready(function () {
     let orderTypeMenu = $("#montageType");
     let productMenu = $("#productType");
@@ -31,12 +29,12 @@ $(document).ready(function () {
             let typeErrorField = $("#typeErrorField").hide();
             let countErrorField = $("#countErrorField").hide();
 
-            if (count === "") {
+            if (count === "" || isNaN(parseInt(count))) {
                 countErrorField.text("Въведете брой").show();
                 return;
             }
 
-            let newProduct = brand + ', ' + model + ', ' + count;
+            let newProduct = brand + ' - ' + model + ' - ' + count;
             let newOption = $('<option></option>');
 
             switch (productType) {
@@ -77,7 +75,9 @@ $(document).ready(function () {
         if (selectedOrderType === "MONTAGE") {
             hideDescriptionInput();
             showProductMenu();
-            let action = $("form").attr('action',montageUrl);
+            let action = $("form.form-horizontal").attr('action');
+            action = action.replace(/\/montages/g, "/montages/montage");
+            $("form.form-horizontal").attr('action',action);
 
         } else if(selectedOrderType === ""){
             hideProductMenu();
@@ -86,7 +86,7 @@ $(document).ready(function () {
         } else {
             hideProductMenu();
             showDescriptionInput();
-            let action = $("form").attr('action',offerViewUrl);
+            // let action = $("form").attr('action',offerViewUrl);
         }
     });
 
@@ -153,8 +153,8 @@ $(document).ready(function () {
     }
 
     function selectAllChosenProducts() {
-        $(selectedProductsBin).find('select').each(function () {
-            $(this).prop('selected');
+        $(selectedProductsBin).find('select option').each(function () {
+            $(this).prop('selected','selected');
         });
     }
 

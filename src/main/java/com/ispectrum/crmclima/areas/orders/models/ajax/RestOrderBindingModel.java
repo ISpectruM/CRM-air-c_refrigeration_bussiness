@@ -1,6 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.models.ajax;
 
-public class OrderSaveModel {
+public class RestOrderBindingModel {
 
     private String id;
 
@@ -13,7 +13,7 @@ public class OrderSaveModel {
     private String comment;
 
 
-    public OrderSaveModel() {
+    public RestOrderBindingModel() {
     }
 
     public String getId() {

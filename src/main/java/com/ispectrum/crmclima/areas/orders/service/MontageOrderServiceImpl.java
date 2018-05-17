@@ -7,7 +7,9 @@ import com.ispectrum.crmclima.areas.clients.service.ClientService;
 import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundException;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.repository.MontageOrderRepository;
@@ -24,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -47,37 +48,21 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public void addMontage(String clientId,MontageOrderBindingModel model) {
+    public void addMontage(String clientId, MontageOrderBindingModel model) {
 
-        MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
+        MontageOrder newOrder = createNewOrder(clientId, model);
 
-        Long orderNumber = this.montageOrderRepository
-                .findTopByOrderByOrderNumberDesc().getOrderNumber();
-        if (orderNumber == null){
-            orderNumber=0L;
-        }
-        newOrder.setOrderNumber(orderNumber+1);
+        Map<AirConditioner, Integer> airConditioners = getAirConditionersFromInput(model.getAircProductsBin());
+        newOrder.setAirConditioners(airConditioners);
 
-        Date orderDate = model.getOrderDate();
-        LocalDate localDate = LocalDate.now();
-        if (orderDate != null){
-            localDate = DateToLocalDate.convert(orderDate);
-        }
-        newOrder.setOrderDate(localDate);
-
-        if (model.getScheduleDate() != null){
-            newOrder.setScheduleDate(DateToLocalDate.convert(model.getScheduleDate()));
-        }
-
-        newOrder.setClient(getClient(clientId));
-        newOrder.setLocation(getLocation(model));
-
-        addProductToOrder(newOrder, model);
-
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails user = this.userDetailsService.loadUserByUsername(principal.getName());
-        newOrder.setUser((User)user);
         this.montageOrderRepository.save(newOrder);
+    }
+
+    @Override
+    public boolean addOfferView(String clientId, OfferViewBindingModel model) {
+        MontageOrder newOrder = this.createNewOrder(clientId,model);
+        this.montageOrderRepository.save(newOrder);
+        return false;
     }
 
     @Override
@@ -120,6 +105,10 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         MontageOrder editedOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
         editedOrder.setId(id);
 
+        if (editedOrder.getIsFinished()){
+            editedOrder.setEndDate(LocalDate.now());
+        }
+
         Client client = montage.getClient();
         editedOrder.setClient(client);
 
@@ -133,10 +122,12 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         }
         editedOrder.setScheduleDate(newScheduleDate);
 
-        Location location = getLocation(model);
+        Location location = createLocation(model);
         editedOrder.setLocation(location);
 
-        addProductToOrder(editedOrder, model);
+        List<String> aircProductsBin = model.getAircProductsBin();
+        Map<AirConditioner, Integer> airconditioners = getAirConditionersFromInput(aircProductsBin);
+        editedOrder.setAirConditioners(airconditioners);
         this.montageOrderRepository.save(editedOrder);
     }
 
@@ -153,7 +144,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public void saveMontageChanges(OrderSaveModel model) {
+    public void saveScheduleMontageChanges(RestOrderBindingModel model) {
         String id = model.getId();
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
         if (montage == null){
@@ -172,10 +163,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
             montage.setEndDate(LocalDate.now());
         }
 
-        //        set new schedule date
-        DateTimeFormatter formatter =DateTimeFormatter.ofPattern(
-                "yyyy-MM-dd", Locale.getDefault());
-        LocalDate date = LocalDate.parse(model.getScheduleDate(), formatter);
+        LocalDate date = DateToLocalDate.convert(model.getScheduleDate());
         montage.setScheduleDate(date);
 
         this.montageOrderRepository.save(montage);
@@ -186,28 +174,67 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         return this.montageOrderRepository.findAllByScheduleDateAndIsFinished(scheduleDate,false);
     }
 
-
-    private Client getClient(String clientId) {
+    private Client createClient(String clientId) {
         return this.clientService.getPureClientById(clientId);
     }
 
-    private void addProductToOrder(MontageOrder newOrder, MontageOrderBindingModel model) {
-        if(model.getProductType().equals("AIRCONDS")){
-            Map<AirConditioner, Integer> airConditioners = new HashMap<>();
-            AirConditioner airc = this.airConditionService.getByModel(model.getProduct());
-            airConditioners.put(airc,model.getCount());
-            newOrder.setAirConditioners(airConditioners);
+    private Map<AirConditioner, Integer> getAirConditionersFromInput(List<String> aircProductsBin) {
+        Map<AirConditioner, Integer> airConditioners = new HashMap<>();
+
+        for (String product : aircProductsBin) {
+            String[] tokens = product.split(" - ");
+            String aircModel = tokens[1];
+            int count = Integer.parseInt(tokens[2]);
+            AirConditioner airc = this.airConditionService.getByModel(aircModel);
+            airConditioners.put(airc, count);
         }
-//        TODO: Add other equipment
+        return airConditioners;
     }
 
-    private Location getLocation(MontageOrderBindingModel model) {
+//    private void addProductToOrder(MontageOrder newOrder, OfferViewBindingModel model) {
+//        String orderType = model.getMontageType();
+//        if(orderType.equals("OVERVIEW")){
+////            TODO
+//        } else if(orderType.equals("OFFER")){
+////TODO
+//        }
+//    }
+
+    private Location createLocation(BaseBindingModel model) {
         Location location = new Location();
         location.setCity(model.getCity());
         location.setAddress(model.getAddress());
         return location;
     }
 
+    private <T extends BaseBindingModel> MontageOrder createNewOrder(String clientId, T  model) {
+        MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
+        Long orderNumber = this.montageOrderRepository
+                .findTopByOrderByOrderNumberDesc().getOrderNumber();
+        if (orderNumber == null){
+            orderNumber=0L;
+        }
+        newOrder.setOrderNumber(orderNumber+1);
+
+        Date orderDate = model.getOrderDate();
+        LocalDate localDate = LocalDate.now();
+        if (orderDate != null){
+            localDate = DateToLocalDate.convert(orderDate);
+        }
+        newOrder.setOrderDate(localDate);
+
+        if (model.getScheduleDate() != null){
+            newOrder.setScheduleDate(DateToLocalDate.convert(model.getScheduleDate()));
+        }
+
+        newOrder.setClient(createClient(clientId));
+        newOrder.setLocation(createLocation(model));
+
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = this.userDetailsService.loadUserByUsername(principal.getName());
+        newOrder.setUser((User)user);
+        return newOrder;
+    }
 
 }

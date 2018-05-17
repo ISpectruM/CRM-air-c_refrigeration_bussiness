@@ -1,7 +1,7 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.repository.ProphylacticOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
 
 
     @Override
-    public void saveProphylacticChanges(OrderSaveModel model) {
+    public void saveProphylacticChanges(RestOrderBindingModel model) {
 //        TODO save changes to DB
     }
 

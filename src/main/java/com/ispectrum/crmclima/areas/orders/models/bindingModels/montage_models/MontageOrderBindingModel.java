@@ -8,25 +8,24 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 public class MontageOrderBindingModel extends BaseBindingModel{
 
-//montage
     private String productType;
 
-    //repair, prophylactic
     private String product;
 
-
-    //montage
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
-//montage
+
     private Double discount;
 
-//montage
     private String other;
 
+    private List<String> aircProductsBin;
+    private List<String> coolersProductsBin;
+    private List<String> fridgeProductsBin;
 
     public MontageOrderBindingModel() {
     }
@@ -69,5 +68,29 @@ public class MontageOrderBindingModel extends BaseBindingModel{
 
     public void setProduct(String product) {
         this.product = product;
+    }
+
+    public List<String> getAircProductsBin() {
+        return this.aircProductsBin;
+    }
+
+    public void setAircProductsBin(List<String> aircProductsBin) {
+        this.aircProductsBin = aircProductsBin;
+    }
+
+    public List<String> getCoolersProductsBin() {
+        return this.coolersProductsBin;
+    }
+
+    public void setCoolersProductsBin(List<String> coolersProductsBin) {
+        this.coolersProductsBin = coolersProductsBin;
+    }
+
+    public List<String> getFridgeProductsBin() {
+        return this.fridgeProductsBin;
+    }
+
+    public void setFridgeProductsBin(List<String> fridgeProductsBin) {
+        this.fridgeProductsBin = fridgeProductsBin;
     }
 }

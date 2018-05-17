@@ -1,7 +1,8 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface MontageOrderService {
 
     void addMontage(String clientId,MontageOrderBindingModel model);
 
+    boolean addOfferView(String clientId,OfferViewBindingModel model);
+
     Page<MontageOrderDto> getAllMontages(Pageable pageable);
 
     MontageOrderDto getMontageById(String id);
@@ -27,7 +30,7 @@ public interface MontageOrderService {
 
     List<MontageOrder> getAllUnfinishedMontages();
 
-    void saveMontageChanges(OrderSaveModel model);
+    void saveScheduleMontageChanges(RestOrderBindingModel model);
 
     Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate);
 

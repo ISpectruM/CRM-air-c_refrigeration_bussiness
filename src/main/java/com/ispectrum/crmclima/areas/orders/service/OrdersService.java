@@ -3,7 +3,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
-import com.ispectrum.crmclima.areas.orders.models.ajax.OrderSaveModel;
+import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +16,7 @@ public interface OrdersService {
 
     List<ProphylacticOrder> getAllUnfinishedProphylactics();
 
-    void saveOrder(OrderSaveModel model);
+    void saveOrder(RestOrderBindingModel model);
 
     Set<MontageOrder> getMontagesByScheduleDate(LocalDate scheduleDate);
 
