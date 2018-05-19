@@ -53,6 +53,12 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     public RepairOrder saveRepairOrder(String clientId, RepairBindingModel model) {
         RepairOrder newOrder = ModelMappingUtil.convertClass(model, RepairOrder.class);
 
+        Long orderNumber = this.repairOrderRepository
+                .findTopByOrderByOrderNumberDesc().getOrderNumber();
+        if (orderNumber == null){
+            orderNumber=0L;
+        }
+        newOrder.setOrderNumber(orderNumber+1);
         if(model.getOrderDate() != null){
             newOrder.setOrderDate(DateToLocalDate.convert(model.getOrderDate()));
         }

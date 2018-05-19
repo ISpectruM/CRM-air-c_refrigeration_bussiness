@@ -2,7 +2,7 @@
 
 <div class="container" th:object="${order}">
     <div class="row m-2 card-header">
-        <h4 class="col-sm-6">Детайли на заявка</h4>
+        <h4 class="col-sm-6" th:text="|Детайли на заявка № *{#numbers.formatInteger(orderNumber,6)}|"></h4>
     </div>
     <div class="row m-2">
         <div class="col">

@@ -8,15 +8,25 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class RepairBindingModel extends BaseOrderBindingModel {
+public abstract class BaseOrderBindingModel {
 
-    @NotEmpty(message = Messages.CHOOSE_SERVICE)
-    private String repairType;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderDate;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
-    private Double deposit;
+    @NotNull(message = Messages.FIELD_CANT_BE_EMPTY)
+    private Integer count;
 
-//    private String otherProduct;
+    private String city;
+
+    private String address;
+
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
+    private Double externalPrice;
+
+    private String comment;
+
+    private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
@@ -29,16 +39,41 @@ public class RepairBindingModel extends BaseOrderBindingModel {
     private boolean isDeferred;
     private boolean isWaiting;
 
-    public RepairBindingModel() {
+
+    public BaseOrderBindingModel() {
     }
 
 
-    public Double getDeposit() {
-        return this.deposit;
+    public Date getOrderDate() {
+        return this.orderDate;
     }
 
-    public void setDeposit(Double deposit) {
-        this.deposit = deposit;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Integer getCount() {
+        return this.count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Double getExternalPrice() {
+        return this.externalPrice;
+    }
+
+    public void setExternalPrice(Double externalPrice) {
+        this.externalPrice = externalPrice;
     }
 
     public Date getScheduleDate() {
@@ -97,6 +132,14 @@ public class RepairBindingModel extends BaseOrderBindingModel {
         this.isWaiting = waiting;
     }
 
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public boolean getIsForFinishing() {
         return this.isForFinishing;
     }
@@ -105,20 +148,19 @@ public class RepairBindingModel extends BaseOrderBindingModel {
         isForFinishing = forFinishing;
     }
 
-    public String getRepairType() {
-        return this.repairType;
+    public String getCity() {
+        return this.city;
     }
 
-    public void setRepairType(String repairType) {
-        this.repairType = repairType;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-//    public String getOtherProduct() {
-//        return this.otherProduct;
-//    }
-//
-//    public void setOtherProduct(String otherProduct) {
-//        this.otherProduct = otherProduct;
-//    }
+    public String getDescription() {
+        return this.description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

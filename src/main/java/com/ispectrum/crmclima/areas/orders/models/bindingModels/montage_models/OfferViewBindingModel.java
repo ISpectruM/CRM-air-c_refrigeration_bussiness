@@ -1,20 +1,25 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models;
 
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
+import com.ispectrum.crmclima.constants.Messages;
 
-public class OfferViewBindingModel extends BaseBindingModel {
+import javax.validation.constraints.NotEmpty;
 
-    //repair, view
-    private String description;
+public class OfferViewBindingModel extends BaseOrderBindingModel {
+
+    @NotEmpty(message = Messages.CHOOSE_SERVICE)
+    private String montageType;
+
 
     public OfferViewBindingModel() {
     }
 
-    public String getDescription() {
-        return this.description;
+
+    public String getMontageType() {
+        return this.montageType;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMontageType(String montageType) {
+        this.montageType = montageType;
     }
 }

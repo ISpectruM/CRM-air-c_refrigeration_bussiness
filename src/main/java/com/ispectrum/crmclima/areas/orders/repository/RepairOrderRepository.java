@@ -20,4 +20,6 @@ public interface RepairOrderRepository extends JpaRepository<RepairOrder, String
     Page<RepairOrder> findAllByDeletedOnIsNull(Pageable pageable);
 
     RepairOrder findFirstById(String id);
+
+    RepairOrder findTopByOrderByOrderNumberDesc();
 }

@@ -1,27 +1,28 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models;
 
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
 import com.ispectrum.crmclima.constants.Messages;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
 
-public class MontageOrderBindingModel extends BaseBindingModel{
+public class MontageOrderBindingModel extends BaseOrderBindingModel {
+
+    @NotEmpty(message = Messages.CHOOSE_SERVICE)
+    private String montageType;
 
     private String productType;
 
-    private String product;
+    private String otherProduct;
+
+    private String model;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
 
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double discount;
-
-    private String other;
 
     private List<String> aircProductsBin;
     private List<String> coolersProductsBin;
@@ -54,20 +55,12 @@ public class MontageOrderBindingModel extends BaseBindingModel{
         this.productType = productType;
     }
 
-    public String getOther() {
-        return this.other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
-    }
-
     public String getProduct() {
-        return this.product;
+        return this.model;
     }
 
     public void setProduct(String product) {
-        this.product = product;
+        this.model = product;
     }
 
     public List<String> getAircProductsBin() {
@@ -92,5 +85,21 @@ public class MontageOrderBindingModel extends BaseBindingModel{
 
     public void setFridgeProductsBin(List<String> fridgeProductsBin) {
         this.fridgeProductsBin = fridgeProductsBin;
+    }
+
+    public String getMontageType() {
+        return this.montageType;
+    }
+
+    public void setMontageType(String montageType) {
+        this.montageType = montageType;
+    }
+
+    public String getOtherProduct() {
+        return this.otherProduct;
+    }
+
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
     }
 }

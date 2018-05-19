@@ -8,7 +8,8 @@ import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundExce
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.EditMontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
@@ -97,7 +98,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public void editMontage(String id, MontageOrderBindingModel model) {
+    public void editMontage(String id, EditMontageOrderBindingModel model) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
         if (montage == null){
             throw new MontageNotFoundException();
@@ -126,8 +127,13 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         editedOrder.setLocation(location);
 
         List<String> aircProductsBin = model.getAircProductsBin();
-        Map<AirConditioner, Integer> airconditioners = getAirConditionersFromInput(aircProductsBin);
-        editedOrder.setAirConditioners(airconditioners);
+        if (model.getIsAircProductChanged().equals("true")){
+            Map<AirConditioner, Integer> airconditioners = getAirConditionersFromInput(aircProductsBin);
+            editedOrder.setAirConditioners(airconditioners);
+        } else {
+            editedOrder.setAirConditioners(montage.getAirConditioners());
+        }
+
         this.montageOrderRepository.save(editedOrder);
     }
 
@@ -179,16 +185,25 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     private Map<AirConditioner, Integer> getAirConditionersFromInput(List<String> aircProductsBin) {
-        Map<AirConditioner, Integer> airConditioners = new HashMap<>();
+        Map<AirConditioner,Integer> airconditioners = new HashMap<>();
 
         for (String product : aircProductsBin) {
             String[] tokens = product.split(" - ");
             String aircModel = tokens[1];
             int count = Integer.parseInt(tokens[2]);
             AirConditioner airc = this.airConditionService.getByModel(aircModel);
-            airConditioners.put(airc, count);
+            if (airconditioners.containsKey(airc)){
+                Integer available = airconditioners.get(airc);
+                airconditioners.put(airc,available + count);
+            }else {
+                airconditioners.put(airc,count);
+            }
         }
-        return airConditioners;
+        return airconditioners;
+    }
+
+    private void fillProductsMap(List<String> aircProductsBin) {
+
     }
 
 //    private void addProductToOrder(MontageOrder newOrder, OfferViewBindingModel model) {
@@ -200,14 +215,14 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 //        }
 //    }
 
-    private Location createLocation(BaseBindingModel model) {
+    private Location createLocation(BaseOrderBindingModel model) {
         Location location = new Location();
         location.setCity(model.getCity());
         location.setAddress(model.getAddress());
         return location;
     }
 
-    private <T extends BaseBindingModel> MontageOrder createNewOrder(String clientId, T  model) {
+    private <T extends BaseOrderBindingModel> MontageOrder createNewOrder(String clientId, T  model) {
         MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
         Long orderNumber = this.montageOrderRepository

@@ -3,6 +3,8 @@ package com.ispectrum.crmclima.areas.orders.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
+import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.EditMontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
@@ -91,15 +93,15 @@ public class MontageOrderController extends BaseController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView editOrder(@PathVariable String id) {
-        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        Object montage = this.montageOrderService.getMontageById(id);
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
 
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/montage/edit/{id}")
     public ModelAndView editOrderAction(@PathVariable String id,
-                                        MontageOrderBindingModel model) {
+                                        EditMontageOrderBindingModel model) {
         this.montageOrderService.editMontage(id, model);
         return this.redirect("/orders/montages/details/" + id);
     }

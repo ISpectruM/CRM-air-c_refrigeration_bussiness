@@ -1,7 +1,5 @@
 package com.ispectrum.crmclima.areas.orders.entities;
 
-import com.ispectrum.crmclima.areas.clients.entities.Client;
-import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.orders.entities.enums.Shift;
 import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
@@ -16,19 +14,13 @@ public class MontageOrder extends BaseOrder{
     private final String service = "montage";
 
     @Enumerated(EnumType.STRING)
+    private MontageType montageType;
+
+    @Enumerated(EnumType.STRING)
     private ProductType productType;
-
-    @ManyToOne(targetEntity = Client.class)
-    private Client client;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Location location;
 
     @Enumerated(EnumType.STRING)
     private Shift shift;
-
-    @Enumerated(EnumType.STRING)
-    private MontageType montageType;
 
     @ElementCollection(targetClass = java.lang.Integer.class)
     @JoinTable(
@@ -46,22 +38,6 @@ public class MontageOrder extends BaseOrder{
         this.airConditioners = new HashMap<>();
     }
 
-
-    public Client getClient() {
-        return this.client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Location getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
     public Shift getShift() {
         return this.shift;
@@ -142,11 +118,10 @@ public class MontageOrder extends BaseOrder{
                             }).sum();
         }
 
-        price = getDiscountedPrice(price);
         return price;
     }
 
-    private double getDiscountedPrice(double aircCost) {
+    private double  getDiscountedPrice(double aircCost) {
         Double discount = this.getDiscount();
 
         if( discount != null){
@@ -170,6 +145,6 @@ public class MontageOrder extends BaseOrder{
             return this.getProductsPrice();
         }
 
-        return this.getDiscountedPrice(this.getExternalPrice());
+        return this.getExternalPrice();
     }
 }

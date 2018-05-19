@@ -4,6 +4,8 @@ import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
+import com.ispectrum.crmclima.areas.users.entities.User;
+import com.ispectrum.crmclima.areas.users.models.dtos.UserDto;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -11,15 +13,19 @@ import java.util.Map;
 public class MontageOrderDto {
     private String id;
 
+    private Long orderNumber;
+
     private LocalDate orderDate;
 
     private MontageType montageType;
 
     private Integer productCount;
 
+    private Integer count;
+
     private ClientDto client;
 
-    private LocationDto location;
+    private String comment;
 
     private Double price;
 
@@ -29,17 +35,23 @@ public class MontageOrderDto {
 
     private Double forPayment;
 
-    private String comment;
-
     private LocalDate scheduleDate;
 
+    private LocalDate endDate;
+
     private String status;
-
-    private String product;
-
+//    montage
+    private String otherProduct;
+//offer, view
     private String description;
 
+    private LocationDto location;
+
+    private UserDto user;
+
     private Map<AirConditionerDto, Integer> airConditioners;
+
+    private Double externalPrice;
 
     private boolean isMarked;
     private boolean isFinished;
@@ -161,11 +173,11 @@ public class MontageOrderDto {
     }
 
     public String getProduct() {
-        return this.product;
+        return this.otherProduct;
     }
 
     public void setProduct(String product) {
-        this.product = product;
+        this.otherProduct = product;
     }
 
     public boolean getIsMarked() {
@@ -246,5 +258,45 @@ public class MontageOrderDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getOrderNumber() {
+        return this.orderNumber;
+    }
+
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public UserDto getUser() {
+        return this.user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
+
+    public Double getExternalPrice() {
+        return this.externalPrice;
+    }
+
+    public void setExternalPrice(Double externalPrice) {
+        this.externalPrice = externalPrice;
+    }
+
+    public Integer getCount() {
+        return this.count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

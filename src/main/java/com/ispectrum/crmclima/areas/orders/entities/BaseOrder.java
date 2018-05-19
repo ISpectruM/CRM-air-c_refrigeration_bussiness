@@ -1,5 +1,7 @@
 package com.ispectrum.crmclima.areas.orders.entities;
 
+import com.ispectrum.crmclima.areas.clients.entities.Client;
+import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.users.entities.User;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
@@ -21,6 +23,11 @@ public abstract class BaseOrder {
 
     private Integer productCount;
 
+    private Integer count;
+
+    @ManyToOne(targetEntity = Client.class)
+    private Client client;
+
     private String comment;
 
     private Double price;
@@ -40,6 +47,9 @@ public abstract class BaseOrder {
     private String otherProduct;
 
     private String description;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Location location;
 
     @ManyToOne(targetEntity = User.class)
     private User user;
@@ -257,5 +267,29 @@ public abstract class BaseOrder {
 
     public void setDeletedOn(LocalDate deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Integer getCount() {
+        return this.count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

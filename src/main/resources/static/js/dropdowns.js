@@ -6,17 +6,18 @@ $(document).ready(function () {
 
     let productHeader = $("#productHeader").hide();
     let descriptionHeader = $("#descriptionHeader").hide();
-    let productTypeContainer = $("#productTypeContainer").hide();
     let newProductContainer = $("#newProductContainer").hide();
+    let productTypeContainer = $("#productTypeContainer").hide();
     let descriptionContainer = $("#descriptionContainer").hide();
     let selectedProductsBin = $("#selectedProducts");
     let allSelectedProducts = $("#allSelectedProducts");
     let productAddBtn = $("#productAddBtn");
     let selectedProductType;
-    let selectedOrderType;
+    let selectedOrderType=orderTypeMenu.val();
 
     hideDescriptionInput();
     attachDeleteBtnActions();
+    showHideOrderTypeSections();
 
     productAddBtn.click(function (event) {
         event.preventDefault();
@@ -25,7 +26,7 @@ $(document).ready(function () {
             let brand = $("#brand").val();
             let model = $("#product").val();
             let count = $("#count").val();
-            let otherProduct = $("#otherProduct").val();
+            let otherProduct = $("#other").val();
             let typeErrorField = $("#typeErrorField").hide();
             let countErrorField = $("#countErrorField").hide();
 
@@ -62,32 +63,15 @@ $(document).ready(function () {
                         typeErrorField.text("Изберете продукт или въведете продукт в поле друго").show();
                         break;
                     }
-                    $("#description").val(otherProduct);
+                    $("#otherProduct").val(otherProduct);
                     clearInputForms();
                     break;
             }
     });
 
     orderTypeMenu.change(function () {
-
         selectedOrderType = $(this).val();
-
-        if (selectedOrderType === "MONTAGE") {
-            hideDescriptionInput();
-            showProductMenu();
-            let action = $("form.form-horizontal").attr('action');
-            action = action.replace(/\/montages/g, "/montages/montage");
-            $("form.form-horizontal").attr('action',action);
-
-        } else if(selectedOrderType === ""){
-            hideProductMenu();
-            hideDescriptionInput();
-            productTypeContainer.hide();
-        } else {
-            hideProductMenu();
-            showDescriptionInput();
-            // let action = $("form").attr('action',offerViewUrl);
-        }
+        showHideOrderTypeSections();
     });
 
     productMenu.change(function () {
@@ -140,6 +124,11 @@ $(document).ready(function () {
         selectAllChosenProducts();
     });
 
+    let selectedAircBin= $("#aircProductsBin");
+    selectedAircBin.change(function () {
+        $("#isAircProductChanged").val("true");
+    });
+
     function attachDeleteBtnActions() {
         selectedProductsBin.find('a').each(function () {
             $(this).click(function (event) {
@@ -156,6 +145,29 @@ $(document).ready(function () {
         $(selectedProductsBin).find('select option').each(function () {
             $(this).prop('selected','selected');
         });
+    }
+
+    function showHideOrderTypeSections() {
+        let form = $("form.form-horizontal");
+        if (selectedOrderType === "") {
+            hideProductMenu();
+            hideDescriptionInput();
+            productTypeContainer.hide();
+        } else if (selectedOrderType === "MONTAGE") {
+            hideDescriptionInput();
+            showProductMenu();
+            let action = form.attr('action');
+            action = action.replace(/\/montages/g, "/montages/montage");
+            form.attr('action', action);
+        } else if(selectedOrderType === "OFFER" ||
+                    selectedOrderType === "OVERVIEW"){
+            hideProductMenu();
+            showDescriptionInput();
+            let action = form.attr('action');
+            action = action.replace(/\/montages/g, "/montages/offer");
+            form.attr('action', action);
+
+        }
     }
 
     function showProductMenu() {
@@ -200,5 +212,7 @@ $(document).ready(function () {
         $("#descriptionInput").val("");
         $("#count").val("");
     }
+
+
 
 });

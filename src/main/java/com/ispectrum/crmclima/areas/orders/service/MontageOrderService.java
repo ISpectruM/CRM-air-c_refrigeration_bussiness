@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.EditMontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.MontageOrderDto;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
@@ -24,7 +25,7 @@ public interface MontageOrderService {
 
     boolean deleteOrder(String id);
 
-    void editMontage(String id,MontageOrderBindingModel model);
+    void editMontage(String id,EditMontageOrderBindingModel model);
 
     List<MontageOrderDto> getAllUnfinishedMontagesDtos();
 
