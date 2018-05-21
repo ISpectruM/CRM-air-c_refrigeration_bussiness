@@ -1,21 +1,16 @@
 <div class="container" th:object="${bindingModel}">
-    <th:block th:object="${client}">
         <div class="card-header">
             <h4 class="col">Нова заявка за ремонт на клиент: </h4>
         </div>
-        <hr/>
-        <h6 class="card-header m-2">Клиент</h6>
-        <div class="row m-2">
-            <label for="name" class="col-sm-2 col-form-label">Име:</label>
-            <div class="form-group col-sm-3">
-                <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
+        <th:block th:object="${client}">
+            <div class="row m-2">
+                <label for="name" class="col-1 col-form-label">Име:</label>
+                <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{name}">
+                <label for="phone" class="col-1 col-form-label">Телефон:</label>
+                <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{phone}">
             </div>
-            <label for="phone" class="col-sm-2 col-form-label">Телефон:</label>
-            <div class="form-group col-sm-3">
-                <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{phone}">
-            </div>
-        </div>
-    </th:block>
+        </th:block>
+
     <div class="container">
         <form class="form-horizontal" th:action="@{/orders/repairs/add/{id}(id=${client.id})}" th:method="POST">
             <h6 class="card-header">Дата</h6>

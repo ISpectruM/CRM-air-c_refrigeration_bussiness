@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -78,12 +79,6 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
-    private ModelAndView getErrorsViewModel(@PathVariable String id, BindingResult bindingResult) {
-        Map<String, Object> model = bindingResult.getModel();
-        ClientDto client = this.clientService.getClientById(id);
-        model.put("client", client);
-        return this.addViewAndObjectsMap("orders/montages/add_montage", model);
-    }
 
     @GetMapping("/details/{id}")
     public ModelAndView getMontageDetails(@PathVariable String id) {
@@ -93,14 +88,26 @@ public class MontageOrderController extends BaseController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView editOrder(@PathVariable String id) {
-        Object montage = this.montageOrderService.getMontageById(id);
+        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
 
     }
 
     @PostMapping("/montage/edit/{id}")
-    public ModelAndView editOrderAction(@PathVariable String id,
+    public ModelAndView editMontageOrderAction(@PathVariable String id,
+                                       @Valid @ModelAttribute(name = "bindingModel") EditMontageOrderBindingModel model,
+                                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return this.getErrorsViewModel(id,bindingResult);
+        }
+        this.montageOrderService.editMontage(id, model);
+        return this.redirect("/orders/montages/details/" + id);
+    }
+
+    @PostMapping("/offer/edit/{id}")
+    public ModelAndView editOfferOrderAction(@PathVariable String id,
                                         EditMontageOrderBindingModel model) {
         this.montageOrderService.editMontage(id, model);
         return this.redirect("/orders/montages/details/" + id);
@@ -118,5 +125,11 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
+    private ModelAndView getErrorsViewModel(@PathVariable String id, BindingResult bindingResult) {
+        Map<String, Object> model = bindingResult.getModel();
+        ClientDto client = this.clientService.getClientById(id);
+        model.put("client", client);
+        return this.addViewAndObjectsMap("orders/montages/add_montage", model);
+    }
 
 }

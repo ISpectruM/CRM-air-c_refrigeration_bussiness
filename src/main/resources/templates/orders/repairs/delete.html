@@ -1,15 +1,15 @@
 <div class="container" th:object="${montage}">
     <div class="form-row m-2 card-header">
         <h4 class="col-sm-4">Изтриване на заявка: </h4>
-        <label for="name" class="col-sm-1 col-form-label">Име:</label>
-        <div class="form-group col-md-4">
-            <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{client.name}">
-        </div>
-        <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
-        <div class="form-group col-sm-2">
-            <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{client.phone}">
-        </div>
     </div>
+    <th:block th:object="${client}">
+        <div class="row m-2">
+            <label for="name" class="col-1 col-form-label">Име:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{name}">
+            <label for="phone" class="col-1 col-form-label">Телефон:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{phone}">
+        </div>
+    </th:block>
     <hr/>
     <h5 class="card-header">Дата</h5>
     <div class="form-group row m-2">

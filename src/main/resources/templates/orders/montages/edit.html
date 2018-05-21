@@ -1,19 +1,11 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
 <div class="container" th:object="${bindingModel}">
-    <th:block th:object="${montage.client}">
-        <div class="form-row m-2 card-header">
-            <h4 class="col-sm-4"
-                th:text="|Редактиране на заявка № ${#numbers.formatInteger(montage.orderNumber,6)}|"></h4>
-            <label for="name" class="col-sm-1 col-form-label">Име:</label>
-            <div class="form-group col-md-4">
-                <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{name}">
-            </div>
-            <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
-            <div class="form-group col-sm-2">
-                <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{phone}">
-            </div>
+        <div class="row m-2">
+            <label for="name" class="col-1 col-form-label">Име:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="${montage.client.name}">
+            <label for="phone" class="col-1 col-form-label">Телефон:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="${montage.client.phone}">
         </div>
-    </th:block>
     <hr/>
     <form class="form-horizontal" th:action="@{/orders/montages/edit/{id}(id=${montage.id})}" th:method="POST">
         <div class="form-group row m-2">
@@ -33,6 +25,7 @@
                     <option th:value="${montage.montageType}" th:text="${montage.montageType.displayName}"></option>
                     <option class="form-control"
                             th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
+                            th:if="${type != montage.montageType}"
                             th:value="${type}" th:text="${type.displayName}"></option>
                 </select>
                 <th:block th:each="error:${#fields.errors('montageType')}">
@@ -75,15 +68,12 @@
                         <a href="#" id="fridgeProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label for="description" th:text="'Друго'"></label>
-                        <input class="form-control" id="description" name="description"
-                               th:value="${montage.description}"/>
+                        <label for="otherProduct" th:text="'Друго'"></label>
+                        <input type="text" class="form-control" id="otherProduct" name="otherProduct"
+                               th:value="${montage.otherProduct}"/>
                     </div>
                 </div>
             </div>
-            <div class="row">
-            </div>
-
             <!--Select products section-->
             <!--Headers-->
             <div class="row">
@@ -96,8 +86,9 @@
                     <!--Description section-->
                     <div id="descriptionContainer" class="form-group row">
                         <div class="col-12">
-                            <label for="descriptionInput">Описание:</label>
-                            <input id="descriptionInput" class="form-control" th:value="${montage.description}"/>
+                            <label for="description">Описание:</label>
+                            <input type="text" id="description" name="description" class="form-control"
+                                   th:value="${montage.description}"/>
                         </div>
                     </div>
                     <!--New products section-->
@@ -124,8 +115,8 @@
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label for="otherProduct">Друго:</label>
-                            <input class="form-control" id="otherProduct" name="otherProduct"
+                            <label for="other">Друго:</label>
+                            <input class="form-control" id="other" name="other"
                                    placeholder="Друг продукт">
                         </div>
                     </div>
@@ -134,7 +125,7 @@
                 <div class="col-md-1">
                     <label for="count">Брой:</label>
                     <input id="count" class="form-control" name="count"
-                           th:if="${montage.montageType.name()=='MONTAGE'}" placeholder="Бр.">
+                           th:if="${montage.montageType.name()=='MONTAGE'}" th:value="${montage.productCount}">
                     <input id="count" class="form-control" name="count"
                            th:if="${montage.montageType.name()!='MONTAGE'}" th:value="${montage.count}">
                     <small id="countErrorField" class="invalid-feedback text-danger"></small>
@@ -155,19 +146,18 @@
                         <label for="externalPrice" class="col-sm-1 col-form-label">Цена:</label>
                         <div class="col-sm-2">
                             <input type="number" class="form-control" id="externalPrice" name="externalPrice"
-                                   placeholder="цена"
-                                   th:classappend="${#fields.hasErrors('externalPrice')}? 'is-invalid':''"
-                                   th:field="*{externalPrice}"
-                                   th:value="${montage.externalPrice}">
+                                   th:value="${montage.externalPrice}"
+                                   th:classappend="${#fields.hasErrors('externalPrice')}? 'is-invalid':''"/>
+
+
                             <th:block th:each="error:${#fields.errors('externalPrice')}">
                                 <small class="invalid-feedback text-danger" th:text="${error}"></small>
                             </th:block>
                         </div>
                         <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
+                            <input type="number" class="form-control" th:id="deposit" th:name="deposit"
                                    th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
-                                   th:field="*{deposit}"
                                    th:value="${montage.deposit}">
                             <th:block th:each="error:${#fields.errors('deposit')}">
                                 <small class="invalid-feedback text-danger" th:text="${error}"></small>

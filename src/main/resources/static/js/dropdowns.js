@@ -15,7 +15,6 @@ $(document).ready(function () {
     let selectedProductType;
     let selectedOrderType=orderTypeMenu.val();
 
-    hideDescriptionInput();
     attachDeleteBtnActions();
     showHideOrderTypeSections();
 
@@ -166,7 +165,6 @@ $(document).ready(function () {
             let action = form.attr('action');
             action = action.replace(/\/montages/g, "/montages/offer");
             form.attr('action', action);
-
         }
     }
 
@@ -207,12 +205,11 @@ $(document).ready(function () {
     function clearInputForms() {
         $("#productType").val("");
         $("#brand").empty().append('<option value="">- Избери -</option>');
-        $("#product").empty().append('<option value="">- Избери -</option>');
+        $("#model").empty().append('<option value="">- Избери -</option>');
         $("#otherProduct").val("");
-        $("#descriptionInput").val("");
+        $("#other").val("");
         $("#count").val("");
+        $("#description").val("");
     }
-
-
 
 });

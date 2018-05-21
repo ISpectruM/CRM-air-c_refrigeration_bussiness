@@ -172,11 +172,11 @@ public class MontageOrderDto {
         this.id = id;
     }
 
-    public String getProduct() {
+    public String getOtherProduct() {
         return this.otherProduct;
     }
 
-    public void setProduct(String product) {
+    public void setOtherProduct(String product) {
         this.otherProduct = product;
     }
 
@@ -284,13 +284,6 @@ public class MontageOrderDto {
         this.user = user;
     }
 
-    public Double getExternalPrice() {
-        return this.externalPrice;
-    }
-
-    public void setExternalPrice(Double externalPrice) {
-        this.externalPrice = externalPrice;
-    }
 
     public Integer getCount() {
         return this.count;
@@ -298,5 +291,13 @@ public class MontageOrderDto {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Double getExternalPrice() {
+        return this.externalPrice;
+    }
+
+    public void setExternalPrice(Double externalPrice) {
+        this.externalPrice = externalPrice;
     }
 }

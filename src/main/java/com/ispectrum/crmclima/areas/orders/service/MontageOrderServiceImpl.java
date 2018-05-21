@@ -51,7 +51,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     @Override
     public void addMontage(String clientId, MontageOrderBindingModel model) {
 
-        MontageOrder newOrder = createNewOrder(clientId, model);
+        MontageOrder newOrder = this.createNewOrder(clientId, model);
 
         Map<AirConditioner, Integer> airConditioners = getAirConditionersFromInput(model.getAircProductsBin());
         newOrder.setAirConditioners(airConditioners);
@@ -103,29 +103,33 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         if (montage == null){
             throw new MontageNotFoundException();
         }
+//        Map dto to model
         MontageOrder editedOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
-        editedOrder.setId(id);
 
+        editedOrder.setId(id);
+        editedOrder.setOrderNumber(montage.getOrderNumber());
+
+//  Check is isFinished and assign finish date
         if (editedOrder.getIsFinished()){
             editedOrder.setEndDate(LocalDate.now());
         }
-
+//  Set client
         Client client = montage.getClient();
         editedOrder.setClient(client);
-
+//  Set orderDate
         LocalDate orderDate = DateToLocalDate.convert(model.getOrderDate());
         editedOrder.setOrderDate(orderDate);
-
+//  Set scheduleDate if present
         Date modelScheduleDate = model.getScheduleDate();
         LocalDate newScheduleDate=null;
         if (modelScheduleDate != null){
             newScheduleDate=DateToLocalDate.convert(model.getScheduleDate());
         }
         editedOrder.setScheduleDate(newScheduleDate);
-
+//  Set location
         Location location = createLocation(model);
         editedOrder.setLocation(location);
-
+//Set new products if present
         List<String> aircProductsBin = model.getAircProductsBin();
         if (model.getIsAircProductChanged().equals("true")){
             Map<AirConditioner, Integer> airconditioners = getAirConditionersFromInput(aircProductsBin);
@@ -202,19 +206,6 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         return airconditioners;
     }
 
-    private void fillProductsMap(List<String> aircProductsBin) {
-
-    }
-
-//    private void addProductToOrder(MontageOrder newOrder, OfferViewBindingModel model) {
-//        String orderType = model.getMontageType();
-//        if(orderType.equals("OVERVIEW")){
-////            TODO
-//        } else if(orderType.equals("OFFER")){
-////TODO
-//        }
-//    }
-
     private Location createLocation(BaseOrderBindingModel model) {
         Location location = new Location();
         location.setCity(model.getCity());
@@ -249,6 +240,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = this.userDetailsService.loadUserByUsername(principal.getName());
         newOrder.setUser((User)user);
+
         return newOrder;
     }
 
