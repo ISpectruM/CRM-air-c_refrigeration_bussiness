@@ -2,12 +2,12 @@
         <div class="card-header">
             <h4 class="col">Нова заявка за ремонт на клиент: </h4>
         </div>
-        <th:block th:object="${client}">
+        <th:block>
             <div class="row m-2">
                 <label for="name" class="col-1 col-form-label">Име:</label>
-                <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{name}">
+                <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="${client.name}">
                 <label for="phone" class="col-1 col-form-label">Телефон:</label>
-                <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{phone}">
+                <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="${client.phone}">
             </div>
         </th:block>
 
@@ -18,7 +18,7 @@
                 <label for="orderDate" class="col-sm-2 col-form-label">Дата:</label>
                 <div class="col-sm-3">
                     <input type="date" class="form-control" id="orderDate" name="orderDate"
-                           th:value="${currentDate}" th:field="currentDate">
+                           th:value="${currentDate}">
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
             <div class="form-group row m-2">
                 <label class="col-sm-2" for="otherProduct">Продукт:</label>
                 <div class="form-group col-sm-6">
-                    <input id="otherProduct" class="form-control" name="otherProduct" th:field="*{otherProduct}"/>
+                    <input id="otherProduct" class="form-control" name="otherProduct"/>
                 </div>
                 <label class="col-sm-1" for="count">Брой:</label>
                 <div class="form-group col-sm-1">
@@ -80,12 +80,12 @@
 
             <h6 class="card-header">Цена</h6>
             <div class="form-group row m-2">
-                <label for="price" class="col-sm-2 col-form-label">Цена:</label>
+                <label for="externalPrice" class="col-sm-2 col-form-label">Цена:</label>
                 <div class="col-sm-2">
-                    <input type="number" class="form-control" id="price" name="price" placeholder="цена"
-                           th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
-                           th:field="*{price}">
-                    <th:block th:each="error:${#fields.errors('price')}">
+                    <input type="number" class="form-control" id="externalPrice" name="externalPrice" placeholder="цена"
+                           th:classappend="${#fields.hasErrors('externalPrice')}? 'is-invalid':''"
+                           th:field="*{externalPrice}">
+                    <th:block th:each="error:${#fields.errors('externalPrice')}">
                         <small class="invalid-feedback text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-                    <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate" th:field="*{scheduleDate}">
+                    <input type="date" class="form-control col-sm-5" id="scheduleDate" name="scheduleDate" th:field="*{scheduleDate}">
                 </div>
             </div>
 

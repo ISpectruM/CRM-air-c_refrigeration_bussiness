@@ -3,7 +3,7 @@ package com.ispectrum.crmclima.areas.orders.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.repair_models.RepairBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.service.RepairOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,13 +69,15 @@ public class RepairOrderController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView getRepairDetails(@PathVariable String id){
         RepairOrderDto repair = this.repairOrderService.getRepairById(id);
+
         return this.addViewAndObject("order",repair,"orders/details");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editRepair(@PathVariable String id){
         RepairOrderDto repair = this.repairOrderService.getRepairById(id);
-        return this.addViewAndObject("repair", repair,"orders/repairs/edit");
+        this.addViewAndObject("repair", repair,"orders/repairs/edit");
+        return this.addObject("bindingModel", new RepairBindingModel());
     }
 
     @PostMapping("/edit/{id}")

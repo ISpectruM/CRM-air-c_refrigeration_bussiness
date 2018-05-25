@@ -10,7 +10,7 @@ import com.ispectrum.crmclima.areas.error_handling.exception.RepairNotFoundExcep
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.repair_models.RepairBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import com.ispectrum.crmclima.areas.orders.repository.RepairOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

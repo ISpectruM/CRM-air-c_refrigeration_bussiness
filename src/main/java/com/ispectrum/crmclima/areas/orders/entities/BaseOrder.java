@@ -20,9 +20,9 @@ public abstract class BaseOrder {
     private Long orderNumber;
 
     private LocalDate orderDate;
-
+    //Used by montage / products amount
     private Integer productCount;
-
+    //Used by offer and overview
     private Integer count;
 
     @ManyToOne(targetEntity = Client.class)

@@ -28,4 +28,14 @@ public class RepairOrder extends BaseOrder{
     public String getService() {
         return this.service;
     }
+
+    @Override
+    public Double getForPayment() {
+        Double price = this.getPrice();
+        Double deposit = this.getDeposit();
+        if (deposit != null && price != null){
+            return price - deposit;
+        }
+        return super.getForPayment();
+    }
 }

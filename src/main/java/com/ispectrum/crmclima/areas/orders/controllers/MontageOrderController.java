@@ -92,7 +92,6 @@ public class MontageOrderController extends BaseController {
 
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
-
     }
 
     @PostMapping("/montage/edit/{id}")

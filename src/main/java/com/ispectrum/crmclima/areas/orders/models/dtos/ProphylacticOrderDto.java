@@ -4,7 +4,7 @@ import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
 import java.time.LocalDate;
 
-public class ProphylacticOrderDto {
+public class ProphylacticOrderDto extends BaseOrderDto{
 
     private String id;
 

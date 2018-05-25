@@ -2,7 +2,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
-import com.ispectrum.crmclima.areas.orders.models.bindingModels.RepairBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.repair_models.RepairBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.RepairOrderDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
