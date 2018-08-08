@@ -25,6 +25,8 @@ public class CreateScheduleDto {
 
     private Integer count;
 
+    private Integer productCount;
+
     private String product;
 
     private Map<BaseProductDto,Integer> airConditioners;
@@ -268,5 +270,13 @@ public class CreateScheduleDto {
 
     public void setService(String service) {
         this.service = service;
+    }
+
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 }

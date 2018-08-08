@@ -41,20 +41,20 @@ public class RepairOrderController extends BaseController{
         return this.addObject("currentDate", LocalDate.now());
     }
 
-    @PostMapping("/add/{id}")
+    @PostMapping("/add/{clientId}")
     public ModelAndView addRepairAction(
-            @PathVariable String id,
+            @PathVariable String clientId,
             @Valid @ModelAttribute(name = "bindingModel") RepairBindingModel bindingModel,
             BindingResult bindingResult){
 
-        ClientDto clientById = this.clientService.getClientById(id);
+        ClientDto clientById = this.clientService.getClientById(clientId);
         if (bindingResult.hasErrors()){
             Map<String, Object> bindingResultModel = bindingResult.getModel();
             bindingResultModel.put("client", clientById);
             return this.addViewAndObjectsMap("orders/repairs/add", bindingResultModel);
         }
 
-        this.repairOrderService.saveRepairOrder(id,bindingModel);
+        this.repairOrderService.saveRepairOrder(clientId,bindingModel);
         return this.redirect("/orders/repairs/all?page=0");
     }
 

@@ -2,6 +2,8 @@ package com.ispectrum.crmclima.areas.products.entities;
 
 import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
 import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
+import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

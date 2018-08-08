@@ -11,13 +11,10 @@ import java.util.*;
 @Entity
 public class MontageOrder extends BaseOrder{
 
-    private final String service = "montage";
+    private final String SERVICE = "montage";
 
     @Enumerated(EnumType.STRING)
     private MontageType montageType;
-
-    @Enumerated(EnumType.STRING)
-    private ProductType productType;
 
     @Enumerated(EnumType.STRING)
     private Shift shift;
@@ -64,6 +61,7 @@ public class MontageOrder extends BaseOrder{
     }
 
     @Override
+    @Transient
     public Integer getProductCount() {
         int count = 0;
         Collection<Integer> values = this.getAirConditioners().values();
@@ -92,20 +90,12 @@ public class MontageOrder extends BaseOrder{
         return total;
     }
 
-    public ProductType getProductType() {
-        return this.productType;
-    }
-
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
-
-    public String getService() {
-        return this.service;
+    public String getSERVICE() {
+        return this.SERVICE;
     }
 
 //Get the price embedded in the product object
-    public Double getProductsPrice() {
+    private Double getProductsPrice() {
         Double price=0D;
         if (airConditioners.size() > 0){
             price = this.getAirConditioners().entrySet().stream()

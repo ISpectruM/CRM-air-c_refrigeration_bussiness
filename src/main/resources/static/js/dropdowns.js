@@ -2,7 +2,7 @@ $(document).ready(function () {
     let orderTypeMenu = $("#montageType");
     let productMenu = $("#productType");
     let brandMenu = $("#brand");
-    let modelMenu = $("#product");
+    let modelMenu = $("#model");
 
     let productHeader = $("#productHeader").hide();
     let descriptionHeader = $("#descriptionHeader").hide();
@@ -23,7 +23,7 @@ $(document).ready(function () {
 
             let productType = $("#productType").val();
             let brand = $("#brand").val();
-            let model = $("#product").val();
+            let model = $("#model").val();
             let count = $("#count").val();
             let otherProduct = $("#other").val();
             let typeErrorField = $("#typeErrorField").hide();

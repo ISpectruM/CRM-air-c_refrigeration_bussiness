@@ -110,8 +110,12 @@
             </td>
             <!--actions-->
             <td>
-                <a type="button" class="btn btn-sm btn-info col-sm-12 mb-2"
+                <a th:unless="*{montageType == null}" type="button" class="btn btn-sm btn-info col-sm-12 mb-2"
                    th:href="@{/orders/montages/details/{id}(id=${order.id})}">Детайли</a>
+                <a th:unless="*{repairType == null}" type="button" class="btn btn-sm btn-info col-sm-12 mb-2"
+                   th:href="@{/orders/repairs/details/{id}(id=${order.id})}">Детайли</a>
+                <a th:unless="*{prophylacticType == null}" type="button" class="btn btn-sm btn-info col-sm-12 mb-2"
+                   th:href="@{/orders/prophylactics/details/{id}(id=${order.id})}">Детайли</a>
                 <a type="button" name="save" th:attr="data-id=${order.id}, data-service=*{service}"
                    class="btn btn-sm btn-info col-sm-12"
                    href="#">Запази</a>

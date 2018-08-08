@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
 
 public class AtLeastOneFieldNotNulValidator implements ConstraintValidator<AtLeastOneFieldNotNull,Object> {
 
@@ -23,7 +24,7 @@ public class AtLeastOneFieldNotNulValidator implements ConstraintValidator<AtLea
         try {
             for (String fieldName : fieldNames) {
                 Object field = PropertyUtils.getProperty(object,fieldName);
-                if (!field.equals("")){
+                if (!field.equals("") || field.getClass().isArray()){
                     return true;
                 }
             }

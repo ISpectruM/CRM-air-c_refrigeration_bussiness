@@ -2,11 +2,15 @@ package com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models;
 
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
 import com.ispectrum.crmclima.constants.Messages;
+import com.ispectrum.crmclima.validation.AtLeastOneFieldNotNull;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@AtLeastOneFieldNotNull(
+        fieldNames = {"aircProductsBin","coolersProductsBin","fridgeProductsBin"},
+        message = Messages.FILL_AT_LEAST_ONE_FIELD)
 public class MontageOrderBindingModel extends BaseOrderBindingModel {
 
     @NotEmpty(message = Messages.CHOOSE_SERVICE)
@@ -17,6 +21,9 @@ public class MontageOrderBindingModel extends BaseOrderBindingModel {
     private String otherProduct;
 
     private String model;
+
+    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
+    private Double externalPrice;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
@@ -101,5 +108,13 @@ public class MontageOrderBindingModel extends BaseOrderBindingModel {
 
     public void setOtherProduct(String otherProduct) {
         this.otherProduct = otherProduct;
+    }
+
+    public Double getExternalPrice() {
+        return externalPrice;
+    }
+
+    public void setExternalPrice(Double externalPrice) {
+        this.externalPrice = externalPrice;
     }
 }

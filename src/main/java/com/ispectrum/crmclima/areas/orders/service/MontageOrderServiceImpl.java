@@ -53,7 +53,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
         MontageOrder newOrder = this.createNewOrder(clientId, model);
 
-        Map<AirConditioner, Integer> airConditioners = getAirConditionersFromInput(model.getAircProductsBin());
+        Map<AirConditioner, Integer> airConditioners = this.getAirConditionersFromInput(model.getAircProductsBin());
         newOrder.setAirConditioners(airConditioners);
 
         this.montageOrderRepository.save(newOrder);
@@ -141,6 +141,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         this.montageOrderRepository.save(editedOrder);
     }
 
+    //Used to generate schedule from unfinished orders only
     @Override
     public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
         List<MontageOrder> allUnFinished =
@@ -148,6 +149,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
     }
 
+    //Used by the orders interceptor service
     @Override
     public List<MontageOrder> getAllUnfinishedMontages() {
         return this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
@@ -216,12 +218,13 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     private <T extends BaseOrderBindingModel> MontageOrder createNewOrder(String clientId, T  model) {
         MontageOrder newOrder = ModelMappingUtil.convertClass(model, MontageOrder.class);
 
-        Long orderNumber = this.montageOrderRepository
-                .findTopByOrderByOrderNumberDesc().getOrderNumber();
-        if (orderNumber == null){
-            orderNumber=0L;
+        MontageOrder lastOrder = this.montageOrderRepository
+                .findTopByOrderByOrderNumberDesc();
+        Long orderNumber = 0L;
+        if (lastOrder != null){
+            orderNumber = lastOrder.getOrderNumber();
         }
-        newOrder.setOrderNumber(orderNumber+1);
+        newOrder.setOrderNumber(orderNumber + 1);
 
         Date orderDate = model.getOrderDate();
         LocalDate localDate = LocalDate.now();

@@ -1,11 +1,6 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
-import com.ispectrum.crmclima.constants.Messages;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public abstract class BaseOrderBindingModel {
@@ -13,16 +8,11 @@ public abstract class BaseOrderBindingModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
-    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
-    @NotNull(message = Messages.FIELD_CANT_BE_EMPTY)
     private Integer count;
 
     private String city;
 
     private String address;
-
-    @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
-    private Double externalPrice;
 
     private String comment;
 
@@ -66,14 +56,6 @@ public abstract class BaseOrderBindingModel {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Double getExternalPrice() {
-        return this.externalPrice;
-    }
-
-    public void setExternalPrice(Double externalPrice) {
-        this.externalPrice = externalPrice;
     }
 
     public Date getScheduleDate() {

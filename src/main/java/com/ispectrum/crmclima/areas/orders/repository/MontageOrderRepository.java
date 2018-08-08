@@ -17,12 +17,16 @@ public interface MontageOrderRepository extends PagingAndSortingRepository<Monta
 //    List<MontageOrder> findAllByOrderDateAsc();
 
     MontageOrder findFirstById(String id);
-//Used to show the orders for new schedule
+
+//Used to show all orders for creating a new schedule
     List<MontageOrder> findAllByIsFinishedAndDeletedOnIsNull(boolean isFinished);
+
 //Used in creating schedule for a specific date
     Set<MontageOrder> findAllByScheduleDateAndIsFinished(LocalDate scheduleDate, boolean isFinished);
-//    Used to get the last order number to assign next;
+
+//Used to get the last order number;
     MontageOrder findTopByOrderByOrderNumberDesc();
 
+    //Get all available orders
     Page<MontageOrder> findAllByDeletedOnIsNull(Pageable pageable);
 }

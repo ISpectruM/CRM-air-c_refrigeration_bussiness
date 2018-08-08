@@ -7,13 +7,12 @@ import javax.persistence.*;
 @Entity
 public class ProphylacticOrder extends BaseOrder{
 
-    private final String service = "prophylactic";
+    private final String SERVICE = "prophylactic";
 
     @Enumerated(EnumType.STRING)
     private ProphylacticType prophylacticType;
 
     private String product;
-
 
     public ProphylacticOrder() { }
 
@@ -34,7 +33,7 @@ public class ProphylacticOrder extends BaseOrder{
         this.prophylacticType = prophylacticType;
     }
 
-    public String getService() {
-        return this.service;
+    public String getSERVICE() {
+        return this.SERVICE;
     }
 }

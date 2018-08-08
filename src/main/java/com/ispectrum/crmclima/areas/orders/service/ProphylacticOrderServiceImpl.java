@@ -1,9 +1,13 @@
 package com.ispectrum.crmclima.areas.orders.service;
 
+import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.dtos.ProphylacticOrderDto;
 import com.ispectrum.crmclima.areas.orders.repository.ProphylacticOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,5 +38,12 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     @Override
     public Set<ProphylacticOrder> getProphylacticsByDate(LocalDate scheduleDate) {
         return this.prophylacticRepository.findAllByScheduleDate(scheduleDate);
+    }
+
+    @Override
+    public Page<ProphylacticOrderDto> getAllProphylactics(Pageable pageable) {
+        Page<ProphylacticOrder> allProphylactics =
+                this.prophylacticRepository.findAllByDeletedOnIsNull(pageable);
+        return ModelMappingUtil.convertPage(allProphylactics, ProphylacticOrderDto.class);
     }
 }

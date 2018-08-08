@@ -51,28 +51,35 @@ public class RepairOrderServiceImpl implements RepairOrderService {
 
     @Override
     public RepairOrder saveRepairOrder(String clientId, RepairBindingModel model) {
+        //Map binding data to new order
         RepairOrder newOrder = ModelMappingUtil.convertClass(model, RepairOrder.class);
 
-        Long orderNumber = this.repairOrderRepository
-                .findTopByOrderByOrderNumberDesc().getOrderNumber();
-        if (orderNumber == null){
-            orderNumber=0L;
+        // Set order number
+        RepairOrder lastOrder = this.repairOrderRepository
+                .findTopByOrderByOrderNumberDesc();
+        Long orderNumber = 0L;
+        if (lastOrder != null){
+            orderNumber=lastOrder.getOrderNumber();
         }
         newOrder.setOrderNumber(orderNumber+1);
+
+        // Set order date
         if(model.getOrderDate() != null){
             newOrder.setOrderDate(DateToLocalDate.convert(model.getOrderDate()));
         }
 
+        // Set client
         Client pureClientById = this.clientService.getPureClientById(clientId);
         if(pureClientById == null){
             throw new ClientNotFoundException();
         }
         newOrder.setClient(pureClientById);
 
+        //Set schedule date
         if (model.getScheduleDate() != null){
             newOrder.setEndDate(DateToLocalDate.convert(model.getScheduleDate()));
         }
-
+        // Set order location
         Location location = ModelMappingUtil.convertClass(model,Location.class);
         newOrder.setLocation(location);
 

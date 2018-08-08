@@ -20,7 +20,8 @@ public abstract class BaseOrder {
     private Long orderNumber;
 
     private LocalDate orderDate;
-    //Used by montage / products amount
+    //Used by montage / products amount from the
+    @Transient
     private Integer productCount;
     //Used by offer and overview
     private Integer count;
@@ -42,6 +43,8 @@ public abstract class BaseOrder {
 
     private LocalDate endDate;
 
+    //Send current order status to the client
+    @Transient
     private String status;
 
     private String otherProduct;
@@ -205,6 +208,7 @@ public abstract class BaseOrder {
         this.endDate = endDate;
     }
 
+    @Transient
     public String getStatus() {
         String status="В изпълнение.";
         if (this.getIsFinished()){

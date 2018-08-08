@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class RepairOrder extends BaseOrder{
 
-    private final String service = "repair";
+    private final String SERVICE = "repair";
 
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
@@ -25,8 +25,8 @@ public class RepairOrder extends BaseOrder{
         this.repairType = repairType;
     }
 
-    public String getService() {
-        return this.service;
+    public String getSERVICE() {
+        return this.SERVICE;
     }
 
     @Override

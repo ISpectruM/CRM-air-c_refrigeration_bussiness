@@ -2,7 +2,8 @@ package com.ispectrum.crmclima.areas.orders.entities.enums;
 
 public enum ProphylacticType {
     PROPHYLACTIC("Профилактика"),
-    LAUNCH("Пускане");
+    WARRANTY_PROPHYLACTIC("Гаранционна профилактика"),
+    LAUNCH("Пускане на съоръжения");
 
     private final String displayName;
 

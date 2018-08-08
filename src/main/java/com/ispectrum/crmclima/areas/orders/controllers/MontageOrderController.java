@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -36,6 +37,7 @@ public class MontageOrderController extends BaseController {
         this.clientService = clientService;
     }
 
+    //Show all montage, offer or view orders
     @GetMapping("/all")
     public ModelAndView getAllMontages(
             @PageableDefault(sort = {"orderNumber"}, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -44,6 +46,7 @@ public class MontageOrderController extends BaseController {
         return this.addObject("area", "orders/montages");
     }
 
+    //Show add order view for client
     @GetMapping("/add/{clientId}")
     public ModelAndView addOrder(@PathVariable String clientId) {
         this.setView("orders/montages/add_montage");
@@ -53,6 +56,7 @@ public class MontageOrderController extends BaseController {
         return this.addObject("client", client);
     }
 
+    //Add montage order
     @PostMapping("/montage/add/{id}")
     public ModelAndView addMontageAction(
             @PathVariable String id,
@@ -66,6 +70,7 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
+    //Add offer or view order
     @PostMapping("/offer/add/{id}")
     public ModelAndView addOrderAction(
             @PathVariable String id,
@@ -79,13 +84,14 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
-
+    //Show order details view
     @GetMapping("/details/{id}")
     public ModelAndView getMontageDetails(@PathVariable String id) {
         MontageOrderDto montage = this.montageOrderService.getMontageById(id);
         return this.addViewAndObject("order", montage, "orders/details");
     }
 
+    //Get edit view for montage, offer and view orders
     @GetMapping("/edit/{id}")
     public ModelAndView editOrder(@PathVariable String id) {
         MontageOrderDto montage = this.montageOrderService.getMontageById(id);
@@ -93,7 +99,7 @@ public class MontageOrderController extends BaseController {
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
     }
-
+    //Edit montage
     @PostMapping("/montage/edit/{id}")
     public ModelAndView editMontageOrderAction(@PathVariable String id,
                                        @Valid @ModelAttribute(name = "bindingModel") EditMontageOrderBindingModel model,
@@ -104,7 +110,7 @@ public class MontageOrderController extends BaseController {
         this.montageOrderService.editMontage(id, model);
         return this.redirect("/orders/montages/details/" + id);
     }
-
+    //Edit offer or view
     @PostMapping("/offer/edit/{id}")
     public ModelAndView editOfferOrderAction(@PathVariable String id,
                                         EditMontageOrderBindingModel model) {
@@ -128,6 +134,7 @@ public class MontageOrderController extends BaseController {
         Map<String, Object> model = bindingResult.getModel();
         ClientDto client = this.clientService.getClientById(id);
         model.put("client", client);
+        model.put("currentDate", LocalDate.now());
         return this.addViewAndObjectsMap("orders/montages/add_montage", model);
     }
 

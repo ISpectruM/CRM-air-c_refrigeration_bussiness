@@ -1,6 +1,8 @@
 package com.ispectrum.crmclima.areas.orders.repository;
 
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,6 @@ public interface ProphylacticOrderRepository extends JpaRepository<ProphylacticO
     List<ProphylacticOrder> findAllByIsFinished(boolean isFinished);
 
     Set<ProphylacticOrder> findAllByScheduleDate(LocalDate scheduleDate);
+
+    Page<ProphylacticOrder> findAllByDeletedOnIsNull(Pageable pageable);
 }

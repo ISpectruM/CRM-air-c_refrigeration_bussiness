@@ -76,15 +76,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     private List<CreateScheduleDto> getAllProphylactics() {
         List<ProphylacticOrder> allUnfinishedProphylactics =
                 this.baseOrderService.getAllUnfinishedProphylactics();
-//        ModelMappingUtil.convertList(allUnfinishedProphylactics,CreateScheduleDto.class);
-        return new ArrayList<>();
+        return ModelMappingUtil.convertList(allUnfinishedProphylactics,CreateScheduleDto.class);
     }
 
     private List<CreateScheduleDto> getAllRepairs() {
         List<RepairOrder> allUnfinishedRepairs =
                 this.baseOrderService.getAllUnfinishedRepairs();
-//        ModelMappingUtil.convertList(allUnfinishedRepairs,CreateScheduleDto.class);
-        return new ArrayList<>();
+        return ModelMappingUtil.convertList(allUnfinishedRepairs,CreateScheduleDto.class);
     }
 
     private List<CreateScheduleDto> getAllMontages() {

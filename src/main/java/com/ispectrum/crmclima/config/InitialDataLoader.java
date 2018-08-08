@@ -28,6 +28,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         this.roleRepository = roleRepository;
         this.userService = userService;
         this.encoder = encoder;
+
     }
 
     @Override
@@ -40,7 +41,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         User admin = createAdminIfNotFound();
 
-        this.createAdminIfNotFound();
         this.userService.persistUser(admin);
 
         alreadySetup = true;
