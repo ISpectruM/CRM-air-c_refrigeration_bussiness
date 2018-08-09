@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.orders.service;
 
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.prophulactic_models.ProphylacticBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.dtos.ProphylacticOrderDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface ProphylacticOrderService {
     Set<ProphylacticOrder> getProphylacticsByDate(LocalDate scheduleDate);
 
     Page<ProphylacticOrderDto> getAllProphylactics(Pageable pageable);
+
+    void saveProphylactic(String clientId, ProphylacticBindingModel bindingModel);
 }

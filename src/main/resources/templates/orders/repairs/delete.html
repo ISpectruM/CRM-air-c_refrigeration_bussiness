@@ -1,142 +1,39 @@
-<div class="container" th:object="${montage}">
-    <div class="form-row m-2 card-header">
-        <h4 class="col-sm-4">Изтриване на заявка: </h4>
+<div class="container" th:object="${repair}">
+    <div class="form-row mt-5">
+        <h3 class="col" th:text="|Сигурни ли сте, че желаете да изтриете заявка - ремонт № *{#numbers.formatInteger(orderNumber,6)}|"> </h3>
     </div>
-    <th:block th:object="${client}">
-        <div class="row m-2">
-            <label for="name" class="col-1 col-form-label">Име:</label>
-            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{name}">
-            <label for="phone" class="col-1 col-form-label">Телефон:</label>
-            <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{phone}">
+    <div class="form-group row m-2">
+        <label for="repairType" class="col-sm-2 col-form-label">Вид заявка:</label>
+        <div class="col-sm-3">
+            <input class="form-control-plaintext" id="repairType" th:value="*{repairType.displayName}">
         </div>
-    </th:block>
-    <hr/>
-    <h5 class="card-header">Дата</h5>
+    </div>
     <div class="form-group row m-2">
         <label for="orderDate" class="col-md-2 col-form-label">От дата:</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="orderDate" th:placeholder="*{orderDate}" disabled="disabled">
+            <input type="date" class="form-control-plaintext" id="orderDate" name="orderDate"
+                   th:value="*{orderDate}">
         </div>
     </div>
-
-    <h5 class="card-header">Вид заявка</h5>
-    <div class="form-group row m-2">
-        <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <input class="col-sm-3" id="montageType" name="montageType" th:placeholder="*{montageType.displayName}" disabled="disabled">
+    <div class="row">
+        <h6 class="col-12" th:text="'На клиент:'"></h6>
     </div>
 
-    <h5 class="card-header">Продукт</h5>
-    <div class="form-group row m-2" disabled="disabled">
-        <div class="form-group col-md-3">
-            <label for="productType">Продукт:</label>
-            <input id="productType" th:unless="*{productType == null}" th:placeholder="*{productType.displayName}">
-            <p th:each="product:*{airConditioners}" th:object="${product.key}"
-               th:text="|*{brand} *{model}|"></p>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="brand-model">Марка/модел:</label>
-            <p id="brand-model" th:each="product:*{airConditioners}" th:object="${product.key}"
-               th:text="|*{brand} *{model}|"></p>
-        </div>
-
-        <div class="form-group col-md-3">
-            <label for="otherProduct">Друго:</label>
-            <div id="otherProduct">
-                <input class="form-control" name="otherProduct" th:placeholder="*{otherProduct}">
-            </div>
-        </div>
-        <div class="form-group col-md-1">
-            <label for="count">Брой:</label>
-            <div id="count">
-                <input class="form-control" name="count" th:placeholder="*{count}">
-            </div>
-        </div>
+    <div class="row m-2">
+        <label for="name" class="col-1 col-form-label">Име:</label>
+        <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{client.name}">
     </div>
-
-    <h5 class="card-header">Адрес</h5>
-    <div class="form-group row m-2" disabled="disabled">
-        <label for="city" class="col-sm-1 col-form-label">Град:</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="city" th:placeholder="*{location.city}">
-        </div>
-        <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="address" th:placeholder="*{location.address}">
-        </div>
+    <div class="row m-2">
+        <label for="phone" class="col-1 col-form-label">Телефон:</label>
+        <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{client.phone}">
     </div>
-
-    <h5 class="card-header">Цена</h5>
-    <div class="form-group row m-2" disabled="disabled">
-        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="price" th:placeholder="*{price}">
-        </div>
-        <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="discount" th:placeholder="*{discount}">
-        </div>
-        <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="deposit" th:placeholder="*{deposit}">
-        </div>
-        <label for="forPayment" class="col-sm-1 col-form-label">Общо:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="forPayment" th:placeholder="*{forPayment}">
-        </div>
-    </div>
-
-    <h5 class="card-header">Статус</h5>
-    <div class="form-group row m-2 " disabled="disabled">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}">
-            <label class="form-check-label" for="isFinished">Приключена</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}">
-            <label class="form-check-label" for="isWaiting">В изчакване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isMarked" th:checked="*{isForFinishing}">
-            <label class="form-check-label" for="isForFinishing">За довършване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}">
-            <label class="form-check-label" for="isPayed">Платена</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}">
-            <label class="form-check-label" for="isDeferred">Разсрочено</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}">
-            <label class="form-check-label" for="isWithInvoice">С фактура</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}">
-            <label class="form-check-label" for="isMarked">Маркирана</label>
-        </div>
-    </div>
-
-    <h5 class="card-header">Особености/бележки</h5>
-    <div class="form-group row m-2" disabled="disabled">
-        <div class="col-sm-6">
-            <label for="comment">Особености/бележки:</label>
-            <textarea class="form-control" id="comment" name="comment" rows="4" th:text="*{comment}"></textarea>
-        </div>
-        <div class="col-sm-6">
-            <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-            <input type="text" class="form-control col-sm-4" id="scheduleDate"
-                   th:placeholder="*{scheduleDate}">
-        </div>
-    </div>
-
     <input
             type="hidden"
             th:name="${_csrf.parameterName}"
             th:value="${_csrf.token}"/>
-    <div class="form-group">
-        <form class="col-lg-12 col-lg-offset-2" th:action="@{/orders/montages/delete/{id}(id=*{id})}" th:method="POST">
-            <a type="button" class="btn btn-dark" th:href="@{/orders/montages/details/{id}(id=*{id})}">Откажи</a>
+    <div class="form-group mt-5 mx-auto">
+        <form class="col-lg-12 col-lg-offset-2" th:action="@{/orders/repairs/delete/{id}(id=*{id})}" th:method="POST">
+            <a type="button" class="btn btn-dark" th:href="@{/orders/repairs/details/{id}(id=*{id})}">Откажи</a>
             <button type="submit" class="btn btn-danger">Изтрий</button>
         </form>
     </div>

@@ -90,7 +90,7 @@ public class RepairOrderController extends BaseController{
     @GetMapping("/delete/{id}")
     public ModelAndView deleteOrder(@PathVariable String id){
         RepairOrderDto montage = this.repairOrderService.getRepairById(id);
-        return this.addViewAndObject("montage", montage,"orders/repairs/delete");
+        return this.addViewAndObject("repair", montage,"orders/repairs/delete");
     }
 
     @PostMapping("/delete/{id}")

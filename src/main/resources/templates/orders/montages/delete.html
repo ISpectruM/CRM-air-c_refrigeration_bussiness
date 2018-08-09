@@ -1,6 +1,6 @@
 <div class="container" th:object="${montage}">
     <div class="form-row mt-5">
-        <h3 class="col" th:text="|Сигурни ли сте, че желаете да изтриете заявка № *{orderNumber}|"> </h3>
+        <h3 class="col" th:text="|Сигурни ли сте, че желаете да изтриете заявка № *{#numbers.formatInteger(orderNumber,6)}|"> </h3>
     </div>
     <div class="form-group row m-2">
         <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>

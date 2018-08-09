@@ -12,12 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/orders/prophylactics")
@@ -39,6 +40,7 @@ public class ProphylacticController extends BaseController {
         Page<ProphylacticOrderDto> prophylactics =
                 this.prophylacticOrderService.getAllProphylactics(pageable);
         this.addViewAndObject("objects", prophylactics, "orders/prophylactics/all");
+//      Needed for setting a proper OrderType paging navigation at templates/fragments/page_nav
         return this.addObject("area", "orders/prophylactics");
 
     }
@@ -53,5 +55,22 @@ public class ProphylacticController extends BaseController {
         return this.addObject("bindingModel", new ProphylacticBindingModel());
     }
 
+    @PostMapping("/add/{clientId}")
+    public ModelAndView addProphylacticAction(
+            @PathVariable String clientId,
+            @Valid @ModelAttribute(name = "bindingModel") ProphylacticBindingModel bindingModel,
+            BindingResult bindingResult){
+
+        ClientDto clientById = this.clientService.getClientById(clientId);
+        if (bindingResult.hasErrors()){
+            Map<String, Object> bindingResultModel = bindingResult.getModel();
+            bindingResultModel.put("client", clientById);
+            return this.addViewAndObjectsMap("orders/repairs/add", bindingResultModel);
+        }
+
+        this.prophylacticOrderService.saveProphylactic(clientId,bindingModel);
+        return this.redirect("/orders/prophylactics/all?page=0");
+
+    }
 
 }
