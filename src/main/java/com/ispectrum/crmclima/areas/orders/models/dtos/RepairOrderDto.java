@@ -7,6 +7,8 @@ public class RepairOrderDto extends BaseOrderDto{
 
     private RepairType repairType;
 
+    private String product;
+
     public RepairOrderDto() {
     }
 
@@ -18,4 +20,11 @@ public class RepairOrderDto extends BaseOrderDto{
         this.repairType = repairType;
     }
 
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
 }

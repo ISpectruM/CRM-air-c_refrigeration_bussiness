@@ -18,7 +18,7 @@ public class RepairBindingModel extends BaseOrderBindingModel {
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double deposit;
 
-    private String otherProduct;
+    private String product;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     @NotNull(message = Messages.FIELD_CANT_BE_EMPTY)
@@ -45,15 +45,6 @@ public class RepairBindingModel extends BaseOrderBindingModel {
         this.repairType = repairType;
     }
 
-
-    public String getOtherProduct() {
-        return this.otherProduct;
-    }
-
-    public void setOtherProduct(String otherProduct) {
-        this.otherProduct = otherProduct;
-    }
-
     @Override
     public Integer getCount() {
         return count;
@@ -70,5 +61,13 @@ public class RepairBindingModel extends BaseOrderBindingModel {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
     }
 }

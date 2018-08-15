@@ -130,7 +130,7 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
-    private ModelAndView getErrorsViewModel(@PathVariable String id, BindingResult bindingResult) {
+    private ModelAndView getErrorsViewModel(String id, BindingResult bindingResult) {
         Map<String, Object> model = bindingResult.getModel();
         ClientDto client = this.clientService.getClientById(id);
         model.put("client", client);

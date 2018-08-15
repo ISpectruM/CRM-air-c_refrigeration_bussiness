@@ -17,7 +17,7 @@ public class ProphylacticBindingModel extends BaseOrderBindingModel {
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     private Double price;
 
-    private String otherProduct;
+    private String product;
 
     @Min(value = 0, message = Messages.NEGATIVE_NUMBERS_NOT_ALLOWED)
     @NotNull(message = Messages.FIELD_CANT_BE_EMPTY)
@@ -43,13 +43,6 @@ public class ProphylacticBindingModel extends BaseOrderBindingModel {
         this.deposit = deposit;
     }
 
-    public String getOtherProduct() {
-        return otherProduct;
-    }
-
-    public void setOtherProduct(String otherProduct) {
-        this.otherProduct = otherProduct;
-    }
 
     @Override
     public Integer getCount() {
@@ -67,5 +60,13 @@ public class ProphylacticBindingModel extends BaseOrderBindingModel {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
     }
 }

@@ -12,6 +12,8 @@ public class RepairOrder extends BaseOrder{
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
 
+    private String product;
+
 
     public RepairOrder() {
     }
@@ -37,5 +39,13 @@ public class RepairOrder extends BaseOrder{
             return price - deposit;
         }
         return super.getForPayment();
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
     }
 }

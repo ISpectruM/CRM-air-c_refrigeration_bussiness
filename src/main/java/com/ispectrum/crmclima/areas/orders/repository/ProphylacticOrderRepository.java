@@ -17,4 +17,6 @@ public interface ProphylacticOrderRepository extends JpaRepository<ProphylacticO
     Set<ProphylacticOrder> findAllByScheduleDate(LocalDate scheduleDate);
 
     Page<ProphylacticOrder> findAllByDeletedOnIsNull(Pageable pageable);
+
+    ProphylacticOrder findTopByOrderByOrderNumberDesc();
 }

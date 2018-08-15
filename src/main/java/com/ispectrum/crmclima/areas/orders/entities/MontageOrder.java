@@ -13,6 +13,8 @@ public class MontageOrder extends BaseOrder{
 
     private final String SERVICE = "montage";
 
+    private String otherProduct;
+
     @Enumerated(EnumType.STRING)
     private MontageType montageType;
 
@@ -136,5 +138,13 @@ public class MontageOrder extends BaseOrder{
         }
 
         return this.getExternalPrice();
+    }
+
+    public String getOtherProduct() {
+        return otherProduct;
+    }
+
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
     }
 }

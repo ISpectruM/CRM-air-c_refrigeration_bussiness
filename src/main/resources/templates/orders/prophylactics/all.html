@@ -8,6 +8,7 @@
     </div>
     <!--pagination-->
     <div class="row" th:include="~{fragments/page_nav}"></div>
+
     <!--content-->
     <table class="table table-striped">
         <thead class="thead-dark">
@@ -31,11 +32,8 @@
         <tr class="table" th:each="order, iter:${objects}" th:object="${order}">
             <th scope="row" th:text="${iter.index+1}"></th>
             <td th:text="*{orderDate}"></td>
-            <td th:unless="*{montageType == null}" th:text="*{montageType.displayName}"></td>
-            <td>
-                <p th:each="product:*{airConditioners}" th:object="${product.key}"
-                   th:text="|*{brand} *{model}|"></p>
-            </td>
+            <td th:unless="*{prophylacticType == null}" th:text="*{prophylacticType.displayName}"></td>
+            <td th:text="*{product}"></td>
             <td th:text="*{count}"></td>
             <td th:text="*{client.name}"></td>
             <td th:text="|*{location.city}, *{location.address}|"></td>
@@ -46,7 +44,7 @@
             <td th:text="*{comment}"></td>
             <td>
                 <a type="button" class="btn btn-sm btn-info"
-                   th:href="@{/orders/montages/details/{id}(id=${order.id})}">Детайли</a>
+                   th:href="@{/orders/prophilactics/details/{id}(id=${order.id})}">Детайли</a>
             </td>
         </tr>
         </tbody>

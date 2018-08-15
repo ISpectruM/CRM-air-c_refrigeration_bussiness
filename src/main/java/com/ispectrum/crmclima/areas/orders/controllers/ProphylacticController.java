@@ -65,7 +65,8 @@ public class ProphylacticController extends BaseController {
         if (bindingResult.hasErrors()){
             Map<String, Object> bindingResultModel = bindingResult.getModel();
             bindingResultModel.put("client", clientById);
-            return this.addViewAndObjectsMap("orders/repairs/add", bindingResultModel);
+            bindingResultModel.put("currentDate", LocalDate.now());
+            return this.addViewAndObjectsMap("orders/prophylactics/add", bindingResultModel);
         }
 
         this.prophylacticOrderService.saveProphylactic(clientId,bindingModel);

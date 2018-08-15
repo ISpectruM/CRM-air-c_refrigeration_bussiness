@@ -16,6 +16,9 @@ public class MontageOrderDto extends BaseOrderDto{
 
     private Double externalPrice;
 
+    private String otherProduct;
+
+
 
     public MontageOrderDto() {
     }
@@ -59,5 +62,13 @@ public class MontageOrderDto extends BaseOrderDto{
 
     public void setExternalPrice(Double externalPrice) {
         this.externalPrice = externalPrice;
+    }
+
+    public String getOtherProduct() {
+        return otherProduct;
+    }
+
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
     }
 }

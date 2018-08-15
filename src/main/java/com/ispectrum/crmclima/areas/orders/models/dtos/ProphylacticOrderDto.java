@@ -2,6 +2,8 @@ package com.ispectrum.crmclima.areas.orders.models.dtos;
 
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
+import com.ispectrum.crmclima.areas.orders.entities.enums.ProphylacticType;
+
 import java.time.LocalDate;
 
 public class ProphylacticOrderDto extends BaseOrderDto{
@@ -10,7 +12,7 @@ public class ProphylacticOrderDto extends BaseOrderDto{
 
     private LocalDate orderDate;
 
-    private String prophylacticType;
+    private ProphylacticType prophylacticType;
 
     private String product;
 
@@ -101,11 +103,11 @@ public class ProphylacticOrderDto extends BaseOrderDto{
         this.id = id;
     }
 
-    public String getProphylacticType() {
-        return this.prophylacticType;
+    public ProphylacticType getProphylacticType() {
+        return prophylacticType;
     }
 
-    public void setProphylacticType(String prophylacticType) {
+    public void setProphylacticType(ProphylacticType prophylacticType) {
         this.prophylacticType = prophylacticType;
     }
 }

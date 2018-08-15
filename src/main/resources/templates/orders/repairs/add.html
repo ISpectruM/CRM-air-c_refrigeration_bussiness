@@ -22,6 +22,7 @@
                 </div>
             </div>
 
+            <!--Repair type section-->
             <h6 class="card-header">Вид заявка</h6>
             <div class="form-group row m-2">
                 <label for="repairType" class="col-sm-2 col-form-label">Вид заявка:</label>
@@ -40,12 +41,15 @@
                 </div>
             </div>
 
+            <!--Product-->
             <h6 class="card-header">Продукт</h6>
             <div class="form-group row m-2">
-                <label class="col-sm-2" for="otherProduct">Продукт:</label>
+                <label class="col-sm-2" for="product">Продукт:</label>
                 <div class="form-group col-sm-6">
-                    <input id="otherProduct" class="form-control" name="otherProduct"/>
+                    <input id="product" class="form-control" name="product"/>
                 </div>
+
+                <!--Products count-->
                 <label class="col-sm-1" for="count">Брой:</label>
                 <div class="form-group col-sm-1">
                     <input id="count" class="form-control" name="count"
@@ -57,6 +61,7 @@
                 </div>
             </div>
 
+            <!--Description-->
             <h6 class="card-header">Описание на проблема</h6>
             <div class="form-group row m-2">
                 <label class="col-sm-2" for="description">Описание:</label>
@@ -65,6 +70,7 @@
                 </div>
             </div>
 
+            <!--Address section-->
             <h6 class="card-header">Адрес</h6>
             <div class="form-group row m-2">
                 <label for="city" class="col-sm-2 col-form-label">Град:</label>
@@ -78,6 +84,7 @@
                 </div>
             </div>
 
+            <!--Price section-->
             <h6 class="card-header">Цена</h6>
             <div class="form-group row m-2">
                 <label for="price" class="col-sm-2 col-form-label">Цена:</label>
@@ -89,6 +96,8 @@
                         <small class="invalid-feedback text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
+
+                <!--Deposit section-->
                 <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
                 <div class="col-sm-2">
                     <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"

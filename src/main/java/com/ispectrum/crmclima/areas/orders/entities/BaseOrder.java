@@ -47,7 +47,6 @@ public abstract class BaseOrder {
     @Transient
     private String status;
 
-    private String otherProduct;
 
     private String description;
 
@@ -231,14 +230,6 @@ public abstract class BaseOrder {
 
     public void setIsForFinishing(boolean forFinishing) {
         isForFinishing = forFinishing;
-    }
-
-    public String getOtherProduct() {
-        return this.otherProduct;
-    }
-
-    public void setOtherProduct(String otherProduct) {
-        this.otherProduct = otherProduct;
     }
 
     public Long getOrderNumber() {

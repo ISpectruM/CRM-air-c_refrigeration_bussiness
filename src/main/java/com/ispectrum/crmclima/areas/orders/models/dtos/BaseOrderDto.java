@@ -32,7 +32,6 @@ public abstract class BaseOrderDto {
 
     private String status;
 
-    private String otherProduct;
 
     private String description;
 
@@ -148,14 +147,6 @@ public abstract class BaseOrderDto {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getOtherProduct() {
-        return this.otherProduct;
-    }
-
-    public void setOtherProduct(String otherProduct) {
-        this.otherProduct = otherProduct;
     }
 
     public String getDescription() {
