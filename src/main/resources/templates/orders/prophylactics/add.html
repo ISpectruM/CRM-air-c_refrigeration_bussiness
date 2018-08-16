@@ -22,6 +22,7 @@
                 </div>
             </div>
 
+            <!--Order type section-->
             <h6 class="card-header">Вид заявка</h6>
             <div class="form-group row m-2">
                 <label for="prophylacticType" class="col-sm-2 col-form-label">Вид заявка:</label>
@@ -40,11 +41,12 @@
                 </div>
             </div>
 
+            <!--Product section-->
             <h6 class="card-header">Продукт</h6>
             <div class="form-group row m-2">
-                <label class="col-sm-2" for="otherProduct">Продукт:</label>
+                <label class="col-sm-2" for="product">Продукт:</label>
                 <div class="form-group col-sm-6">
-                    <input id="otherProduct" class="form-control" name="otherProduct"/>
+                    <input id="product" class="form-control" name="product"/>
                 </div>
                 <label class="col-sm-1" for="count">Брой:</label>
                 <div class="form-group col-sm-1">
@@ -57,6 +59,7 @@
                 </div>
             </div>
 
+            <!--Description section-->
             <h6 class="card-header">Описание</h6>
             <div class="form-group row m-2">
                 <label class="col-sm-2" for="description">Описание:</label>
@@ -78,6 +81,7 @@
                 </div>
             </div>
 
+            <!--Price section-->
             <h6 class="card-header">Цена</h6>
             <div class="form-group row m-2">
                 <label for="price" class="col-sm-2 col-form-label">Цена:</label>
@@ -100,6 +104,7 @@
                 </div>
             </div>
 
+            <!--Status section-->
             <h6 class="card-header">Статус</h6>
             <div class="form-group row m-2 ">
                 <div class="form-check form-check-inline">
@@ -132,6 +137,7 @@
                 </div>
             </div>
 
+            <!--Notes section-->
             <h6 class="card-header">Особености/бележки</h6>
             <div class="form-group row m-2">
                 <div class="col-sm-6">
@@ -148,6 +154,7 @@
                     type="hidden"
                     th:name="${_csrf.parameterName}"
                     th:value="${_csrf.token}"/>
+
             <div class="form-group">
                 <div class="col-lg-12 col-lg-offset-2">
                     <button type="reset" class="btn btn-default">Изчисти</button>

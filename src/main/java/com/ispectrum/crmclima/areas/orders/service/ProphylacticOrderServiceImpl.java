@@ -82,7 +82,13 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
         this.prophylacticRepository.saveAndFlush(newProphylacticOrder);
     }
 
-//    Rest service
+    @Override
+    public ProphylacticOrderDto getProphylacticById(String id) {
+        ProphylacticOrder firstById = this.prophylacticRepository.findFirstById(id);
+        return ModelMappingUtil.convertClass(firstById, ProphylacticOrderDto.class);
+    }
+
+    //    Rest service
     @Override
     public void saveProphylacticChanges(RestOrderBindingModel model) {
 //        TODO save changes to DB

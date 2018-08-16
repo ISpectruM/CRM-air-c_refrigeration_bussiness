@@ -1,166 +1,183 @@
-<div class="container" th:object="${montage}">
-    <div class="form-row m-2 card-header">
-        <h4 class="col-sm-4">Редакция на заявка за клиент: </h4>
-        <label for="name" class="col-sm-1 col-form-label">Име:</label>
-        <div class="form-group col-md-4">
-            <input type="text" readonly class="form-control-plaintext" id="name" th:placeholder="*{client.name}">
-        </div>
-        <label for="phone" class="col-sm-1 col-form-label">Телефон:</label>
-        <div class="form-group col-sm-2">
-            <input type="text" readonly class="form-control-plaintext" id="phone" th:placeholder="*{client.phone}">
-        </div>
+<div class="container" th:object="${bindingModel}">
+    <div class="card-header">
+        <h4 class="col" th:text="|Редактиране на заявка № ${#numbers.formatInteger(prophylactic.orderNumber,6)}|"></h4>
     </div>
-<hr/>
-<form class="form-horizontal" th:action="@{/orders/montages/edit/{id}(id=${id})}" th:method="POST">
-    <h5 class="card-header">Дата</h5>
-    <div class="form-group row m-2">
-        <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
-        <div class="col-md-3">
-            <input type="date" class="form-control" id="orderDate" name="orderDate"
-                   th:value="*{orderDate}">
+    <th:block th:object="${prophylactic}">
+        <div class="row m-2">
+            <label for="name" class="col-1 col-form-label">Име:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{client.name}">
+            <label for="phone" class="col-1 col-form-label">Телефон:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{client.phone}">
         </div>
-    </div>
+    </th:block>
+    <div class="container">
+        <form class="form-horizontal" th:action="@{/orders/prophylactics/edit/{id}(id=${prophylactic.id})}" th:method="POST">
 
-    <h5 class="card-header">Вид заявка</h5>
-    <div class="form-group row m-2">
-        <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
-        <select class="col-sm-3" id="montageType" name="montageType">
-            <option th:value="*{montageType}" th:text="*{montageType.displayName}"></option>
-            <option class="form-control"
-                    th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.MontageType).values()}"
-                    th:value="${type}" th:text="${type.displayName}"></option>
-        </select>
-    </div>
-
-    <h5 class="card-header">Продукт</h5>
-    <div class="form-group row m-2" th:each="aircon:*{airConditioners}" th:object="${aircon.key}"
-         th:include="~{orders/montages/fragments/products}">
-    </div>
-    <div class="form-group row m-2" th:unless="*{airConditioners} == null">
-        <div class="form-group col-md-3">
-            <label for="productType">Продукт:</label>
-            <select id="productType" name="productType" class="form-control">
-                <option value="">- Избери -</option>
-                <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
-                        th:value="${product}" th:text="${product.displayName}"></option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="brand">Марка:</label>
-            <select id="brand" class="form-control" name="brand">
-                <option value="">- Избери -</option>
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="product">Модел:</label>
-            <select id="product" name="product" class="form-control">
-                <option value="">- Избери -</option>
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="otherProduct">Друго:</label>
-            <div id="otherProduct">
-                <input class="form-control" name="otherProduct" placeholder="Друг продукт"/>
+            <!--Order date-->
+            <h6 class="card-header">Дата</h6>
+            <div class="form-group row m-2">
+                <label for="orderDate" class="col-sm-2 col-form-label">Дата:</label>
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" id="orderDate" name="orderDate"
+                           th:value="${prophylactic.orderDate}">
+                </div>
             </div>
-        </div>
-        <div class="form-group col-md-1">
-            <label for="count">Брой:</label>
-            <div>
-                <input id="count" class="form-control" name="count"/>
+
+            <!--prophylactic type-->
+            <h6 class="card-header">Вид заявка</h6>
+            <div class="form-group row m-2">
+                <label for="prophylacticType" class="col-sm-2 col-form-label">Вид заявка:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="prophylacticType" name="prophylacticType"
+                            th:classappend="${#fields.hasErrors('prophylacticType')}? 'is-invalid':''"
+                            th:field="*{prophylacticType}">
+                        <option th:value="${prophylactic.prophylacticType}" th:text="${prophylactic.prophylacticType.displayName}"></option>
+                        <option class="form-control"
+                                th:each="type :${T(com.ispectrum.crmclima.areas.orders.entities.enums.ProphylacticType).values()}"
+                                th:value="${type}" th:text="${type.displayName}"></option>
+                    </select>
+                    <th:block th:each="error:${#fields.errors('prophylacticType')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <h5 class="card-header">Адрес</h5>
-    <div class="form-group row m-2">
-        <label for="city" class="col-sm-1 col-form-label">Град:</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="city" name="city"
-                   th:value="*{location.city}">
-        </div>
-        <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="address" name="address"
-                   th:value="*{location.address}">
-        </div>
-    </div>
+            <!--Product field-->
+            <h6 class="card-header">Продукт</h6>
+            <div class="form-group row m-2">
+                <label class="col-sm-2" for="product">Продукт:</label>
+                <div class="form-group col-sm-6">
+                    <input id="product" class="form-control" name="product" th:value="${prophylactic.product}"/>
+                </div>
+                <label class="col-sm-1" for="count">Брой:</label>
 
-    <h5 class="card-header">Цена</h5>
-    <div class="form-group row m-2">
-        <label for="price" class="col-sm-1 col-form-label">Цена:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="price" name="price"
-                   th:value="*{price}">
-        </div>
-        <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="deposit" name="deposit"
-                   th:value="*{deposit}">
-        </div>
-        <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="discount" name="discount"
-                   th:value="*{discount}">
-        </div>
+                <!--Product count field-->
+                <div class="form-group col-sm-1">
+                    <input id="count" class="form-control" name="count"
+                           th:classappend="${#fields.hasErrors('count')}? 'is-invalid':''"
+                           th:field="*{count}" th:value="${prophylactic.count}">
+                    <th:block th:each="error:${#fields.errors('count')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+            </div>
 
-    </div>
+            <!--Description field-->
+            <h6 class="card-header">Описание на проблема</h6>
+            <div class="form-group row m-2">
+                <label class="col-sm-2" for="description">Описание:</label>
+                <div class="col-sm-6">
+                        <textarea class="form-control" id="description" name="description" rows="2"
+                                  th:text="${prophylactic.description}"></textarea>
+                </div>
+            </div>
 
-    <h5 class="card-header">Статус</h5>
-    <div class="form-group row m-2 ">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}">
-            <label class="form-check-label" for="isFinished">Приключена</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}">
-            <label class="form-check-label" for="isWaiting">В изчакване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
-                   th:checked="*{isForFinishing}">
-            <label class="form-check-label" for="isForFinishing">За довършване</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}">
-            <label class="form-check-label" for="isPayed">Платена</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}">
-            <label class="form-check-label" for="isDeferred">Разсрочено</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}">
-            <label class="form-check-label" for="isWithInvoice">С фактура</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}">
-            <label class="form-check-label" for="isMarked">Маркирана</label>
-        </div>
-    </div>
+            <!--Address field-->
+            <h6 class="card-header">Адрес</h6>
+            <div class="form-group row m-2">
+                <label for="city" class="col-sm-2 col-form-label">Град:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="city" name="city"
+                           th:value="${prophylactic.location.city}">
+                </div>
+                <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="address" name="address"
+                           th:value="${prophylactic.location.address}">
+                </div>
+            </div>
 
-    <h5 class="card-header">Особености/бележки</h5>
-    <div class="form-group row m-2">
-        <div class="col-sm-6">
-            <label for="comment">Особености/бележки:</label>
-            <textarea class="form-control" id="comment" name="comment" rows="4"
-            th:value="*{comment}"></textarea>
-        </div>
-        <div class="col-sm-6">
-            <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-            <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate"
-                   th:value="*{scheduleDate}">
-        </div>
-    </div>
+            <!--Price section-->
+            <h6 class="card-header">Цена</h6>
+            <div class="form-group row m-2">
 
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
-    <div class="form-group">
-        <div class="col-lg-12 col-lg-offset-2">
-            <a type="button" class="btn btn-dark" th:href="@{/orders/montages/all?page=0}">Откажи</a>
-            <button type="submit" class="btn btn-success">Запиши</button>
-        </div>
+                <!--Price field-->
+                <label for="price" class="col-sm-2 col-form-label">Цена:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="price" name="price"
+                           th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
+                           th:value="${prophylactic.price}">
+                    <th:block th:each="error:${#fields.errors('price')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+
+                <!--Deposit field-->
+                <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
+                           th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
+                           th:value="${prophylactic.deposit}">
+                    <th:block th:each="error:${#fields.errors('deposit')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+            </div>
+            <!--Status section-->
+            <h6 class="card-header">Статус</h6>
+            <div class="form-group row m-2 ">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished"
+                           th:vaule="${prophylactic.isFinished}">
+                    <label class="form-check-label" for="isFinished">Приключена</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting"
+                           th:value="${prophylactic.isWaiting}">
+                    <label class="form-check-label" for="isWaiting">В изчакване</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
+                           th:value="${prophylactic.isForFinishing}">
+                    <label class="form-check-label" for="isForFinishing">За довършване</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed"
+                           th:value="${prophylactic.isPayed}">
+                    <label class="form-check-label" for="isPayed">Платена</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred"
+                           th:value="${prophylactic.isDeferred}">
+                    <label class="form-check-label" for="isDeferred">Разсрочено</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice"
+                           th:value="${prophylactic.isWithInvoice}">
+                    <label class="form-check-label" for="isWithInvoice">С фактура</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked"
+                           th:value="${prophylactic.isMarked}">
+                    <label class="form-check-label" for="isMarked">Маркирана</label>
+                </div>
+            </div>
+
+            <h6 class="card-header">Особености/бележки</h6>
+            <div class="form-group row m-2">
+                <div class="col-sm-6">
+                    <label for="comment">Особености/бележки:</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="4"
+                              th:text="${prophylactic.comment}"></textarea>
+                </div>
+                <div class="col-sm-6">
+                    <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
+                    <input type="date" class="form-control col-sm-5" id="scheduleDate" name="scheduleDate"
+                           th:value="${prophylactic.scheduleDate}">
+                </div>
+            </div>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+            <div class="form-group">
+                <div class="col-lg-12 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Изчисти</button>
+                    <a type="button" class="btn btn-default" th:href="@{/orders/prophylactics/all?page=0}">Откажи</a>
+                    <button type="submit" class="btn btn-primary">Запиши</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
 </div>

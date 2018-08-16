@@ -7,6 +7,7 @@
 <table class="table table-striped mt-2">
     <thead>
     <tr>
+        <th scope="col">#</th>
         <th scope="col">Дата</th>
         <th scope="col">Дейност</th>
         <th scope="col">Продукт</th>
@@ -21,18 +22,16 @@
     <tr th:each="repair, iter:${client.getRepairOrders()}" th:object="${repair}">
         <th scope="row" th:text="${iter.index+1}"></th>
         <td th:text="*{orderDate}"></td>
-        <td th:text="*{repairType}"></td>
+        <td th:text="*{repairType.displayName}"></td>
         <td th:text="*{product}"></td>
-        <td th:text="*{productCount}"></td>
+        <td th:text="*{count}"></td>
         <td th:text="*{location.getAddress()}"></td>
         <td th:text="*{comment}"></td>
         <td>
-            <p th:if="*{isFinished()}">Приключена</p>
-            <p th:if="*{isWaiting()}">В изчакване</p>
-            <p th:unless="*{isFinished()} AND *{isWaiting()}">В изпълнение</p>
+            <p th:text="*{status}"></p>
         </td>
         <td>
-            <a type="button" class="btn btn-info" th:href="@{/orders/repairs/{id}(id=${repair.id})}">Детайли</a>
+            <a type="button" class="btn btn-info" th:href="@{/orders/repairs/details/{id}(id=${repair.id})}">Детайли</a>
         </td>
     </tr>
     </tbody>

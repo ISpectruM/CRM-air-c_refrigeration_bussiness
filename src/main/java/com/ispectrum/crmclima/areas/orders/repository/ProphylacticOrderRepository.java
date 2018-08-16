@@ -19,4 +19,6 @@ public interface ProphylacticOrderRepository extends JpaRepository<ProphylacticO
     Page<ProphylacticOrder> findAllByDeletedOnIsNull(Pageable pageable);
 
     ProphylacticOrder findTopByOrderByOrderNumberDesc();
+
+    ProphylacticOrder findFirstById(String id);
 }

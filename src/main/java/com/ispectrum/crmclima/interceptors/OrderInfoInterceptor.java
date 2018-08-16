@@ -18,13 +18,16 @@ public class OrderInfoInterceptor extends HandlerInterceptorAdapter {
     private final RepairOrderService repairOrderService;
 
     @Autowired
-    public OrderInfoInterceptor(MontageOrderService montageOrderService, RepairOrderService repairOrderService) {
+    public OrderInfoInterceptor(
+            MontageOrderService montageOrderService,
+            RepairOrderService repairOrderService) {
         this.montageOrderService = montageOrderService;
         this.repairOrderService = repairOrderService;
     }
 
     private Integer getOrdersCount(){
-        List<MontageOrderDto> unfinishedMontages = this.montageOrderService.getAllUnfinishedMontagesDtos();
+        List<MontageOrderDto> unfinishedMontages =
+                this.montageOrderService.getAllUnfinishedMontagesDtos();
         return unfinishedMontages.size();
     }
 

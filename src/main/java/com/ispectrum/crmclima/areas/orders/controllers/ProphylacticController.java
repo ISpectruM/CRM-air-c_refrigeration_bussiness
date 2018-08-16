@@ -71,7 +71,18 @@ public class ProphylacticController extends BaseController {
 
         this.prophylacticOrderService.saveProphylactic(clientId,bindingModel);
         return this.redirect("/orders/prophylactics/all?page=0");
-
     }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView editProphylactic(@PathVariable String id){
+        ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(id);
+        this.addViewAndObject("prophylactic",prophylacticById, "orders/prophylactics/edit");
+        return this.addObject("bindingModel", new ProphylacticBindingModel());
+    }
+
+    @GetMapping("/details/{orderId}")
+    public ModelAndView getDetails(@PathVariable String orderId){
+        ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(orderId);
+        return this.addViewAndObject("order", prophylacticById, "orders/details");
+    }
 }
