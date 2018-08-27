@@ -24,4 +24,6 @@ public interface ProphylacticOrderService {
     void saveProphylactic(String clientId, ProphylacticBindingModel bindingModel);
 
     ProphylacticOrderDto getProphylacticById(String id);
+
+    boolean editProphylactic(String id, ProphylacticBindingModel bindingModel);
 }

@@ -88,7 +88,12 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
         return ModelMappingUtil.convertClass(firstById, ProphylacticOrderDto.class);
     }
 
-    //    Rest service
+    @Override
+    public boolean editProphylactic(String id, ProphylacticBindingModel bindingModel) {
+        return false;
+    }
+
+    //Rest service save prophylactic in schedule mode
     @Override
     public void saveProphylacticChanges(RestOrderBindingModel model) {
 //        TODO save changes to DB

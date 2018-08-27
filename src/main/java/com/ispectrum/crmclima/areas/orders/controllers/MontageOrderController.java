@@ -57,16 +57,16 @@ public class MontageOrderController extends BaseController {
     }
 
     //Add montage order
-    @PostMapping("/montage/add/{id}")
+    @PostMapping("/montage/add/{clientId}")
     public ModelAndView addMontageAction(
-            @PathVariable String id,
+            @PathVariable String clientId,
             @Valid @ModelAttribute(name = "bindingModel") MontageOrderBindingModel bindingModel,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return getErrorsViewModel(id, bindingResult);
+            return getErrorsViewModel(clientId, bindingResult, "add");
         }
-        this.montageOrderService.addMontage(id, bindingModel);
+        this.montageOrderService.addMontage(clientId, bindingModel);
         return this.redirect("/orders/montages/all?page=0");
     }
 
@@ -78,7 +78,7 @@ public class MontageOrderController extends BaseController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return getErrorsViewModel(id, bindingResult);
+            return getErrorsViewModel(id, bindingResult, "add");
         }
         this.montageOrderService.addOfferView(id, bindingModel);
         return this.redirect("/orders/montages/all?page=0");
@@ -105,7 +105,7 @@ public class MontageOrderController extends BaseController {
                                        @Valid @ModelAttribute(name = "bindingModel") EditMontageOrderBindingModel model,
                                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
-            return this.getErrorsViewModel(id,bindingResult);
+            return this.getErrorsViewModel(id,bindingResult, "edit");
         }
         this.montageOrderService.editMontage(id, model);
         return this.redirect("/orders/montages/details/" + id);
@@ -130,10 +130,12 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/all?page=0");
     }
 
-    private ModelAndView getErrorsViewModel(String id, BindingResult bindingResult) {
+    private ModelAndView getErrorsViewModel(String id, BindingResult bindingResult, String orderAction) {
         Map<String, Object> model = bindingResult.getModel();
-        ClientDto client = this.clientService.getClientById(id);
-        model.put("client", client);
+        if (orderAction.equals("add")){
+            ClientDto client = this.clientService.getClientById(id);
+            model.put("client", client);
+        }
         model.put("currentDate", LocalDate.now());
         return this.addViewAndObjectsMap("orders/montages/add_montage", model);
     }

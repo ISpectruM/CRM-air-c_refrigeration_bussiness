@@ -48,7 +48,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    //Show warnings if changes are present in schedule`s orders
     $('.changeEvent').change(function (event) {
         $(event.target).parent('label').addClass('red-bold-font');
         $(event.target).addClass('red-bold-font');

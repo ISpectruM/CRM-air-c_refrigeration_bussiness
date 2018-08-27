@@ -80,6 +80,24 @@ public class ProphylacticController extends BaseController {
         return this.addObject("bindingModel", new ProphylacticBindingModel());
     }
 
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editProphylacticAction(
+            @PathVariable String id,
+            @Valid @ModelAttribute ProphylacticBindingModel bindingModel,
+            BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            Map<String, Object> model = bindingResult.getModel();
+            model.put("currentDate", LocalDate.now());
+            return this.addViewAndObjectsMap("orders/prophylactics/edit", model);
+        }
+
+        ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(id);
+//        TODO save edit to DB and return view
+        return new ModelAndView();
+    }
+
     @GetMapping("/details/{orderId}")
     public ModelAndView getDetails(@PathVariable String orderId){
         ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(orderId);

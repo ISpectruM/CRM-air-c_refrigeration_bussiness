@@ -131,7 +131,7 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         editedOrder.setLocation(location);
 //Set new products if present
         List<String> aircProductsBin = model.getAircProductsBin();
-        if (model.getIsAircProductChanged().equals("true")){
+        if (model.getIsAircProductChanged()){
             Map<AirConditioner, Integer> airconditioners = getAirConditionersFromInput(aircProductsBin);
             editedOrder.setAirConditioners(airconditioners);
         } else {

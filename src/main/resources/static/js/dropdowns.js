@@ -14,6 +14,7 @@ $(document).ready(function () {
     let productAddBtn = $("#productAddBtn");
     let selectedProductType;
     let selectedOrderType=orderTypeMenu.val();
+    let aircProductsChanged= $("#isAircProductChanged");
 
     attachDeleteBtnActions();
     showHideOrderTypeSections();
@@ -29,13 +30,15 @@ $(document).ready(function () {
             let typeErrorField = $("#typeErrorField").hide();
             let countErrorField = $("#countErrorField").hide();
 
+            checkIfProductListIsEdited(model, count, otherProduct);
+
             if (count === "" || isNaN(parseInt(count))) {
                 countErrorField.text("Въведете брой").show();
                 return;
             }
 
             let newProduct = brand + ' - ' + model + ' - ' + count;
-            let newOption = $('<option></option>');
+            let newOption = $('<option selected="selected"></option>');
 
             switch (productType) {
                 case "AIRCONDS":
@@ -118,21 +121,26 @@ $(document).ready(function () {
         });
     });
 
-    let submitBtn = $("#submitBtn");
-    submitBtn.click(function () {
-        selectAllChosenProducts();
-    });
+    // let submitBtn = $("#submitBtn");
+    // submitBtn.click(function () {
+    //     selectAllChosenProducts();
+    // });
 
-    let selectedAircBin= $("#aircProductsBin");
-    selectedAircBin.change(function () {
-        $("#isAircProductChanged").val("true");
-    });
+
+    function checkIfProductListIsEdited(model, count, other) {
+        if(aircProductsChanged){
+            if ((model !== "" || other !== "") && count !== "") {
+                aircProductsChanged.prop('checked',true);
+            }
+        }
+    }
 
     function attachDeleteBtnActions() {
         selectedProductsBin.find('a').each(function () {
             $(this).click(function (event) {
                 event.preventDefault();
-                let selectedOptions = $(event.target).parent().prev('div').find('.form-control option:selected');
+                let selectedOptions =
+                    $(event.target).parent().prev('div').find('.form-control option:selected');
                 selectedOptions.each(function () {
                     $(this).remove();
                 });
@@ -140,11 +148,11 @@ $(document).ready(function () {
         })
     }
 
-    function selectAllChosenProducts() {
-        $(selectedProductsBin).find('select option').each(function () {
-            $(this).prop('selected','selected');
-        });
-    }
+    // function selectAllChosenProducts() {
+    //     $(selectedProductsBin).find('select option').each(function () {
+    //         $(this).prop('selected','selected');
+    //     });
+    // }
 
     function showHideOrderTypeSections() {
         let form = $("form.form-horizontal");
@@ -156,14 +164,14 @@ $(document).ready(function () {
             hideDescriptionInput();
             showProductMenu();
             let action = form.attr('action');
-            action = action.replace(/\/montages/g, "/montages/montage");
+            action = action.replace(/^.*(?=\/add)/g, "/orders/montages/montage");
             form.attr('action', action);
         } else if(selectedOrderType === "OFFER" ||
                     selectedOrderType === "OVERVIEW"){
             hideProductMenu();
             showDescriptionInput();
             let action = form.attr('action');
-            action = action.replace(/\/montages/g, "/montages/offer");
+            action = action.replace(/^.*(?=\/add)/g, "/orders/montages/offer");
             form.attr('action', action);
         }
     }

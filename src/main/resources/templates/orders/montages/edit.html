@@ -44,40 +44,47 @@
                     <h6 class="card-header col-12" th:text="'Избрани продукти / услуги'"></h6>
                 </div>
                 <div class="row" id="selectedProducts">
+
+                    <!--Selected air-conditioners-->
                     <div class="form-group col-sm-4 pr-1">
                         <label for="aircProductsBin" th:text="'Климатици'"></label>
                         <select multiple class="form-control" id="aircProductsBin" name="aircProductsBin">
                             <option th:each="airc:${montage.airConditioners}" th:object="${airc.key}"
-                                    th:value="*{model}" th:text="|*{brand} - *{model} - ${airc.value}|"></option>
+                                    th:value="|*{brand} - *{model} - ${airc.value}|"
+                                    th:text="|*{brand} - *{model} - ${airc.value}|" selected="selected">
+
+                            </option>
                         </select>
-                        <input type="hidden" id="isAircProductChanged" name="isAircProductChanged" value="">
+                        <!--Needed to recognise if the products are changed assigned via JS-->
+                        <input type="checkbox" style="display: none" id="isAircProductChanged" name="isAircProductChanged"/>
                     </div>
                     <div class="form-group col p-0 pt-4">
                         <a href="#" id="aircProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
                     </div>
+
+                    <!--Selected fridge equipment-->
                     <div class="form-group col-sm-3 pr-1">
-                        <label for="coolersProductsBin" th:text="'Изпарителни охладители'"></label>
-                        <select multiple class="form-control" id="coolersProductsBin"
-                                name="coolersProductsBin"></select>
-                    </div>
-                    <div class="form-group col p-0 pt-4">
-                        <a href="#" id="coolersProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
-                    </div>
-                    <div class="form-group col-sm-4 pr-1">
                         <label for="fridgeProductsBin" th:text="'Хладилна техника'"></label>
-                        <select multiple class="form-control" id="fridgeProductsBin" name="fridgeProductsBin"></select>
+                        <select multiple class="form-control" id="fridgeProductsBin"
+                                name="fridgeProductsBin">
+                        </select>
                     </div>
                     <div class="form-group col p-0 pt-4">
                         <a href="#" id="fridgeProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
                     </div>
-                    <div class="form-group col-sm-12">
-                        <label for="otherProduct" th:text="'Друго'"></label>
-                        <input type="text" class="form-control" id="otherProduct" name="otherProduct"
-                               th:value="${montage.otherProduct}"/>
+
+                    <!--Selected other products-->
+                    <div class="form-group col-sm-4 pr-1">
+                        <label for="otherProductsBin" th:text="'Друго'"></label>
+                        <select multiple class="form-control" id="otherProductsBin" name="otherProductsBin">
+                        </select>
+                    </div>
+                    <div class="form-group col p-0 pt-4">
+                        <a href="#" id="otherProductsBinBtn" type="button" class="btn btn-sm btn-danger">-</a>
                     </div>
                 </div>
             </div>
-            <!--Select products section-->
+<!--Select products section-->
             <!--Section headers-->
             <div class="row">
                 <h6 id="productHeader" class="card-header col-12" th:text="'Изобр на продукти'"></h6>
@@ -112,8 +119,8 @@
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label for="product">Модел:</label>
-                            <select id="product" name="product" class="form-control">
+                            <label for="model">Модел:</label>
+                            <select id="model" name="model" class="form-control">
                                 <option value="">- Избери -</option>
                             </select>
                         </div>
@@ -128,7 +135,7 @@
                 <div class="col-md-1">
                     <label for="count">Брой:</label>
                     <input id="count" class="form-control" name="count"
-                           th:if="${montage.montageType.name()=='MONTAGE'}" th:value="${montage.productCount}">
+                           th:if="${montage.montageType.name()=='MONTAGE'}" value="">
                     <input id="count" class="form-control" name="count"
                            th:if="${montage.montageType.name()!='MONTAGE'}" th:value="${montage.count}">
                     <small id="countErrorField" class="invalid-feedback text-danger"></small>
