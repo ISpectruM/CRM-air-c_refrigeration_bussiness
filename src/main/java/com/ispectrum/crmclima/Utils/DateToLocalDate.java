@@ -1,5 +1,7 @@
 package com.ispectrum.crmclima.Utils;
 
+import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,5 +20,14 @@ public final class DateToLocalDate {
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern(
                 "yyyy-MM-dd", Locale.getDefault());
         return LocalDate.parse(date, formatter);
+    }
+
+    public static <T extends BaseOrderBindingModel> LocalDate setLocalDate(T model) {
+        Date orderDate = model.getOrderDate();
+        LocalDate localDate = LocalDate.now();
+        if (orderDate != null){
+            localDate = convert(orderDate);
+        }
+        return localDate;
     }
 }

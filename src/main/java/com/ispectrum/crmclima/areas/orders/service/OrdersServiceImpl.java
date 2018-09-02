@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+//Main orders service used by schedule and REST controllers
 @Service
 public class OrdersServiceImpl implements OrdersService {
     private final MontageOrderService montageOrderService;

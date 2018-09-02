@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Repository
 public interface ProphylacticOrderRepository extends JpaRepository<ProphylacticOrder, String>{
-    List<ProphylacticOrder> findAllByIsFinished(boolean isFinished);
+    List<ProphylacticOrder> findAllByIsFinishedIsFalseAndDeletedOnIsNull();
 
     Set<ProphylacticOrder> findAllByScheduleDate(LocalDate scheduleDate);
 
@@ -21,4 +21,6 @@ public interface ProphylacticOrderRepository extends JpaRepository<ProphylacticO
     ProphylacticOrder findTopByOrderByOrderNumberDesc();
 
     ProphylacticOrder findFirstById(String id);
+
+    Integer countByIsFinishedIsFalseAndDeletedOnIsNull();
 }

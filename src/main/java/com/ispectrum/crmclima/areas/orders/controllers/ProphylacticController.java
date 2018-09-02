@@ -42,7 +42,6 @@ public class ProphylacticController extends BaseController {
         this.addViewAndObject("objects", prophylactics, "orders/prophylactics/all");
 //      Needed for setting a proper OrderType paging navigation at templates/fragments/page_nav
         return this.addObject("area", "orders/prophylactics");
-
     }
 
     @GetMapping("/add/{clientId}")
@@ -69,7 +68,7 @@ public class ProphylacticController extends BaseController {
             return this.addViewAndObjectsMap("orders/prophylactics/add", bindingResultModel);
         }
 
-        this.prophylacticOrderService.saveProphylactic(clientId,bindingModel);
+        this.prophylacticOrderService.createProphylactic(clientId,bindingModel);
         return this.redirect("/orders/prophylactics/all?page=0");
     }
 
@@ -79,7 +78,6 @@ public class ProphylacticController extends BaseController {
         this.addViewAndObject("prophylactic",prophylacticById, "orders/prophylactics/edit");
         return this.addObject("bindingModel", new ProphylacticBindingModel());
     }
-
 
     @PostMapping("/edit/{id}")
     public ModelAndView editProphylacticAction(
@@ -93,9 +91,8 @@ public class ProphylacticController extends BaseController {
             return this.addViewAndObjectsMap("orders/prophylactics/edit", model);
         }
 
-        ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(id);
-//        TODO save edit to DB and return view
-        return new ModelAndView();
+        this.prophylacticOrderService.editProphylactic(id, bindingModel);
+        return this.redirect("/orders/prophylactics/details/" + id);
     }
 
     @GetMapping("/details/{orderId}")

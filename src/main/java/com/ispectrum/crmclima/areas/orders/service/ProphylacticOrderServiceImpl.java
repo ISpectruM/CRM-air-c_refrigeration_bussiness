@@ -46,7 +46,7 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
 
 
     @Override
-    public void saveProphylactic(String clientId, ProphylacticBindingModel bindingModel) {
+    public void createProphylactic(String clientId, ProphylacticBindingModel bindingModel) {
         Client client = this.clientRepository.findFirstById(clientId);
 
         ProphylacticOrder newProphylacticOrder =
@@ -83,14 +83,43 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     }
 
     @Override
+    public boolean editProphylactic(String id, ProphylacticBindingModel bindingModel) {
+        ProphylacticOrder oldProphylactic = this.prophylacticRepository.findFirstById(id);
+        ProphylacticOrder editedOrder =
+                ModelMappingUtil.convertClass(bindingModel,ProphylacticOrder.class);
+
+        editedOrder.setId(id);
+        editedOrder.setOrderNumber(oldProphylactic.getOrderNumber());
+
+        //  Check if isFinished and assign finish date
+        if (editedOrder.getIsFinished()){
+            editedOrder.setEndDate(LocalDate.now());
+        }
+
+        editedOrder.setClient(oldProphylactic.getClient());
+        editedOrder.setOrderDate(DateToLocalDate.setLocalDate(bindingModel));
+
+        Date scheduleDate = bindingModel.getScheduleDate();
+        if (scheduleDate != null){
+            editedOrder.setScheduleDate(DateToLocalDate.convert(scheduleDate));
+        }
+
+        editedOrder.setLocation(createLocation(bindingModel));
+        editedOrder.setUser(oldProphylactic.getUser());
+
+        this.prophylacticRepository.saveAndFlush(editedOrder);
+        return true;
+    }
+
+    @Override
     public ProphylacticOrderDto getProphylacticById(String id) {
         ProphylacticOrder firstById = this.prophylacticRepository.findFirstById(id);
         return ModelMappingUtil.convertClass(firstById, ProphylacticOrderDto.class);
     }
 
     @Override
-    public boolean editProphylactic(String id, ProphylacticBindingModel bindingModel) {
-        return false;
+    public Integer getAllActiveOrders() {
+        return this.prophylacticRepository.countByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
     //Rest service save prophylactic in schedule mode
@@ -101,7 +130,7 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
 
     @Override
     public List<ProphylacticOrder> getUnfinishedProphylactics() {
-        return this.prophylacticRepository.findAllByIsFinished(false);
+        return this.prophylacticRepository.findAllByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
     @Override

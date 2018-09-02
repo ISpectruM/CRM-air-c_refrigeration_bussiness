@@ -4,7 +4,6 @@ package com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models;
 public class EditMontageOrderBindingModel extends MontageOrderBindingModel {
     private boolean isAircProductChanged;
 
-
     public EditMontageOrderBindingModel() {
     }
 

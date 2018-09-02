@@ -35,21 +35,6 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     }
 
     @Override
-    public void saveRepairChanges(RestOrderBindingModel model) {
-//        TODO save changes to DB
-    }
-
-    @Override
-    public List<RepairOrder> getUnfinishedRepairs() {
-        return this.repairOrderRepository.findAll();
-    }
-
-    @Override
-    public Set<RepairOrder> getRepairsByDate(LocalDate scheduleDate) {
-        return this.repairOrderRepository.findAllByScheduleDate(scheduleDate);
-    }
-
-    @Override
     public RepairOrder saveRepairOrder(String clientId, RepairBindingModel model) {
         //Map binding data to new order
         RepairOrder newOrder = ModelMappingUtil.convertClass(model, RepairOrder.class);
@@ -64,9 +49,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         newOrder.setOrderNumber(orderNumber+1);
 
         // Set order date
-        if(model.getOrderDate() != null){
-            newOrder.setOrderDate(DateToLocalDate.convert(model.getOrderDate()));
-        }
+        newOrder.setOrderDate(DateToLocalDate.setLocalDate(model));
 
         // Set client
         Client pureClientById = this.clientService.getPureClientById(clientId);
@@ -87,31 +70,16 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     }
 
     @Override
-    public Page<RepairOrderDto> getAllRepairs(Pageable pageable) {
-        Page<RepairOrder> allRepairs = this.repairOrderRepository.findAllByDeletedOnIsNull(pageable);
-        return ModelMappingUtil.convertPage(allRepairs,RepairOrderDto.class);
-    }
-
-    @Override
-    public RepairOrderDto getRepairById(String id) {
-        RepairOrder firstById = this.repairOrderRepository.findFirstById(id);
-        return ModelMappingUtil.convertClass(firstById,RepairOrderDto.class);
-    }
-
-    @Override
     public RepairOrder editRepair(String id, RepairBindingModel bindingModel) {
         RepairOrder repair = this.repairOrderRepository.findFirstById(id);
         if (repair == null){
             throw new MontageNotFoundException();
         }
         RepairOrder editedOrder = ModelMappingUtil.convertClass(bindingModel, RepairOrder.class);
+
         editedOrder.setId(id);
-
-        Client client = repair.getClient();
-        editedOrder.setClient(client);
-
-        LocalDate orderDate = DateToLocalDate.convert(bindingModel.getOrderDate());
-        editedOrder.setOrderDate(orderDate);
+        editedOrder.setClient(repair.getClient());
+        editedOrder.setOrderDate(DateToLocalDate.setLocalDate(bindingModel));
 
         Date scheduleDate = bindingModel.getScheduleDate();
         LocalDate newDate = null;
@@ -139,6 +107,33 @@ public class RepairOrderServiceImpl implements RepairOrderService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void saveRepairChanges(RestOrderBindingModel model) {
+//        TODO save changes to DB
+    }
+
+    @Override
+    public List<RepairOrder> getUnfinishedRepairs() {
+        return this.repairOrderRepository.findAllByIsFinishedIsFalseAndDeletedOnIsNull();
+    }
+
+    @Override
+    public Set<RepairOrder> getRepairsByDate(LocalDate scheduleDate) {
+        return this.repairOrderRepository.findAllByScheduleDate(scheduleDate);
+    }
+
+    @Override
+    public Page<RepairOrderDto> getAllRepairs(Pageable pageable) {
+        Page<RepairOrder> allRepairs = this.repairOrderRepository.findAllByDeletedOnIsNull(pageable);
+        return ModelMappingUtil.convertPage(allRepairs,RepairOrderDto.class);
+    }
+
+    @Override
+    public RepairOrderDto getRepairById(String id) {
+        RepairOrder firstById = this.repairOrderRepository.findFirstById(id);
+        return ModelMappingUtil.convertClass(firstById,RepairOrderDto.class);
     }
 
     private Location getLocation(RepairBindingModel model) {

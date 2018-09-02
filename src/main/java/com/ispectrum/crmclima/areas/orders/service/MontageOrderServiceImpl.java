@@ -60,44 +60,6 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public boolean addOfferView(String clientId, OfferViewBindingModel model) {
-        MontageOrder newOrder = this.createNewOrder(clientId,model);
-        this.montageOrderRepository.save(newOrder);
-        return false;
-    }
-
-    @Override
-    public Page<MontageOrderDto> getAllMontages(Pageable pageable) {
-        Page<MontageOrder> montages = this.montageOrderRepository.findAllByDeletedOnIsNull(pageable);
-        return ModelMappingUtil.convertPage(montages,MontageOrderDto.class);
-    }
-
-    @Override
-    public MontageOrderDto getMontageById(String id) {
-        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
-        if(montage == null){
-            throw new MontageNotFoundException();
-        }
-        return ModelMappingUtil.convertClass(montage,MontageOrderDto.class);
-    }
-
-    @Override
-    public boolean deleteOrder(String id) {
-        MontageOrder montageToDelete = this.montageOrderRepository.findFirstById(id);
-        if(montageToDelete == null){
-            throw new MontageNotFoundException();
-        }
-        try {
-            montageToDelete.setDeletedOn(LocalDate.now());
-            this.montageOrderRepository.save(montageToDelete);
-
-        } catch (Exception e){
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public void editMontage(String id, EditMontageOrderBindingModel model) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
         if (montage == null){
@@ -114,21 +76,19 @@ public class MontageOrderServiceImpl implements MontageOrderService {
             editedOrder.setEndDate(LocalDate.now());
         }
 //  Set client
-        Client client = montage.getClient();
-        editedOrder.setClient(client);
+        editedOrder.setClient(montage.getClient());
 //  Set orderDate
-        LocalDate orderDate = DateToLocalDate.convert(model.getOrderDate());
-        editedOrder.setOrderDate(orderDate);
+        editedOrder.setOrderDate(DateToLocalDate.setLocalDate(model));
+
 //  Set scheduleDate if present
         Date modelScheduleDate = model.getScheduleDate();
-        LocalDate newScheduleDate=null;
         if (modelScheduleDate != null){
-            newScheduleDate=DateToLocalDate.convert(model.getScheduleDate());
+            editedOrder.setScheduleDate(DateToLocalDate.convert(modelScheduleDate));
         }
-        editedOrder.setScheduleDate(newScheduleDate);
+
 //  Set location
-        Location location = createLocation(model);
-        editedOrder.setLocation(location);
+        editedOrder.setLocation(createLocation(model));
+
 //Set new products if present
         List<String> aircProductsBin = model.getAircProductsBin();
         if (model.getIsAircProductChanged()){
@@ -141,18 +101,27 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         this.montageOrderRepository.save(editedOrder);
     }
 
-    //Used to generate schedule from unfinished orders only
     @Override
-    public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
-        List<MontageOrder> allUnFinished =
-                this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
-        return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
+    public boolean addOfferView(String clientId, OfferViewBindingModel model) {
+        MontageOrder newOrder = this.createNewOrder(clientId,model);
+        this.montageOrderRepository.save(newOrder);
+        return false;
     }
 
-    //Used by the orders interceptor service
     @Override
-    public List<MontageOrder> getAllUnfinishedMontages() {
-        return this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
+    public boolean deleteOrder(String id) {
+        MontageOrder montageToDelete = this.montageOrderRepository.findFirstById(id);
+        if(montageToDelete == null){
+            throw new MontageNotFoundException();
+        }
+        try {
+            montageToDelete.setDeletedOn(LocalDate.now());
+            this.montageOrderRepository.save(montageToDelete);
+
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -181,6 +150,36 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         this.montageOrderRepository.save(montage);
     }
 
+    @Override
+    public Page<MontageOrderDto> getAllMontages(Pageable pageable) {
+        Page<MontageOrder> montages = this.montageOrderRepository.findAllByDeletedOnIsNull(pageable);
+        return ModelMappingUtil.convertPage(montages,MontageOrderDto.class);
+    }
+
+    @Override
+    public MontageOrderDto getMontageById(String id) {
+        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+        if(montage == null){
+            throw new MontageNotFoundException();
+        }
+        return ModelMappingUtil.convertClass(montage,MontageOrderDto.class);
+    }
+    //Used to generate daily schedule including active and unfinished orders only
+
+    @Override
+    public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
+        List<MontageOrder> allUnFinished =
+                this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
+        return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
+    }
+    //Used by the orders interceptor service to show the count of all unfinished active montages
+
+    @Override
+    public List<MontageOrder> getAllUnfinishedMontages() {
+        return this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
+    }
+
+//    Used to deliver scheduled montages by date
     @Override
     public Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate) {
         return this.montageOrderRepository.findAllByScheduleDateAndIsFinished(scheduleDate,false);
@@ -224,14 +223,9 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         if (lastOrder != null){
             orderNumber = lastOrder.getOrderNumber();
         }
-        newOrder.setOrderNumber(orderNumber + 1);
 
-        Date orderDate = model.getOrderDate();
-        LocalDate localDate = LocalDate.now();
-        if (orderDate != null){
-            localDate = DateToLocalDate.convert(orderDate);
-        }
-        newOrder.setOrderDate(localDate);
+        newOrder.setOrderNumber(orderNumber + 1);
+        newOrder.setOrderDate(DateToLocalDate.setLocalDate(model));
 
         if (model.getScheduleDate() != null){
             newOrder.setScheduleDate(DateToLocalDate.convert(model.getScheduleDate()));
@@ -239,12 +233,15 @@ public class MontageOrderServiceImpl implements MontageOrderService {
 
         newOrder.setClient(createClient(clientId));
         newOrder.setLocation(createLocation(model));
-
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails user = this.userDetailsService.loadUserByUsername(principal.getName());
-        newOrder.setUser((User)user);
+        newOrder.setUser((User)getCurrentUser());
 
         return newOrder;
     }
+
+    private UserDetails getCurrentUser() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        return this.userDetailsService.loadUserByUsername(principal.getName());
+    }
+
 
 }

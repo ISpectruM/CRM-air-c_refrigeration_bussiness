@@ -99,6 +99,7 @@ public class MontageOrderController extends BaseController {
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
     }
+
     //Edit montage
     @PostMapping("/montage/edit/{id}")
     public ModelAndView editMontageOrderAction(@PathVariable String id,
@@ -110,6 +111,7 @@ public class MontageOrderController extends BaseController {
         this.montageOrderService.editMontage(id, model);
         return this.redirect("/orders/montages/details/" + id);
     }
+
     //Edit offer or view
     @PostMapping("/offer/edit/{id}")
     public ModelAndView editOfferOrderAction(@PathVariable String id,

@@ -21,9 +21,11 @@ public interface ProphylacticOrderService {
 
     Page<ProphylacticOrderDto> getAllProphylactics(Pageable pageable);
 
-    void saveProphylactic(String clientId, ProphylacticBindingModel bindingModel);
+    void createProphylactic(String clientId, ProphylacticBindingModel bindingModel);
 
     ProphylacticOrderDto getProphylacticById(String id);
 
     boolean editProphylactic(String id, ProphylacticBindingModel bindingModel);
+
+    Integer getAllActiveOrders();
 }

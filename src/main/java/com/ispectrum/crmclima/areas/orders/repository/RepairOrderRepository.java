@@ -13,7 +13,7 @@ import java.util.Set;
 @Repository
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, String> {
 
-    List<RepairOrder> findAllByIsFinished(boolean isFinished);
+    List<RepairOrder> findAllByIsFinishedIsFalseAndDeletedOnIsNull();
 
     Set<RepairOrder> findAllByScheduleDate(LocalDate scheduleDate);
 
