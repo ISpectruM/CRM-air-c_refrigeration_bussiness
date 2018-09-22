@@ -111,10 +111,11 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     @Override
     public boolean deleteOrder(String id) {
         MontageOrder montageToDelete = this.montageOrderRepository.findFirstById(id);
-        if(montageToDelete == null){
-            throw new MontageNotFoundException();
-        }
+
         try {
+            if(montageToDelete == null){
+                throw new MontageNotFoundException();
+            }
             montageToDelete.setDeletedOn(LocalDate.now());
             this.montageOrderRepository.save(montageToDelete);
 

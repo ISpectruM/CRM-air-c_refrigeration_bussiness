@@ -4,7 +4,9 @@ import com.ispectrum.crmclima.Utils.DateToLocalDate;
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.repository.ClientRepository;
+import com.ispectrum.crmclima.areas.error_handling.exception.MontageNotFoundException;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
+import com.ispectrum.crmclima.areas.orders.entities.BaseOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.models.ajax.RestOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.BaseOrderBindingModel;
@@ -16,6 +18,8 @@ import com.ispectrum.crmclima.areas.users.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -120,6 +124,11 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     @Override
     public Integer getAllActiveOrders() {
         return this.prophylacticRepository.countByIsFinishedIsFalseAndDeletedOnIsNull();
+    }
+
+    public boolean deleteProphylactic(String id) {
+        ProphylacticOrder deleteCandidate = this.prophylacticRepository.findFirstById(id);
+        return deleteOrder(deleteCandidate,this.prophylacticRepository);
     }
 
     //Rest service save prophylactic in schedule mode

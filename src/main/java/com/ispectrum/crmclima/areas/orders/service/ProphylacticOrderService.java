@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public interface ProphylacticOrderService {
+public interface ProphylacticOrderService extends BaseOrderService {
 
     void saveProphylacticChanges(RestOrderBindingModel model);
 
@@ -28,4 +28,7 @@ public interface ProphylacticOrderService {
     boolean editProphylactic(String id, ProphylacticBindingModel bindingModel);
 
     Integer getAllActiveOrders();
+
+    public boolean deleteProphylactic(String id);
+
 }

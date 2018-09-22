@@ -120,15 +120,15 @@ public class MontageOrderController extends BaseController {
         return this.redirect("/orders/montages/details/" + id);
     }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView deleteOrder(@PathVariable String id) {
-        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+    @GetMapping("/delete/{orderId}")
+    public ModelAndView deleteOrder(@PathVariable String orderId) {
+        MontageOrderDto montage = this.montageOrderService.getMontageById(orderId);
         return this.addViewAndObject("montage", montage, "orders/montages/delete");
     }
 
-    @PostMapping("/delete/{id}")
-    public ModelAndView deleteOrderAction(@PathVariable String id) {
-        this.montageOrderService.deleteOrder(id);
+    @PostMapping("/delete/{orderId}")
+    public ModelAndView deleteOrderAction(@PathVariable String orderId) {
+        this.montageOrderService.deleteOrder(orderId);
         return this.redirect("/orders/montages/all?page=0");
     }
 

@@ -36,7 +36,8 @@ public class ProphylacticController extends BaseController {
 
     @GetMapping("/all")
     public ModelAndView getAll(
-            @PageableDefault(sort = {"orderNumber"}, direction = Sort.Direction.DESC) Pageable pageable){
+            @PageableDefault(sort = {"orderNumber"},
+                    direction = Sort.Direction.DESC) Pageable pageable){
         Page<ProphylacticOrderDto> prophylactics =
                 this.prophylacticOrderService.getAllProphylactics(pageable);
         this.addViewAndObject("objects", prophylactics, "orders/prophylactics/all");
@@ -99,5 +100,17 @@ public class ProphylacticController extends BaseController {
     public ModelAndView getDetails(@PathVariable String orderId){
         ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(orderId);
         return this.addViewAndObject("order", prophylacticById, "orders/details");
+    }
+
+    @GetMapping("delete/{orderId}")
+    public ModelAndView delete(@PathVariable String orderId){
+        ProphylacticOrderDto prophylactic = this.prophylacticOrderService.getProphylacticById(orderId);
+        return this.addViewAndObject("order", prophylactic, "orders/prophylactics/delete");
+    }
+
+    @PostMapping("delete/{orderId}")
+    public ModelAndView deleteAction(@PathVariable String orderId){
+        this.prophylacticOrderService.deleteProphylactic(orderId);
+        return this.redirect("/orders/prophylactics/all?page=0");
     }
 }
