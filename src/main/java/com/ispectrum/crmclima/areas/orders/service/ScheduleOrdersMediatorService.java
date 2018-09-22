@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public interface OrdersService {
+public interface ScheduleOrdersMediatorService {
     List<MontageOrder> getAllUnfinishedMontages();
 
     List<RepairOrder> getAllUnfinishedRepairs();

@@ -13,11 +13,9 @@ import java.util.Set;
 
 public interface ProphylacticOrderService extends BaseOrderService {
 
-    void saveProphylacticChanges(RestOrderBindingModel model);
-
     List<ProphylacticOrder> getUnfinishedProphylactics();
 
-    Set<ProphylacticOrder> getProphylacticsByDate(LocalDate scheduleDate);
+    Set<ProphylacticOrder> getProphylacticsByScheduleDate(LocalDate scheduleDate);
 
     Page<ProphylacticOrderDto> getAllProphylactics(Pageable pageable);
 
@@ -27,7 +25,7 @@ public interface ProphylacticOrderService extends BaseOrderService {
 
     boolean editProphylactic(String id, ProphylacticBindingModel bindingModel);
 
-    Integer getAllActiveOrders();
+    Integer getAllActiveOrdersCount();
 
     public boolean deleteProphylactic(String id);
 

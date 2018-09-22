@@ -122,7 +122,7 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     }
 
     @Override
-    public Integer getAllActiveOrders() {
+    public Integer getAllActiveOrdersCount() {
         return this.prophylacticRepository.countByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
@@ -131,19 +131,13 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
         return deleteOrder(deleteCandidate,this.prophylacticRepository);
     }
 
-    //Rest service save prophylactic in schedule mode
-    @Override
-    public void saveProphylacticChanges(RestOrderBindingModel model) {
-//        TODO save changes to DB
-    }
-
     @Override
     public List<ProphylacticOrder> getUnfinishedProphylactics() {
         return this.prophylacticRepository.findAllByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
     @Override
-    public Set<ProphylacticOrder> getProphylacticsByDate(LocalDate scheduleDate) {
+    public Set<ProphylacticOrder> getProphylacticsByScheduleDate(LocalDate scheduleDate) {
         return this.prophylacticRepository.findAllByScheduleDate(scheduleDate);
     }
 

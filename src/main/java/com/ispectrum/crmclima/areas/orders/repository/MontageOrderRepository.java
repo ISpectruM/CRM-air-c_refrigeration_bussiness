@@ -19,7 +19,7 @@ public interface MontageOrderRepository extends PagingAndSortingRepository<Monta
     MontageOrder findFirstById(String id);
 
 //Used to show all orders for creating a new schedule
-    List<MontageOrder> findAllByIsFinishedAndDeletedOnIsNull(boolean isFinished);
+    List<MontageOrder> findAllByIsFinishedIsFalseAndDeletedOnIsNull();
 
 //Used in creating schedule for a specific date
     Set<MontageOrder> findAllByScheduleDateAndIsFinished(LocalDate scheduleDate, boolean isFinished);
@@ -29,4 +29,6 @@ public interface MontageOrderRepository extends PagingAndSortingRepository<Monta
 
     //Get all available orders
     Page<MontageOrder> findAllByDeletedOnIsNull(Pageable pageable);
+
+    Integer countByIsFinishedIsFalseAndDeletedOnIsNull();
 }

@@ -6,7 +6,7 @@ import com.ispectrum.crmclima.areas.error_handling.exception.ScheduleNotFound;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
-import com.ispectrum.crmclima.areas.orders.service.OrdersService;
+import com.ispectrum.crmclima.areas.orders.service.ScheduleOrdersMediatorService;
 import com.ispectrum.crmclima.areas.schedules.entities.Schedule;
 import com.ispectrum.crmclima.areas.schedules.models.bindingModels.AddScheduleBindingModel;
 import com.ispectrum.crmclima.areas.schedules.models.dtos.CreateScheduleDto;
@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService {
-    private final OrdersService baseOrderService;
+public class ScheduleServiceImpl implements com.ispectrum.crmclima.areas.schedules.service.ScheduleService {
+    private final ScheduleOrdersMediatorService baseOrderService;
     private final ScheduleRepository scheduleRepository;
 
     @Autowired
-    public ScheduleServiceImpl(OrdersService baseOrderService, ScheduleRepository scheduleRepository) {
+    public ScheduleServiceImpl(ScheduleOrdersMediatorService baseOrderService, ScheduleRepository scheduleRepository) {
         this.baseOrderService = baseOrderService;
         this.scheduleRepository = scheduleRepository;
     }

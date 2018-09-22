@@ -97,31 +97,23 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     @Override
     public boolean deleteRepair(String id) {
         RepairOrder repairToDelete = this.repairOrderRepository.findFirstById(id);
-        if (repairToDelete == null){
-            throw new RepairNotFoundException();
-        }
-        try {
-            repairToDelete.setDeletedOn(LocalDate.now());
-            this.repairOrderRepository.save(repairToDelete);
-        } catch (Exception e){
-            return false;
-        }
-        return true;
+        return this.deleteOrder(repairToDelete, this.repairOrderRepository);
     }
 
-    @Override
-    public void saveRepairChanges(RestOrderBindingModel model) {
-//        TODO save changes to DB
-    }
-
+    //Get all active and unfinished repair orders
     @Override
     public List<RepairOrder> getUnfinishedRepairs() {
         return this.repairOrderRepository.findAllByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
     @Override
-    public Set<RepairOrder> getRepairsByDate(LocalDate scheduleDate) {
+    public Set<RepairOrder> getRepairsByScheduleDateNotFinished(LocalDate scheduleDate) {
         return this.repairOrderRepository.findAllByScheduleDate(scheduleDate);
+    }
+
+    @Override
+    public Integer getAllUnfinishedRepairsCount() {
+        return this.repairOrderRepository.countByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
     @Override

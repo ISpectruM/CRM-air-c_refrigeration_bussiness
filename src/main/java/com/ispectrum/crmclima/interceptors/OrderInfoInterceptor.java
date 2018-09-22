@@ -66,15 +66,15 @@ public class OrderInfoInterceptor extends HandlerInterceptorAdapter {
     }
 
     private Integer getOrdersCount(){
-        return  this.montageOrderService.getAllUnfinishedMontagesDtos().size();
+        return  this.montageOrderService.getAllUnfinishedMontagesCount();
     }
 
     private Integer getRepairsCount(){
-        return this.repairOrderService.getUnfinishedRepairs().size();
+        return this.repairOrderService.getAllUnfinishedRepairsCount();
     }
 
     private Integer getProphylacticsCount() {
-        return this.prophylacticOrderService.getAllActiveOrders();
+        return this.prophylacticOrderService.getAllActiveOrdersCount();
     }
 
 

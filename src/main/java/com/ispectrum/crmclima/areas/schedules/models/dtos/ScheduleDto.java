@@ -65,7 +65,7 @@ public class ScheduleDto {
     }
 
     public Integer getMontagesAmount() {
-        return this.montagesAmount;
+        return this.montageOrders.size();
     }
 
     public void setMontagesAmount(Integer montagesAmount) {

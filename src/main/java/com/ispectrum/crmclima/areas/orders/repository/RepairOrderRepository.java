@@ -22,4 +22,6 @@ public interface RepairOrderRepository extends JpaRepository<RepairOrder, String
     RepairOrder findFirstById(String id);
 
     RepairOrder findTopByOrderByOrderNumberDesc();
+
+    Integer countByIsFinishedIsFalseAndDeletedOnIsNull();
 }

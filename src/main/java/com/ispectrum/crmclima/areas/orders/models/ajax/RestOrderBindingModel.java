@@ -1,5 +1,7 @@
 package com.ispectrum.crmclima.areas.orders.models.ajax;
 
+import java.util.Date;
+
 public class RestOrderBindingModel {
 
     private String id;
@@ -8,7 +10,7 @@ public class RestOrderBindingModel {
 
     private StatusBindingSaveModel status;
 
-    private String scheduleDate;
+    private Date scheduleDate;
 
     private String comment;
 
@@ -40,11 +42,11 @@ public class RestOrderBindingModel {
         this.status = status;
     }
 
-    public String getScheduleDate() {
+    public Date getScheduleDate() {
         return this.scheduleDate;
     }
 
-    public void setScheduleDate(String scheduleDate) {
+    public void setScheduleDate(Date scheduleDate) {
         this.scheduleDate = scheduleDate;
     }
 

@@ -108,48 +108,36 @@ public class MontageOrderServiceImpl implements MontageOrderService {
         return false;
     }
 
-    @Override
-    public boolean deleteOrder(String id) {
+    public boolean deleteMontage(String id) {
         MontageOrder montageToDelete = this.montageOrderRepository.findFirstById(id);
-
-        try {
-            if(montageToDelete == null){
-                throw new MontageNotFoundException();
-            }
-            montageToDelete.setDeletedOn(LocalDate.now());
-            this.montageOrderRepository.save(montageToDelete);
-
-        } catch (Exception e){
-            return false;
-        }
-        return true;
+        return this.deleteOrder(montageToDelete, this.montageOrderRepository);
     }
 
-    @Override
-    public void saveScheduleMontageChanges(RestOrderBindingModel model) {
-        String id = model.getId();
-        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
-        if (montage == null){
-            throw new MontageNotFoundException();
-        }
-//        Set new status
-        montage.setIsDeferred(model.getStatus().getIsDeferred());
-        montage.setIsFinished(model.getStatus().getIsFinished());
-        montage.setIsForFinishing(model.getStatus().getIsForFinishing());
-        montage.setIsMarked(model.getStatus().getIsMarked());
-        montage.setIsPayed(model.getStatus().getIsPayed());
-        montage.setIsWaiting(model.getStatus().getIsWaiting());
-        montage.setIsWithInvoice(model.getStatus().getIsWithInvoice());
-
-        if (montage.getIsFinished()){
-            montage.setEndDate(LocalDate.now());
-        }
-
-        LocalDate date = DateToLocalDate.convert(model.getScheduleDate());
-        montage.setScheduleDate(date);
-
-        this.montageOrderRepository.save(montage);
-    }
+//    @Override
+//    public void saveScheduleMontageChanges(RestOrderBindingModel model) {
+//        String id = model.getId();
+//        MontageOrder montage = this.montageOrderRepository.findFirstById(id);
+//        if (montage == null){
+//            throw new MontageNotFoundException();
+//        }
+////        Set new status
+//        montage.setIsDeferred(model.getStatus().getIsDeferred());
+//        montage.setIsFinished(model.getStatus().getIsFinished());
+//        montage.setIsForFinishing(model.getStatus().getIsForFinishing());
+//        montage.setIsMarked(model.getStatus().getIsMarked());
+//        montage.setIsPayed(model.getStatus().getIsPayed());
+//        montage.setIsWaiting(model.getStatus().getIsWaiting());
+//        montage.setIsWithInvoice(model.getStatus().getIsWithInvoice());
+//
+//        if (montage.getIsFinished()){
+//            montage.setEndDate(LocalDate.now());
+//        }
+//
+//        LocalDate date = DateToLocalDate.convert(model.getScheduleDate());
+//        montage.setScheduleDate(date);
+//
+//        this.montageOrderRepository.save(montage);
+//    }
 
     @Override
     public Page<MontageOrderDto> getAllMontages(Pageable pageable) {
@@ -158,31 +146,35 @@ public class MontageOrderServiceImpl implements MontageOrderService {
     }
 
     @Override
-    public MontageOrderDto getMontageById(String id) {
+    public MontageOrderDto getMontageDtoById(String id) {
         MontageOrder montage = this.montageOrderRepository.findFirstById(id);
         if(montage == null){
             throw new MontageNotFoundException();
         }
         return ModelMappingUtil.convertClass(montage,MontageOrderDto.class);
     }
+
+    @Override
+    public MontageOrder getMontageById(String id) {
+        return this.montageOrderRepository.findFirstById(id);
+    }
     //Used to generate daily schedule including active and unfinished orders only
 
     @Override
-    public List<MontageOrderDto> getAllUnfinishedMontagesDtos() {
-        List<MontageOrder> allUnFinished =
-                this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
-        return ModelMappingUtil.convertList(allUnFinished, MontageOrderDto.class);
+    public Integer getAllUnfinishedMontagesCount() {
+        return this.montageOrderRepository.countByIsFinishedIsFalseAndDeletedOnIsNull();
     }
-    //Used by the orders interceptor service to show the count of all unfinished active montages
 
+    //Get all valid montages that are not finished.
+    // Used by the orders interceptor service to show the count of all unfinished active montages
     @Override
     public List<MontageOrder> getAllUnfinishedMontages() {
-        return this.montageOrderRepository.findAllByIsFinishedAndDeletedOnIsNull(false);
+        return this.montageOrderRepository.findAllByIsFinishedIsFalseAndDeletedOnIsNull();
     }
 
 //    Used to deliver scheduled montages by date
     @Override
-    public Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate) {
+    public Set<MontageOrder> getMontagesByScheduleDateNotFinished(LocalDate scheduleDate) {
         return this.montageOrderRepository.findAllByScheduleDateAndIsFinished(scheduleDate,false);
     }
 

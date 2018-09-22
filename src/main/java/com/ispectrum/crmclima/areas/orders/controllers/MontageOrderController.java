@@ -3,7 +3,6 @@ package com.ispectrum.crmclima.areas.orders.controllers;
 import com.ispectrum.crmclima.areas.BaseController;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
-import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.EditMontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.MontageOrderBindingModel;
 import com.ispectrum.crmclima.areas.orders.models.bindingModels.montage_models.OfferViewBindingModel;
@@ -16,13 +15,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -87,14 +84,14 @@ public class MontageOrderController extends BaseController {
     //Show order details view
     @GetMapping("/details/{id}")
     public ModelAndView getMontageDetails(@PathVariable String id) {
-        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        MontageOrderDto montage = this.montageOrderService.getMontageDtoById(id);
         return this.addViewAndObject("order", montage, "orders/details");
     }
 
     //Get edit view for montage, offer and view orders
     @GetMapping("/edit/{id}")
     public ModelAndView editOrder(@PathVariable String id) {
-        MontageOrderDto montage = this.montageOrderService.getMontageById(id);
+        MontageOrderDto montage = this.montageOrderService.getMontageDtoById(id);
 
         this.addViewAndObject("montage", montage, "orders/montages/edit");
         return this.addObject("bindingModel", new MontageOrderBindingModel());
@@ -122,13 +119,13 @@ public class MontageOrderController extends BaseController {
 
     @GetMapping("/delete/{orderId}")
     public ModelAndView deleteOrder(@PathVariable String orderId) {
-        MontageOrderDto montage = this.montageOrderService.getMontageById(orderId);
+        MontageOrderDto montage = this.montageOrderService.getMontageDtoById(orderId);
         return this.addViewAndObject("montage", montage, "orders/montages/delete");
     }
 
     @PostMapping("/delete/{orderId}")
     public ModelAndView deleteOrderAction(@PathVariable String orderId) {
-        this.montageOrderService.deleteOrder(orderId);
+        this.montageOrderService.deleteMontage(orderId);
         return this.redirect("/orders/montages/all?page=0");
     }
 

@@ -11,21 +11,21 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public interface RepairOrderService {
-
-    void saveRepairChanges(RestOrderBindingModel model);
-
-    List<RepairOrder> getUnfinishedRepairs();
-
-    Set<RepairOrder> getRepairsByDate(LocalDate scheduleDate);
-
-    RepairOrder saveRepairOrder(String clientId, RepairBindingModel model);
-
-    Page<RepairOrderDto> getAllRepairs(Pageable pageable);
+public interface RepairOrderService extends BaseOrderService{
 
     RepairOrderDto getRepairById(String id);
+
+    RepairOrder saveRepairOrder(String clientId, RepairBindingModel model);
 
     RepairOrder editRepair(String id,RepairBindingModel bindingModel);
 
     boolean deleteRepair(String id);
+
+    Page<RepairOrderDto> getAllRepairs(Pageable pageable);
+
+    List<RepairOrder> getUnfinishedRepairs();
+
+    Set<RepairOrder> getRepairsByScheduleDateNotFinished(LocalDate scheduleDate);
+
+    Integer getAllUnfinishedRepairsCount();
 }

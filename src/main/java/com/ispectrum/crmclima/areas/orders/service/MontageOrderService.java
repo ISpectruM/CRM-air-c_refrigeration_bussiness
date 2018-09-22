@@ -13,26 +13,26 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public interface MontageOrderService {
+public interface MontageOrderService extends BaseOrderService{
 
     void addMontage(String clientId,MontageOrderBindingModel model);
 
     boolean addOfferView(String clientId,OfferViewBindingModel model);
 
-    Page<MontageOrderDto> getAllMontages(Pageable pageable);
-
-    MontageOrderDto getMontageById(String id);
-
-    boolean deleteOrder(String id);
-
     void editMontage(String id,EditMontageOrderBindingModel model);
 
-    List<MontageOrderDto> getAllUnfinishedMontagesDtos();
+    boolean deleteMontage(String id);
+
+    MontageOrder getMontageById(String id);
+
+    MontageOrderDto getMontageDtoById(String id);
+
+    Page<MontageOrderDto> getAllMontages(Pageable pageable);
 
     List<MontageOrder> getAllUnfinishedMontages();
 
-    void saveScheduleMontageChanges(RestOrderBindingModel model);
+    Set<MontageOrder> getMontagesByScheduleDateNotFinished(LocalDate scheduleDate);
 
-    Set<MontageOrder> getMontagesByDateNotFinished(LocalDate scheduleDate);
+    Integer getAllUnfinishedMontagesCount();
 
 }
