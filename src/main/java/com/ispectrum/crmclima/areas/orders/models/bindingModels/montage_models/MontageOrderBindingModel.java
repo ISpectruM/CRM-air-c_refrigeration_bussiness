@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @AtLeastOneFieldNotNull(
-        fieldNames = {"aircProductsBin","coolersProductsBin","fridgeProductsBin"},
+        fieldNames = {"aircProductsBin","coolersProductsBin","fridgeProductsBin", "otherProduct"},
         message = Messages.FILL_AT_LEAST_ONE_FIELD)
 public class MontageOrderBindingModel extends BaseOrderBindingModel {
 

@@ -87,15 +87,15 @@ public class RepairOrderController extends BaseController{
         return this.redirect("/orders/repairs/details/" + id);
     }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView deleteOrder(@PathVariable String id){
-        RepairOrderDto montage = this.repairOrderService.getRepairById(id);
+    @GetMapping("/delete/{repairId}")
+    public ModelAndView deleteOrder(@PathVariable String repairId){
+        RepairOrderDto montage = this.repairOrderService.getRepairById(repairId);
         return this.addViewAndObject("repair", montage,"orders/repairs/delete");
     }
 
-    @PostMapping("/delete/{id}")
-    public ModelAndView deleteOrderAction(@PathVariable String id){
-        this.repairOrderService.deleteRepair(id);
+    @PostMapping("/delete/{repairId}")
+    public ModelAndView deleteOrderAction(@PathVariable String repairId){
+        this.repairOrderService.deleteRepair(repairId);
         return this.redirect("/orders/repairs/all?page=0");
     }
 }

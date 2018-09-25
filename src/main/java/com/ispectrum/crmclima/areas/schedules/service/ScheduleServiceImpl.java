@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.schedules.service;
 
 import com.ispectrum.crmclima.Utils.DateToLocalDate;
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
+import com.ispectrum.crmclima.areas.error_handling.exception.ScheduleAlreadyCreatedException;
 import com.ispectrum.crmclima.areas.error_handling.exception.ScheduleNotFound;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ScheduleServiceImpl implements com.ispectrum.crmclima.areas.schedules.service.ScheduleService {
@@ -44,15 +46,24 @@ public class ScheduleServiceImpl implements com.ispectrum.crmclima.areas.schedul
 
     @Override
     public String addSchedule(AddScheduleBindingModel model) {
+
         Schedule newSchedule = new Schedule();
         LocalDate date = DateToLocalDate.convert(model.getScheduleDate());
+        Boolean isScheduleCreated = this.scheduleRepository.existsByScheduleDate(date);
+        if(isScheduleCreated){
+            throw new ScheduleAlreadyCreatedException();
+        }
+
         newSchedule.setScheduleDate(date);
-        newSchedule.setMontageOrders(
-                this.baseOrderService.getMontagesByScheduleDate(date));
-        newSchedule.setRepairOrders(
-                this.baseOrderService.getRepairsByScheduleDate(date));
-        newSchedule.setProphylacticOrders(
-                this.baseOrderService.getProphylacticsByScheduleDate(date));
+
+        Set<MontageOrder> montagesByScheduleDate = this.baseOrderService.getMontagesByScheduleDate(date);
+        newSchedule.setMontageOrders(montagesByScheduleDate);
+
+        Set<RepairOrder> repairsByScheduleDate = this.baseOrderService.getRepairsByScheduleDate(date);
+        newSchedule.setRepairOrders(repairsByScheduleDate);
+
+        Set<ProphylacticOrder> prophylacticsByScheduleDate = this.baseOrderService.getProphylacticsByScheduleDate(date);
+        newSchedule.setProphylacticOrders(prophylacticsByScheduleDate);
 
         Schedule schedule = this.scheduleRepository.saveAndFlush(newSchedule);
         return schedule.getId();

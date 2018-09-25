@@ -1,11 +1,9 @@
 package com.ispectrum.crmclima.areas.locations.entities;
 
+import com.ispectrum.crmclima.areas.locations.entities.enums.Cities;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Location {
@@ -18,7 +16,8 @@ public class Location {
     private String id;
 
     @Column(nullable = false)
-    private String city;
+    @Enumerated(EnumType.STRING)
+    private Cities city;
 
     private String address;
 
@@ -39,13 +38,6 @@ public class Location {
         this.id = id;
     }
 
-    public String getCity() {
-        return this.city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getAddress() {
         return this.address;
@@ -77,5 +69,13 @@ public class Location {
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    public Cities getCity() {
+        return city;
+    }
+
+    public void setCity(Cities city) {
+        this.city = city;
     }
 }

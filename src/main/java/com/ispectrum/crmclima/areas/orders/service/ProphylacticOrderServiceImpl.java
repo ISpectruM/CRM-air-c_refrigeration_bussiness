@@ -149,9 +149,9 @@ public class ProphylacticOrderServiceImpl implements ProphylacticOrderService {
     }
 
     private Location createLocation(BaseOrderBindingModel model) {
-        Location location = new Location();
-        location.setCity(model.getCity());
-        location.setAddress(model.getAddress());
+        Location location = ModelMappingUtil.convertClass(model, Location.class);
+//        location.setCity(model.getCity());
+//        location.setAddress(model.getAddress());
         return location;
     }
 

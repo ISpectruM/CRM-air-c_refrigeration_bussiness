@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ public class Schedule {
 
     @Column(unique = true)
     private LocalDate scheduleDate;
+
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     @ManyToMany(targetEntity = MontageOrder.class)
     private Set<MontageOrder> montageOrders;
@@ -107,5 +110,13 @@ public class Schedule {
 
     public void setProphylacticsAmount(Integer prophylacticsAmount) {
         this.prophylacticsAmount = prophylacticsAmount;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }

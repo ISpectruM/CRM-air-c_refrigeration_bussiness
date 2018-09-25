@@ -31,7 +31,7 @@ public class CreateScheduleDto {
 
     private Map<BaseProductDto,Integer> airConditioners;
 
-    private String other;
+    private String otherProduct;
 
     private String description;
 
@@ -224,12 +224,12 @@ public class CreateScheduleDto {
         isForFinishing = forFinishing;
     }
 
-    public String getOther() {
-        return this.other;
+    public String getOtherProduct() {
+        return this.otherProduct;
     }
 
-    public void setOther(String other) {
-        this.other = other;
+    public void setOtherProduct(String other) {
+        this.otherProduct = other;
     }
 
     public Map<BaseProductDto, Integer> getAirConditioners() {

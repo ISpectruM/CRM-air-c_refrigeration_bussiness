@@ -1,3 +1,5 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <div class="container" th:object="${bindingModel}">
     <div class="form-row m-2 card-header">
         <h4 class="col">Нова заявка за монтаж на клиент: </h4>
@@ -11,7 +13,7 @@
         </div>
     </th:block>
     <hr/>
-    <form class="form-horizontal" th:action="@{/orders/montages/add/{id}(id=${client.id})}" th:method="POST">
+    <form class="form-horizontal" th:action="@{/orders/montages/montage/add/{id}(id=${client.id})}" th:method="POST">
         <div class="form-group row m-2">
             <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
             <div class="col-md-3">
@@ -33,6 +35,9 @@
                 </select>
                 <th:block th:each="error:${#fields.errors('montageType')}">
                     <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                </th:block>
+                <th:block th:if="${#fields.hasGlobalErrors()}">
+                    <small class="invalid-feedback text-danger" style="display: block" th:text="${atLeastOneFilled}"></small>
                 </th:block>
             </div>
         </div>
@@ -68,7 +73,7 @@
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="otherProduct" th:text="'Друго'"></label>
-                        <input class="form-control" id="otherProduct" name="otherProduct"/>
+                        <input class="form-control" id="otherProduct" name="otherProduct" th:field="*{otherProduct}"/>
                     </div>
                 </div>
             </div>
@@ -88,7 +93,7 @@
                     <div id="descriptionContainer" class="form-group row">
                         <div class="col-12">
                             <label for="description">Описание:</label>
-                            <input id="description" name="description" class="form-control"/>
+                            <input id="description" name="description" class="form-control" th:field="*{description}"/>
                         </div>
                     </div>
                     <!--New products section-->
@@ -100,7 +105,6 @@
                                 <option th:each="product:${T(com.ispectrum.crmclima.areas.products.entities.enums.ProductType).values()}"
                                         th:value="${product}" th:text="${product.displayName}"></option>
                             </select>
-                            <small id="typeErrorField" class="invalid-feedback text-danger"></small>
                         </div>
                         <div class="col-md-3">
                             <label for="brand">Марка:</label>
@@ -124,7 +128,7 @@
                 <div class="col-md-1">
                     <label for="count">Брой:</label>
                     <div class="">
-                        <input id="count" class="form-control" name="count">
+                        <input id="count" class="form-control" name="count" th:field="*{count}">
                     </div>
                 </div>
                 <!--Add product btn-->
@@ -162,7 +166,7 @@
                         <label for="discount" class="col-sm-1 col-form-label">Отстъпка:</label>
                         <div class="col-sm-2">
                             <input type="number" class="form-control" id="discount" name="discount"
-                                   placeholder="Отстъпка">
+                                   placeholder="Отстъпка" th:field="*{discount}">
                         </div>
                     </div>
                 </div>
@@ -173,13 +177,17 @@
         <h6 class="card-header">Адрес</h6>
         <div class="form-group row m-2">
             <label for="city" class="col-sm-1 col-form-label">Град:</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="city" name="city" placeholder="обл. / гр.">
-            </div>
+            <select id="city" name="city" class="form-control col-sm-2" th:field="*{city}">
+                <option value="">- Избери -</option>
+                <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
+                        th:value="${city}" th:text="${city.displayName}"></option>
+            </select>
+
+
             <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="address" name="address"
-                       placeholder="ул. / бл. / № / вх. /ет. ...">
+                       placeholder="ул. / бл. / № / вх. /ет. ..." th:field="*{address}">
             </div>
         </div>
 
@@ -225,7 +233,7 @@
             </div>
             <div class="col-sm-6">
                 <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-                <input type="date" class="form-control col-sm-4" id="scheduleDate" name="scheduleDate">
+                <input type="date" class="form-control col-sm-4" id="scheduleDate" th:field="*{scheduleDate}">
             </div>
         </div>
 

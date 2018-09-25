@@ -156,21 +156,23 @@ $(document).ready(function () {
 
     function showHideOrderTypeSections() {
         let form = $("form.form-horizontal");
+        let action = form.attr('action');
+
         if (selectedOrderType === "") {
             hideProductMenu();
             hideDescriptionInput();
             productTypeContainer.hide();
-        } else if (selectedOrderType === "MONTAGE") {
-            hideDescriptionInput();
-            showProductMenu();
-            let action = form.attr('action');
-            action = action.replace(/^.*(?=\/add)/g, "/orders/montages/montage");
-            form.attr('action', action);
-        } else if(selectedOrderType === "OFFER" ||
+        }
+        // else if (selectedOrderType === "MONTAGE") {
+        //     hideDescriptionInput();
+        //     showProductMenu();
+        //     action = action.replace(/^.*(?=\/add)/g, "/orders/montages/montage");
+        //     form.attr('action', action);
+        // }
+        else if(selectedOrderType === "OFFER" ||
                     selectedOrderType === "OVERVIEW"){
             hideProductMenu();
             showDescriptionInput();
-            let action = form.attr('action');
             action = action.replace(/^.*(?=\/add)/g, "/orders/montages/offer");
             form.attr('action', action);
         }

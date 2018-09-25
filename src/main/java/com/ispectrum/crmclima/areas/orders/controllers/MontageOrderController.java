@@ -98,7 +98,7 @@ public class MontageOrderController extends BaseController {
     }
 
     //Edit montage
-    @PostMapping("/montage/edit/{id}")
+    @PostMapping("/edit/{id}")
     public ModelAndView editMontageOrderAction(@PathVariable String id,
                                        @Valid @ModelAttribute(name = "bindingModel") EditMontageOrderBindingModel model,
                                        BindingResult bindingResult) {
@@ -135,7 +135,12 @@ public class MontageOrderController extends BaseController {
             ClientDto client = this.clientService.getClientById(id);
             model.put("client", client);
         }
+        if (bindingResult.hasGlobalErrors()){
+            model.put("atLeastOneFilled", bindingResult.getGlobalError().getDefaultMessage());
+        }
+
         model.put("currentDate", LocalDate.now());
+
         return this.addViewAndObjectsMap("orders/montages/add_montage", model);
     }
 
