@@ -33,7 +33,7 @@ public class ScheduleController extends BaseController{
                 this.scheduleService.getAllUnfinishedOrders();
         this.addViewAndObject("orders",allUnfinishedOrders,"schedules/create");
         LocalDate scheduleDate = LocalDate.now().plusDays(1);
-        return this.addObject("currentDate", scheduleDate);
+        return this.addObjectToView("currentDate", scheduleDate);
     }
 
     @PostMapping("/add")

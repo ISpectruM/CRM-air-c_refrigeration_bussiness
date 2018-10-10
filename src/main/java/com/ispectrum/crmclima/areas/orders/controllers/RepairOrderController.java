@@ -36,9 +36,9 @@ public class RepairOrderController extends BaseController{
     public ModelAndView addRepair(@PathVariable String id){
         ClientDto clientById = this.clientService.getClientById(id);
         this.addViewAndObject("client",clientById,"orders/repairs/add");
-        this.addObject("bindingModel", new RepairBindingModel());
+        this.addObjectToView("bindingModel", new RepairBindingModel());
 
-        return this.addObject("currentDate", LocalDate.now());
+        return this.addObjectToView("currentDate", LocalDate.now());
     }
 
     @PostMapping("/add/{clientId}")
@@ -63,7 +63,7 @@ public class RepairOrderController extends BaseController{
             @PageableDefault(sort={"orderDate"}, direction = Sort.Direction.DESC) Pageable pageable){
         Page<RepairOrderDto> allRepairs = this.repairOrderService.getAllRepairs(pageable);
         this.addViewAndObject("objects",allRepairs,"orders/repairs/all");
-        return this.addObject("area", "repairs");
+        return this.addObjectToView("area", "repairs");
     }
 
     @GetMapping("/details/{id}")
@@ -77,7 +77,7 @@ public class RepairOrderController extends BaseController{
     public ModelAndView editRepair(@PathVariable String id){
         RepairOrderDto repair = this.repairOrderService.getRepairById(id);
         this.addViewAndObject("repair", repair,"orders/repairs/edit");
-        return this.addObject("bindingModel", new RepairBindingModel());
+        return this.addObjectToView("bindingModel", new RepairBindingModel());
     }
 
     @PostMapping("/edit/{id}")

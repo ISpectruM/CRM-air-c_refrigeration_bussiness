@@ -5,6 +5,8 @@ public enum ProductType {
     COOLERS("Изпарителни охладители"),
     FRIDGES("Хладилник/фризер"),
     CAMERAS("Хладилна камера"),
+    HEATPUMPS("Термо помпи"),
+    DEHUMIDIFIER("Влагоуловител"),
     OTHERS("Друго");
 
     private final String displayName;

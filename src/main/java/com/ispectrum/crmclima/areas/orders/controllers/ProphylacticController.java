@@ -42,7 +42,7 @@ public class ProphylacticController extends BaseController {
                 this.prophylacticOrderService.getAllProphylactics(pageable);
         this.addViewAndObject("objects", prophylactics, "orders/prophylactics/all");
 //      Needed for setting a proper OrderType paging navigation at templates/fragments/page_nav
-        return this.addObject("area", "orders/prophylactics");
+        return this.addObjectToView("area", "orders/prophylactics");
     }
 
     @GetMapping("/add/{clientId}")
@@ -50,9 +50,9 @@ public class ProphylacticController extends BaseController {
         ClientDto clientDto = this.clientService.getClientById(clientId);
 
         this.setView("orders/prophylactics/add");
-        this.addObject("client", clientDto);
-        this.addObject("currentDate", LocalDate.now());
-        return this.addObject("bindingModel", new ProphylacticBindingModel());
+        this.addObjectToView("client", clientDto);
+        this.addObjectToView("currentDate", LocalDate.now());
+        return this.addObjectToView("bindingModel", new ProphylacticBindingModel());
     }
 
     @PostMapping("/add/{clientId}")
@@ -77,7 +77,7 @@ public class ProphylacticController extends BaseController {
     public ModelAndView editProphylactic(@PathVariable String id){
         ProphylacticOrderDto prophylacticById = this.prophylacticOrderService.getProphylacticById(id);
         this.addViewAndObject("prophylactic",prophylacticById, "orders/prophylactics/edit");
-        return this.addObject("bindingModel", new ProphylacticBindingModel());
+        return this.addObjectToView("bindingModel", new ProphylacticBindingModel());
     }
 
     @PostMapping("/edit/{id}")

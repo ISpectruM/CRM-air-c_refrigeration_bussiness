@@ -1,17 +1,3 @@
 <h5 class="row card-header mb-1">Ремонти</h5>
-<!--content-->
-<table class="table table-striped schedule-sch">
-    <thead class="thead-dark">
-    <th:block th:include="~{schedules/fragments/scheduleTableHead}"></th:block>
-    </thead>
-    <tbody class="table-bordered">
-    <tr th:colspan="11">Поморие, Сарафово, Бургас</tr>
-    <th:block th:each="repair, iter:${schedule.repairOrders}" th:object="${repair}" th:with="city=*{location.city}">
-        <th:block th:include="~{schedules/fragments/firstAreaTableBody}"></th:block>
-    </th:block>
-    <tr th:colspan="11">Несебър, Сл.Бряг, Равда, Влас</tr>
-    <th:block th:each="repair, iter:${schedule.repairOrders}" th:object="${repair}" th:with="city=*{location.city}">
-        <th:block th:include="~{schedules/fragments/secondAreaTableBody}"></th:block>
-    </th:block>
-    </tbody>
-</table>
+<!--Repairs header and rows-->
+<th:block th:include="~{schedules/fragments/scheduleTableSectionFragment :: orders_table(orders=${schedule.repairOrders})}" ></th:block>

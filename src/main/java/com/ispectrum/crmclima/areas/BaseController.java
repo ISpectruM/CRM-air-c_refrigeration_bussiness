@@ -20,7 +20,7 @@ public abstract class BaseController {
         return modelAndView;
     }
 
-    protected ModelAndView addObject(String name,Object object){
+    protected ModelAndView addObjectToView(String name, Object object){
         return this.modelAndView.addObject(name,object);
     }
 

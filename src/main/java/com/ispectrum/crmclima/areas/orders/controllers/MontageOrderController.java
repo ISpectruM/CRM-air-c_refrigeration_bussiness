@@ -40,7 +40,7 @@ public class MontageOrderController extends BaseController {
             @PageableDefault(sort = {"orderNumber"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<MontageOrderDto> allMontages = this.montageOrderService.getAllMontages(pageable);
         this.addViewAndObject("objects", allMontages, "orders/montages/all");
-        return this.addObject("area", "orders/montages");
+        return this.addObjectToView("area", "orders/montages");
     }
 
     //Show add order view for client
@@ -48,9 +48,9 @@ public class MontageOrderController extends BaseController {
     public ModelAndView addOrder(@PathVariable String clientId) {
         this.setView("orders/montages/add_montage");
         ClientDto client = this.clientService.getClientById(clientId);
-        this.addObject("bindingModel", new MontageOrderBindingModel());
-        this.addObject("currentDate", LocalDate.now());
-        return this.addObject("client", client);
+        this.addObjectToView("bindingModel", new MontageOrderBindingModel());
+        this.addObjectToView("currentDate", LocalDate.now());
+        return this.addObjectToView("client", client);
     }
 
     //Add montage order
@@ -94,7 +94,7 @@ public class MontageOrderController extends BaseController {
         MontageOrderDto montage = this.montageOrderService.getMontageDtoById(id);
 
         this.addViewAndObject("montage", montage, "orders/montages/edit");
-        return this.addObject("bindingModel", new MontageOrderBindingModel());
+        return this.addObjectToView("bindingModel", new MontageOrderBindingModel());
     }
 
     //Edit montage

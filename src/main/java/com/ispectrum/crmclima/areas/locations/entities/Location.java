@@ -19,6 +19,8 @@ public class Location {
     @Enumerated(EnumType.STRING)
     private Cities city;
 
+    private String area;
+
     private String address;
 
     private String details;
@@ -77,5 +79,13 @@ public class Location {
 
     public void setCity(Cities city) {
         this.city = city;
+    }
+
+    public String getArea() {
+        return this.city.getArea();
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

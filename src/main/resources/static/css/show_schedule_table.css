@@ -10,6 +10,7 @@
 .table-center-text{
     text-align: center;
     font-weight: bold ;
+    background-color: #b3d7ff;
 }
 
 /* Column widths are based on these cells */

@@ -20,7 +20,7 @@
 <!--client-->
 <td th:text="*{client.name}"></td>
 <!--address-->
-<td th:text="|*{location.city}, *{location.address}|"></td>
+<td th:text="|*{location.city.displayName}, *{location.address}|"></td>
 <!--phone-->
 <td th:text="*{client.phone}"></td>
 <!--deposit-->

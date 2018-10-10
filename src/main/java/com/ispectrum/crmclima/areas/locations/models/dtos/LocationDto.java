@@ -1,8 +1,12 @@
 package com.ispectrum.crmclima.areas.locations.models.dtos;
 
+import com.ispectrum.crmclima.areas.locations.entities.enums.Cities;
+
 public class LocationDto {
 
-    private String city;
+    private Cities city;
+
+    private String area;
 
     private String address;
 
@@ -11,13 +15,6 @@ public class LocationDto {
     public LocationDto() {
     }
 
-    public String getCity() {
-        return this.city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getAddress() {
         return this.address;
@@ -33,5 +30,21 @@ public class LocationDto {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Cities getCity() {
+        return city;
+    }
+
+    public void setCity(Cities city) {
+        this.city = city;
     }
 }

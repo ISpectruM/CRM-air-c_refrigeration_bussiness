@@ -1,24 +1,19 @@
 package com.ispectrum.crmclima.areas.clients.controllers;
 
 import com.ispectrum.crmclima.areas.BaseController;
-import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.clients.models.bindingModels.AddClientModel;
 import com.ispectrum.crmclima.areas.clients.models.dtos.ClientDto;
 import com.ispectrum.crmclima.areas.clients.service.ClientService;
-import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotAddedException;
-import com.ispectrum.crmclima.areas.error_handling.exception.ClientNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -37,7 +32,7 @@ public class ClientController extends BaseController{
                             direction = Sort.Direction.DESC) Pageable pageable){
         Page<ClientDto> allClients = this.clientService.getAllClients(pageable);
         this.addViewAndObject("objects",allClients,"clients/all");
-        return this.addObject("area","clients");
+        return this.addObjectToView("area","clients");
     }
 
     @GetMapping("/details/{id}")

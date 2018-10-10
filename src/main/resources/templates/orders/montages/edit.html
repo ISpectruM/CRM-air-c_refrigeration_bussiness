@@ -187,11 +187,12 @@
         <h6 class="card-header">Адрес</h6>
         <div class="form-group row m-2">
             <label for="city" class="col-sm-1 col-form-label">Град:</label>
-            <select id="city" name="city" class="form-control">
+            <select id="city" name="city" class="form-control col-sm-2" th:field="*{city}">
                 <option value="">- Избери -</option>
-                <option th:each="product:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities.values()}"
-                        th:value="${product}" th:text="${product.displayName}"></option>
+                <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
+                        th:value="${city}" th:text="${city.displayName}"></option>
             </select>
+
             <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="address" name="address"

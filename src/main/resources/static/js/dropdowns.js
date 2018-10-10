@@ -163,12 +163,12 @@ $(document).ready(function () {
             hideDescriptionInput();
             productTypeContainer.hide();
         }
-        // else if (selectedOrderType === "MONTAGE") {
-        //     hideDescriptionInput();
-        //     showProductMenu();
-        //     action = action.replace(/^.*(?=\/add)/g, "/orders/montages/montage");
-        //     form.attr('action', action);
-        // }
+        else if (selectedOrderType === "MONTAGE") {
+            hideDescriptionInput();
+            showProductMenu();
+            action = action.replace(/^.*(?=\/add)/g, "/orders/montages/montage");
+            form.attr('action', action);
+        }
         else if(selectedOrderType === "OFFER" ||
                     selectedOrderType === "OVERVIEW"){
             hideProductMenu();

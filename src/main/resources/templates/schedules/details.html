@@ -3,12 +3,15 @@
     <div class="row card-header mb-1">
         <h3 class="col-sm-12" th:text="|График за дата: ${schedule.scheduleDate}|"></h3>
     </div>
+    <!--Montages schedule section-->
     <div th:unless="${#lists.isEmpty(schedule.montageOrders)}">
         <th:block th:replace="~{schedules/fragments/montageTable}"></th:block>
     </div>
+    <!--Repairs schedule section-->
     <div th:unless="${#lists.isEmpty(schedule.repairOrders)}" >
         <th:block th:replace="~{schedules/fragments/repairTable}"></th:block>
     </div>
+    <!--Prophylactics schedule section-->
     <div th:unless="${#lists.isEmpty(schedule.prophylacticOrders)}">
         <th:block th:replace="~{schedules/fragments/prophylacticTable}"></th:block>
     </div>

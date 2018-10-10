@@ -1,5 +1,6 @@
 <!--Filtering the orders by location-->
 <tr class="table"
-    th:if="${#strings.equalsIgnoreCase(area,'несебър')}">
+    th:if="${#strings.equalsIgnoreCase(area,'селата')} or
+                ${#strings.equalsIgnoreCase(area,'друго')}">
     <th:block th:include="~{schedules/fragments/scheduleTableRow}"></th:block>
 </tr>
