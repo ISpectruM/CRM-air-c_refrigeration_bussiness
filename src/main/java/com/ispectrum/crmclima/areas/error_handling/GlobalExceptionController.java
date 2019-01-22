@@ -1,7 +1,6 @@
 package com.ispectrum.crmclima.areas.error_handling;
 
 import com.ispectrum.crmclima.areas.BaseController;
-import com.ispectrum.crmclima.constants.Messages;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,9 +13,9 @@ public class GlobalExceptionController extends BaseController {
     public ModelAndView getRuntimeException(RuntimeException e){
 
         String errorMessage =
-                e.getClass().isAnnotationPresent(ResponseStatus.class)
-                ? e.getClass().getAnnotation(ResponseStatus.class).reason()
-                        : e.getMessage();
-        return this.addViewAndObject("exception",errorMessage,"error/error_page");
+                e.getClass().isAnnotationPresent(ResponseStatus.class) ?
+                        e.getClass().getAnnotation(ResponseStatus.class).reason() :
+                        e.getMessage();
+        return this.addViewAndObject("exception", errorMessage,"error/error_page");
     }
 }
