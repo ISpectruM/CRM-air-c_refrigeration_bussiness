@@ -24,7 +24,6 @@ public enum Cities {
     GULUBETS("с.Гълъбец", "Селата"),
     BELODOL("с.Белодол", "Селата"),
     OTHER("Друг", "Друг");
-    ;
 
     private final String displayName;
     private final String area;
