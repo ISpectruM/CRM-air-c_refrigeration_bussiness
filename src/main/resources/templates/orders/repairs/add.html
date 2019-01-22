@@ -1,15 +1,16 @@
 <div class="container" th:object="${bindingModel}">
-        <div class="card-header">
-            <h4 class="col">Нова заявка за ремонт на клиент: </h4>
+    <div class="card-header">
+        <h4 class="col">Нова заявка за ремонт на клиент: </h4>
+    </div>
+    <th:block>
+        <div class="row m-2">
+            <label for="name" class="col-1 col-form-label">Име:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="${client.name}">
+            <label for="phone" class="col-1 col-form-label">Телефон:</label>
+            <input type="text" readonly class="col-5 form-control-plaintext" id="phone"
+                   th:placeholder="${client.phone}">
         </div>
-        <th:block>
-            <div class="row m-2">
-                <label for="name" class="col-1 col-form-label">Име:</label>
-                <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="${client.name}">
-                <label for="phone" class="col-1 col-form-label">Телефон:</label>
-                <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="${client.phone}">
-            </div>
-        </th:block>
+    </th:block>
 
     <div class="container">
         <form class="form-horizontal" th:action="@{/orders/repairs/add/{id}(id=${client.id})}" th:method="POST">
@@ -66,7 +67,8 @@
             <div class="form-group row m-2">
                 <label class="col-sm-2" for="description">Описание:</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="description" name="description" rows="2" th:field="*{description}"></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="2"
+                              th:field="*{description}"></textarea>
                 </div>
             </div>
 
@@ -75,7 +77,11 @@
             <div class="form-group row m-2">
                 <label for="city" class="col-sm-2 col-form-label">Град:</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="city" name="city" placeholder="град" th:field="*{city}">
+                    <select id="city" name="city" class="form-control" th:field="*{city}">
+                        <option value="">- Избери -</option>
+                        <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
+                                th:value="${city}" th:text="${city.displayName}"></option>
+                    </select>
                 </div>
                 <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
                 <div class="col-sm-7">
@@ -112,15 +118,18 @@
             <h6 class="card-header">Статус</h6>
             <div class="form-group row m-2 ">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:field="*{isFinished}">
+                    <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished"
+                           th:field="*{isFinished}">
                     <label class="form-check-label" for="isFinished">Приключена</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:field="*{isWaiting}">
+                    <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting"
+                           th:field="*{isWaiting}">
                     <label class="form-check-label" for="isWaiting">В изчакване</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing" th:field="*{isForFinishing}">
+                    <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
+                           th:field="*{isForFinishing}">
                     <label class="form-check-label" for="isForFinishing">За довършване</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -128,15 +137,18 @@
                     <label class="form-check-label" for="isPayed">Платена</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:field="*{isDeferred}">
+                    <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred"
+                           th:field="*{isDeferred}">
                     <label class="form-check-label" for="isDeferred">Разсрочено</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:field="*{isWithInvoice}">
+                    <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice"
+                           th:field="*{isWithInvoice}">
                     <label class="form-check-label" for="isWithInvoice">С фактура</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:field="*{isMarked}">
+                    <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked"
+                           th:field="*{isMarked}">
                     <label class="form-check-label" for="isMarked">Маркирана</label>
                 </div>
             </div>
@@ -145,11 +157,13 @@
             <div class="form-group row m-2">
                 <div class="col-sm-6">
                     <label for="comment">Особености/бележки:</label>
-                    <textarea class="form-control" id="comment" name="comment" rows="4" th:field="*{comment}"></textarea>
+                    <textarea class="form-control" id="comment" name="comment" rows="4"
+                              th:field="*{comment}"></textarea>
                 </div>
                 <div class="col-sm-6">
                     <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-                    <input type="date" class="form-control col-sm-5" id="scheduleDate" name="scheduleDate" th:field="*{scheduleDate}">
+                    <input type="date" class="form-control col-sm-5" id="scheduleDate" name="scheduleDate"
+                           th:field="*{scheduleDate}">
                 </div>
             </div>
 

@@ -37,7 +37,8 @@
                     <small class="invalid-feedback text-danger" th:text="${error}"></small>
                 </th:block>
                 <th:block th:if="${#fields.hasGlobalErrors()}">
-                    <small class="invalid-feedback text-danger" style="display: block" th:text="${atLeastOneFilled}"></small>
+                    <small class="invalid-feedback text-danger" style="display: block"
+                           th:text="${atLeastOneFilled}"></small>
                 </th:block>
             </div>
         </div>
@@ -179,13 +180,13 @@
         <h6 class="card-header">Адрес</h6>
         <div class="form-group row m-2">
             <label for="city" class="col-sm-1 col-form-label">Град:</label>
-            <select id="city" name="city" class="form-control col-sm-2" th:field="*{city}">
-                <option value="">- Избери -</option>
-                <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
-                        th:value="${city}" th:text="${city.displayName}"></option>
-            </select>
-
-
+            <div class="col-sm-2">
+                <select id="city" name="city" class="form-control" th:field="*{city}">
+                    <option value="">- Избери -</option>
+                    <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
+                            th:value="${city}" th:text="${city.displayName}"></option>
+                </select>
+            </div>
             <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="address" name="address"
@@ -197,11 +198,13 @@
         <h6 class="card-header">Статус</h6>
         <div class="form-group row m-2 ">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}">
+                <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished"
+                       th:checked="*{isFinished}">
                 <label class="form-check-label" for="isFinished">Приключена</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}">
+                <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting"
+                       th:checked="*{isWaiting}">
                 <label class="form-check-label" for="isWaiting">В изчакване</label>
             </div>
             <div class="form-check form-check-inline">
@@ -214,11 +217,13 @@
                 <label class="form-check-label" for="isPayed">Платена</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}">
+                <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred"
+                       th:checked="*{isDeferred}">
                 <label class="form-check-label" for="isDeferred">Разсрочено</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}">
+                <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice"
+                       th:checked="*{isWithInvoice}">
                 <label class="form-check-label" for="isWithInvoice">С фактура</label>
             </div>
             <div class="form-check form-check-inline">
