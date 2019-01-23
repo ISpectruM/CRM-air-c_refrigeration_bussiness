@@ -9,21 +9,21 @@
     <tr>
         <td th:colspan="11" class="table-center-text">Поморие, Сарафово, Бургас</td>
     </tr>
-    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=*{location.area}">
+    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=*{location.city.area}">
         <th:block th:include="~{schedules/fragments/firstAreaTableBody}"></th:block>
     </th:block>
 
     <tr>
         <td th:colspan="11" class="table-center-text">Несебър, Сл.Бряг, Равда, Влас</td>
     </tr>
-    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=order.location.area">
+    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=*{location.city.area}">
         <th:block th:include="~{schedules/fragments/secondAreaTableBody}"></th:block>
     </th:block>
 
     <tr>
         <td th:colspan="11" class="table-center-text">Други</td>
     </tr>
-    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=order.location.area">
+    <th:block th:each="order, iter:${orders}" th:object="${order}" th:with="area=*{location.city.area}">
         <th:block th:include="~{schedules/fragments/thirdAreaTableBody}"></th:block>
     </th:block>
     </tbody>
