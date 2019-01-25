@@ -1,0 +1,13 @@
+<h6 class="card-header">Особености/бележки</h6>
+<div class="form-group row m-2">
+    <div class="col-sm-6">
+        <label for="comment">Особености/бележки:</label>
+        <textarea class="form-control" id="comment" name="comment" rows="4"
+                  th:field="*{comment}"></textarea>
+    </div>
+    <div class="col-sm-6">
+        <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
+        <input type="date" class="form-control col-sm-5" id="scheduleDate" name="scheduleDate"
+               th:field="*{scheduleDate}">
+    </div>
+</div>

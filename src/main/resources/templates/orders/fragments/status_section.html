@@ -1,0 +1,36 @@
+<h6 class="card-header">Статус</h6>
+<div class="form-group row m-2 ">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished"
+               th:checked="*{isFinished}">
+        <label class="form-check-label" for="isFinished">Приключена</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting"
+               th:checked="*{isWaiting}">
+        <label class="form-check-label" for="isWaiting">В изчакване</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
+               th:checked="*{isForFinishing}">
+        <label class="form-check-label" for="isForFinishing">За довършване</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}">
+        <label class="form-check-label" for="isPayed">Платена</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred"
+               th:checked="*{isDeferred}">
+        <label class="form-check-label" for="isDeferred">Разсрочено</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice"
+               th:checked="*{isWithInvoice}">
+        <label class="form-check-label" for="isWithInvoice">С фактура</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}">
+        <label class="form-check-label" for="isMarked">Маркирана</label>
+    </div>
+</div>

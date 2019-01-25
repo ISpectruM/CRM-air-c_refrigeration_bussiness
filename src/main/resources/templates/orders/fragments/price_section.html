@@ -1,0 +1,23 @@
+<h6 class="card-header">Цена</h6>
+<div class="form-group row m-2">
+    <label for="price" class="col-sm-2 col-form-label">Цена:</label>
+    <div class="col-sm-2">
+        <input type="number" class="form-control" id="price" name="price" placeholder="цена"
+               th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
+               th:field="*{price}">
+        <th:block th:each="error:${#fields.errors('price')}">
+            <small class="invalid-feedback text-danger" th:text="${error}"></small>
+        </th:block>
+    </div>
+
+    <!--Deposit section-->
+    <label for="deposit" class="col-sm-1 col-form-label">Капаро:</label>
+    <div class="col-sm-2">
+        <input type="number" class="form-control" id="deposit" name="deposit" placeholder="капаро"
+               th:classappend="${#fields.hasErrors('deposit')}? 'is-invalid':''"
+               th:field="*{deposit}">
+        <th:block th:each="error:${#fields.errors('deposit')}">
+            <small class="invalid-feedback text-danger" th:text="${error}"></small>
+        </th:block>
+    </div>
+</div>
