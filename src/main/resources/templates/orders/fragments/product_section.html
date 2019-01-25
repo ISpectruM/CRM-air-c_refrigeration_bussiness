@@ -1,0 +1,18 @@
+<h6 class="card-header">Продукт</h6>
+<div class="form-group row m-2">
+    <label class="col-sm-2" for="product">Продукт:</label>
+    <div class="form-group col-sm-6">
+        <input id="product" class="form-control" name="product"/>
+    </div>
+
+    <!--Products count-->
+    <label class="col-sm-1" for="count">Брой:</label>
+    <div class="form-group col-sm-1">
+        <input id="count" class="form-control" name="count"
+               th:classappend="${#fields.hasErrors('count')}? 'is-invalid':''"
+               th:field="*{count}">
+        <th:block th:each="error:${#fields.errors('count')}">
+            <small class="invalid-feedback text-danger" th:text="${error}"></small>
+        </th:block>
+    </div>
+</div>
