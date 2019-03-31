@@ -2,7 +2,7 @@ package com.ispectrum.crmclima.areas.orders.entities;
 
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.orders.entities.enums.Shift;
-import com.ispectrum.crmclima.areas.products.entities.airconditioners.AirConditioner;
+import com.ispectrum.crmclima.areas.products.entities.AirConditioner;
 
 import javax.persistence.*;
 import java.util.*;
