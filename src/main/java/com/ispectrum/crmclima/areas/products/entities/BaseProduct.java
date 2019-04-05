@@ -1,5 +1,6 @@
 package com.ispectrum.crmclima.areas.products.entities;
 
+import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
 import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,15 +19,14 @@ public abstract class BaseProduct {
 
     private String brand;
 
-    private String model;
-
-    private Double price;
-
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
+    @Enumerated
+    private Condition productCondition;
 
-    public BaseProduct() {
+
+    protected BaseProduct() {
     }
 
     public String getId() {
@@ -45,27 +45,19 @@ public abstract class BaseProduct {
         this.brand = brand;
     }
 
-    public String getModel() {
-        return this.model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public ProductType getProductType() {
         return productType;
     }
 
     public void setProductType(ProductType productType) {
         this.productType = productType;
+    }
+
+    public Condition getProductCondition() {
+        return productCondition;
+    }
+
+    public void setProductCondition(Condition productCondition) {
+        this.productCondition = productCondition;
     }
 }
