@@ -28,7 +28,7 @@
                 <th:block th:each="error:${#fields.errors('montageType')}">
                     <small class="invalid-feedback text-danger" th:text="${error}"></small>
                 </th:block>
-                <th:block th:if="${#fields.hasGlobalErrors()}">
+                <th:block th:if="${#fields.hasGlobalErrors()} and *{#strings.equalsIgnoreCase(montageType,'MONTAGE')}">
                     <small class="invalid-feedback text-danger" style="display: block"
                            th:text="${atLeastOneFilled}"></small>
                 </th:block>
