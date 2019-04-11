@@ -1,11 +1,10 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
+import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
+import com.ispectrum.crmclima.areas.products.entities.enums.CompressorType;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class BaseUnit {
@@ -17,11 +16,14 @@ public abstract class BaseUnit {
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
+
+    @Enumerated
+    private AircType aircType;
+
+    @Enumerated
+    private CompressorType compressorType;
+
     private String model;
-    private String coolPower;
-    private String heatPower;
-    private String coolConsumption;
-    private String heatConsumption;
     private String noise;
     private int width;
     private int height;
@@ -38,38 +40,6 @@ public abstract class BaseUnit {
 
     public void setModel(String model) {
         this.model = model;
-    }
-
-    public String getCoolPower() {
-        return coolPower;
-    }
-
-    public void setCoolPower(String coolPower) {
-        this.coolPower = coolPower;
-    }
-
-    public String getHeatPower() {
-        return heatPower;
-    }
-
-    public void setHeatPower(String heatPower) {
-        this.heatPower = heatPower;
-    }
-
-    public String getCoolConsumption() {
-        return coolConsumption;
-    }
-
-    public void setCoolConsumption(String coolConsumption) {
-        this.coolConsumption = coolConsumption;
-    }
-
-    public String getHeatConsumption() {
-        return heatConsumption;
-    }
-
-    public void setHeatConsumption(String heatConsumption) {
-        this.heatConsumption = heatConsumption;
     }
 
     public String getNoise() {
@@ -118,5 +88,21 @@ public abstract class BaseUnit {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public AircType getAircType() {
+        return aircType;
+    }
+
+    public void setAircType(AircType aircType) {
+        this.aircType = aircType;
+    }
+
+    public CompressorType getCompressorType() {
+        return compressorType;
+    }
+
+    public void setCompressorType(CompressorType compressorType) {
+        this.compressorType = compressorType;
     }
 }

@@ -8,13 +8,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class AirConditioner extends BaseProduct {
-
-    @Enumerated
-    private AircType aircType;
 
     @Enumerated
     private CompressorType compressorType;
@@ -30,14 +28,7 @@ public class AirConditioner extends BaseProduct {
     private String coolClass;
     private Double price;
     private String extras;
-
-    public AircType getType() {
-        return this.aircType;
-    }
-
-    public void setType(AircType type) {
-        this.aircType = type;
-    }
+    private LocalDate lastUpdated;
 
     public OutdoorUnit getOutdoorUnit() {
         return outdoorUnit;
@@ -109,5 +100,13 @@ public class AirConditioner extends BaseProduct {
 
     public void setExtras(String extras) {
         this.extras = extras;
+    }
+
+    public LocalDate getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDate lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

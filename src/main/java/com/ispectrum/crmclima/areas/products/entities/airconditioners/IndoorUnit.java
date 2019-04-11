@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 public class IndoorUnit extends BaseUnit{
 
     private String airflow;
+    private int dehumidification;
 
     public String getAirflow() {
         return airflow;
@@ -13,5 +14,13 @@ public class IndoorUnit extends BaseUnit{
 
     public void setAirflow(String airflow) {
         this.airflow = airflow;
+    }
+
+    public int getDehumidification() {
+        return dehumidification;
+    }
+
+    public void setDehumidification(int dehumidification) {
+        this.dehumidification = dehumidification;
     }
 }
