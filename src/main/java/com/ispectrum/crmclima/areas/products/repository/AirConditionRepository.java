@@ -1,6 +1,8 @@
 package com.ispectrum.crmclima.areas.products.repository;
 
 import com.ispectrum.crmclima.areas.products.entities.airconditioners.AirConditioner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -13,5 +15,5 @@ public interface AirConditionRepository extends JpaRepository<AirConditioner, St
 
     AirConditioner findFirstByIndoorUnitModel(String model);
 
-    Set<AirConditioner> findAllBy();
+    Page<AirConditioner> findAll(Pageable airConditioners);
 }

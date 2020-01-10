@@ -24,11 +24,13 @@ public abstract class BaseUnit {
     private CompressorType compressorType;
 
     private String model;
+    private String brand;
     private String noise;
     private int width;
     private int height;
     private int depth;
     private Double weight;
+    private Double price;
 
     public String getDimensions() {
         return height+"/"+width+"/"+depth;
@@ -104,5 +106,21 @@ public abstract class BaseUnit {
 
     public void setCompressorType(CompressorType compressorType) {
         this.compressorType = compressorType;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

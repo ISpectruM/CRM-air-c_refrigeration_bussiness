@@ -1,5 +1,5 @@
 <h6 class="col-sm-6 mb-0 p-2 text-right" style="color: #6c757d"
-    th:text="|- ${currentPage+1} от ${objects.getTotalPages()} -|"></h6>
+    th:text="|- ${objects.getTotalPages() > 0 ? currentPage+1 : 0} от ${objects.getTotalPages()} -|"></h6>
 <nav class="col-sm-6 ml-auto">
     <ul class="pagination pagination-sm justify-content-end mb-1">
         <!--Prev buttons-->

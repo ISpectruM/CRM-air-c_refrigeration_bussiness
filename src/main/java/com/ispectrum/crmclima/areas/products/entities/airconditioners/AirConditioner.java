@@ -1,10 +1,7 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
 import com.ispectrum.crmclima.areas.products.entities.BaseProduct;
-import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
-import com.ispectrum.crmclima.areas.products.entities.enums.CompressorType;
 
-import javax.persistence.Enumerated;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
@@ -13,9 +10,6 @@ import java.util.List;
 
 @Entity
 public class AirConditioner extends BaseProduct {
-
-    @Enumerated
-    private CompressorType compressorType;
 
     @OneToMany
     private List<IndoorUnit> indoorUnit;
@@ -76,14 +70,6 @@ public class AirConditioner extends BaseProduct {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public CompressorType getCompressorType() {
-        return compressorType;
-    }
-
-    public void setCompressorType(CompressorType compressorType) {
-        this.compressorType = compressorType;
     }
 
     public List<IndoorUnit> getIndoorUnit() {

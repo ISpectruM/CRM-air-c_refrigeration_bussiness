@@ -5,15 +5,15 @@ import javax.persistence.Entity;
 @Entity
 public class IndoorUnit extends BaseUnit{
 
-    private String airflow;
+    private String airFlow;
     private int dehumidification;
 
-    public String getAirflow() {
-        return airflow;
+    public String getAirFlow() {
+        return airFlow;
     }
 
-    public void setAirflow(String airflow) {
-        this.airflow = airflow;
+    public void setAirFlow(String airFlow) {
+        this.airFlow = airFlow;
     }
 
     public int getDehumidification() {

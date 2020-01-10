@@ -1,0 +1,149 @@
+<div class="container" th:object="${bindingModel}">
+    <div class="card-header">
+        <h4 class="col">Добавяне на вътрешно тяло: </h4>
+    </div>
+
+    <div class="container">
+        <form class="form-horizontal" th:action="@{/products/airconditioners/indoor}" th:method="POST">
+            <!--Date section-->
+            <h6 class="card-header">Дата</h6>
+            <div th:replace="/orders/fragments/date_section"></div>
+
+            <!--Air-conditioner type section-->
+            <h6 class="card-header">Тип климатик</h6>
+            <div class="form-group row m-2">
+                <label for="aircType" class="col-sm-2 col-form-label">Тип:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="aircType" name="aircType"
+                            th:classappend="${#fields.hasErrors('aircType')}? 'is-invalid':''"
+                            th:field="*{aircType}">
+                        <option value="">- Избери тип -</option>
+                        <option class="form-control"
+                                th:each="type :${T(com.ispectrum.crmclima.areas.products.entities.enums.AircType).values()}"
+                                th:value="${type}" th:text="${type.displayName}"></option>
+                    </select>
+                    <th:block th:each="error:${#fields.errors('aircType')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+            </div>
+
+            <!--Compressor type section-->
+            <h6 class="card-header">Тип компресор</h6>
+            <div class="form-group row m-2">
+                <label for="compressorType" class="col-sm-2 col-form-label">Тип:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="compressorType" name="compressorType"
+                            th:classappend="${#fields.hasErrors('compressorType')}? 'is-invalid':''"
+                            th:field="*{compressorType}">
+                        <option value="">- Избери -</option>
+                        <option class="form-control"
+                                th:each="type :${T(com.ispectrum.crmclima.areas.products.entities.enums.CompressorType).values()}"
+                                th:value="${type}" th:text="${type.displayName}"></option>
+                    </select>
+                    <th:block th:each="error:${#fields.errors('compressorType')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+            </div>
+
+            <!--Model section-->
+            <h6 class="card-header">Модел</h6>
+            <div class="form-group row m-2">
+                <label for="model" class="col-sm-2 col-form-label">Модел:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="model" name="model" placeholder="модел"
+                           th:classappend="${#fields.hasErrors('model')}? 'is-invalid':''"
+                           th:field="*{model}">
+                    <th:block th:each="error:${#fields.errors('model')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+
+                <!--Price section-->
+                <label for="price" class="col-sm-1 col-form-label">Цена:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Цена"
+                           th:classappend="${#fields.hasErrors('price')}? 'is-invalid':''"
+                           th:field="*{price}">
+                    <th:block th:each="error:${#fields.errors('price')}">
+                        <small class="invalid-feedback text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+            </div>
+
+            <!--Dimensions-->
+            <h6 class="card-header">Размери</h6>
+            <div class="form-group row mt-2">
+                <div class="col-12">
+                    <div class="row">
+                        <label for="width" class="col-sm-1 col-form-label">Широчина:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="width" name="width"
+                                   placeholder="широчина" th:field="*{width}">
+                        </div>
+                        <label for="height" class="col-sm-1 col-form-label">Височина:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="height" name="height"
+                                   placeholder="височина" th:field="*{height}">
+                        </div>
+                        <label for="depth" class="col-sm-1 col-form-label">Дълбочина:</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="depth" name="depth"
+                                   placeholder="дълбочина" th:field="*{depth}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Weight-->
+            <h6 class="card-header">Тегло</h6>
+            <div class="form-group row m-2">
+                <label for="weight" class="col-sm-2 col-form-label">Тегло:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="weight" name="weight"
+                           placeholder="тегло" th:field="*{weight}">
+                </div>
+            </div>
+            <!--Airflow-->
+            <div class="form-group row m-2">
+                <label for="airFlow" class="col-sm-2 col-form-label">Въздушен поток:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="airFlow" name="airFlow"
+                           placeholder="Въздушен поток" th:field="*{airFlow}">
+                </div>
+            </div>
+            <!--Dry-->
+            <div class="form-group row m-2">
+                <label for="dehumidification" class="col-sm-2 col-form-label">Степен на изсушаване:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="dehumidification" name="dehumidification"
+                           placeholder="Степен на изсушаване" th:field="*{dehumidification}">
+                </div>
+            </div>
+
+            <!--Noise-->
+            <div class="form-group row m-2">
+                <label for="noise" class="col-sm-2 col-form-label">Шум:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="noise" name="noise"
+                           placeholder="dB" th:field="*{noise}">
+                </div>
+            </div>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+
+            <div class="form-group">
+                <div class="col-lg-12 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Изчисти</button>
+                    <a type="button" class="btn btn-default"
+                       th:href="@{/products/airconditioners/all?page=0}">Откажи</a>
+                    <button type="submit" class="btn btn-primary">Запиши</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
