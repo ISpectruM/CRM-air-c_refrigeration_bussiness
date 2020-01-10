@@ -1,7 +1,7 @@
 # Client relations management system
-for “Supply, installation and support of refrigeration installations and air-conditioners” business. 
+“Supply, installation and support of refrigeration installations and air-conditioners”. 
 
 Functionality: 
-Create, edit, delete and store clients and orders in database; generating daily schedule; search clients and orders; spring security accounts and roles – admin, sellers, installers; generate statistics; use bgMaps in orders to locate the order address; android app that grants constant access for installers to the schedule and record their work;
+Create, edit, delete and store clients and orders; generate daily schedule; search clients and orders; generate statistics; use bgMaps in orders to locate the order address; rest API for android app that grants constant access for installers to the schedule and timely record their work;
 
-Used technologies: JAVA Spring, Thymeleaf, JavaScript – DOM, Ajax, MySQL  
+Used technologies: JAVA Spring boot, Hibernate, Spring security, Thymeleaf, MySQL, JavaScript – DOM, Ajax;  
