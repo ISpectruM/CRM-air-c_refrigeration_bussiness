@@ -1,9 +1,13 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
-public class OutdoorUnit extends BaseUnit{
+public class OutdoorUnit extends BaseUnit {
 
     private String coolPower;
     private String heatPower;
@@ -12,6 +16,12 @@ public class OutdoorUnit extends BaseUnit{
     private String gas;
     private int minWorkingTemp;
 
+    @ManyToMany
+    @JoinTable(
+            name = "outdoors_indoors",
+            joinColumns = @JoinColumn(name = "outdoor_id"),
+            inverseJoinColumns = @JoinColumn(name = "indoor_id"))
+    private List<IndoorUnit> indoorUnits;
 
     public String getGas() {
         return gas;
@@ -59,5 +69,13 @@ public class OutdoorUnit extends BaseUnit{
 
     public void setHeatConsumption(String heatConsumption) {
         this.heatConsumption = heatConsumption;
+    }
+
+    public List<IndoorUnit> getIndoorUnits() {
+        return indoorUnits;
+    }
+
+    public void setIndoorUnits(List<IndoorUnit> indoorUnit) {
+        this.indoorUnits = indoorUnit;
     }
 }

@@ -4,18 +4,18 @@ import com.ispectrum.crmclima.areas.products.entities.BaseProduct;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class AirConditioner extends BaseProduct {
 
-    @OneToMany
-    private List<IndoorUnit> indoorUnit;
-
     @OneToOne
     private OutdoorUnit outdoorUnit;
+
+    @OneToOne
+    private IndoorUnit indoorUnit;
+
     private double scop;
     private double seer;
     private String heatClass;
@@ -72,14 +72,6 @@ public class AirConditioner extends BaseProduct {
         this.price = price;
     }
 
-    public List<IndoorUnit> getIndoorUnit() {
-        return indoorUnit;
-    }
-
-    public void setIndoorUnit(List<IndoorUnit> indoorUnit) {
-        this.indoorUnit = indoorUnit;
-    }
-
     public String getExtras() {
         return extras;
     }
@@ -94,5 +86,13 @@ public class AirConditioner extends BaseProduct {
 
     public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public IndoorUnit getIndoorUnit() {
+        return indoorUnit;
+    }
+
+    public void setIndoorUnit(IndoorUnit indoorUnit) {
+        this.indoorUnit = indoorUnit;
     }
 }

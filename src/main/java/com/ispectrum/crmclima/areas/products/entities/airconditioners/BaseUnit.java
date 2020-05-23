@@ -1,7 +1,7 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
-import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
 import com.ispectrum.crmclima.areas.products.entities.enums.CompressorType;
+import com.ispectrum.crmclima.areas.products.entities.enums.SplitType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,11 +18,10 @@ public abstract class BaseUnit {
     private String id;
 
     @Enumerated
-    private AircType aircType;
+    private SplitType splitType;
 
     @Enumerated
     private CompressorType compressorType;
-
     private String model;
     private String brand;
     private String noise;
@@ -33,7 +32,7 @@ public abstract class BaseUnit {
     private Double price;
 
     public String getDimensions() {
-        return height+"/"+width+"/"+depth;
+        return height + "/" + width + "/" + depth;
     }
 
     public String getModel() {
@@ -92,12 +91,12 @@ public abstract class BaseUnit {
         this.id = id;
     }
 
-    public AircType getAircType() {
-        return aircType;
+    public SplitType getSplitType() {
+        return splitType;
     }
 
-    public void setAircType(AircType aircType) {
-        this.aircType = aircType;
+    public void setSplitType(SplitType splitType) {
+        this.splitType = splitType;
     }
 
     public CompressorType getCompressorType() {

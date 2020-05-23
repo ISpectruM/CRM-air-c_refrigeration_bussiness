@@ -12,17 +12,17 @@
             <!--Air-conditioner type section-->
             <h6 class="card-header">Тип климатик</h6>
             <div class="form-group row m-2">
-                <label for="aircType" class="col-sm-2 col-form-label">Тип:</label>
+                <label for="splitType" class="col-sm-2 col-form-label">Тип:</label>
                 <div class="col-sm-3">
-                    <select class="form-control" id="aircType" name="aircType"
-                            th:classappend="${#fields.hasErrors('aircType')}? 'is-invalid':''"
-                            th:field="*{aircType}">
+                    <select class="form-control" id="splitType" name="splitType"
+                            th:classappend="${#fields.hasErrors('splitType')}? 'is-invalid':''"
+                            th:field="*{splitType}">
                         <option value="">- Избери тип -</option>
                         <option class="form-control"
                                 th:each="type :${T(com.ispectrum.crmclima.areas.products.entities.enums.AircType).values()}"
                                 th:value="${type}" th:text="${type.displayName}"></option>
                     </select>
-                    <th:block th:each="error:${#fields.errors('aircType')}">
+                    <th:block th:each="error:${#fields.errors('splitType')}">
                         <small class="invalid-feedback text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
