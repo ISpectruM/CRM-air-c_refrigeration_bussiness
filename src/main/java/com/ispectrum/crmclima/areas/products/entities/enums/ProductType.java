@@ -1,7 +1,7 @@
 package com.ispectrum.crmclima.areas.products.entities.enums;
 
 public enum ProductType {
-    AIRCONDS("Климатик"),
+    AIRCONDITIONERS("Климатик"),
     COOLERS("Изпарителни охладители"),
     FRIDGES("Хладилник/фризер"),
     CAMERAS("Хладилна камера"),

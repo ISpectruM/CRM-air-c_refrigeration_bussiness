@@ -1,6 +1,6 @@
 package com.ispectrum.crmclima.areas.products.models.dtos;
 
-import com.ispectrum.crmclima.areas.products.entities.enums.AircType;
+import com.ispectrum.crmclima.areas.products.entities.enums.SplitType;
 import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
 import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 
@@ -14,11 +14,15 @@ public class AirConditionerDto {
 
     private Double price;
 
-    private AircType aircType;
+    private SplitType splitType;
 
     private ProductType productType;
 
     private Condition productCondition;
+
+    private long indoorUnitId;
+
+    private long outdoorUnitId;
 
     public AirConditionerDto() {
     }
@@ -55,12 +59,12 @@ public class AirConditionerDto {
         this.price = price;
     }
 
-    public AircType getAircType() {
-        return this.aircType;
+    public SplitType getSplitType() {
+        return this.splitType;
     }
 
-    public void setAircType(AircType aircType) {
-        this.aircType = aircType;
+    public void setSplitType(SplitType splitType) {
+        this.splitType = splitType;
     }
 
     public Condition getProductCondition() {

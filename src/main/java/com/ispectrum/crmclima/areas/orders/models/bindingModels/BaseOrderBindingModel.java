@@ -1,6 +1,9 @@
 package com.ispectrum.crmclima.areas.orders.models.bindingModels;
 
+import com.ispectrum.crmclima.constants.Messages;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public abstract class BaseOrderBindingModel {
@@ -10,6 +13,9 @@ public abstract class BaseOrderBindingModel {
 
     private Integer count;
 
+    private String otherProduct;
+
+    @NotEmpty(message = Messages.CHOOSE_CITY)
     private String city;
 
     private String address;
@@ -48,6 +54,14 @@ public abstract class BaseOrderBindingModel {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getOtherProduct() {
+        return otherProduct;
+    }
+
+    public void setOtherProduct(String otherProduct) {
+        this.otherProduct = otherProduct;
     }
 
     public String getComment() {

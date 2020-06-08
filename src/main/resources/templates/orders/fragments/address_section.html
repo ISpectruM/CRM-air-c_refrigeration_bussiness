@@ -1,0 +1,16 @@
+<h6 class="card-header">Адрес</h6>
+<div class="form-group row m-2">
+    <label for="city" class="col-sm-2 col-form-label">Град:</label>
+    <div class="col-sm-2">
+        <select id="city" name="city" class="form-control" th:field="*{city}">
+            <option value="">- Избери -</option>
+            <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
+                    th:value="${city}" th:text="${city.displayName}"></option>
+        </select>
+    </div>
+    <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
+    <div class="col-sm-7">
+        <input type="text" class="form-control" id="address" name="address"
+               placeholder="ул. / бл. / № / вх. /ет. ..." th:field="*{address}">
+    </div>
+</div>

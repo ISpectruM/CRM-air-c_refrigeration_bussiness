@@ -1,0 +1,56 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div class="ml-5 mr-5" th:with="currentPage=${#conversions.convert(#request.getParameter('page'),'Integer')}">
+    <div class="row card-header mb-1">
+        <h3 class="col-sm-12">Климатици</h3>
+        <div class="col-sm-4">
+            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/add}">Нов климатик</a>
+        </div>
+        <div class="col-sm-4">
+            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/indoor/all}">Вътрешни тела</a>
+        </div>
+        <div class="col-sm-4">
+            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/outdoor/all}">Външни тела</a>
+        </div>
+        <div class="col-sm-7 inline ml-auto" th:include="~{fragments/search}"></div>
+    </div>
+    <!--pagination-->
+    <div class="row" th:include="~{fragments/page_nav}"></div>
+    <!--content-->
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Марка</th>
+            <th scope="col">Модел</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Компресор</th>
+            <th scope="col">Клас-Охл.</th>
+            <th scope="col">Клас-Отопл.</th>
+            <th scope="col">Фреон</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Добавен</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table" th:each="airconditioner, iter:${objects}" th:object="${airconditioner}">
+            <th scope="row" th:text="${iter.index+1}"></th>
+            <td th:text="*{brand}"></td>
+            <td th:text="*{model}"></td>
+            <td th:text="*{splitType}"></td>
+            <td th:text="*{compressorType}"></td>
+            <td th:text="*{coolClass}"></td>
+            <td th:text="*{heatClass}"></td>
+            <td th:text="*{gas}"></td>
+            <td th:text="*{price}"></td>
+            <td th:text="*{date}"></td>
+            <td>
+                <a type="button" class="btn btn-sm btn-info"
+                   th:href="@{/products/airconditioners/details/{id}(id=${airconditioner.id})}">Детайли</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--pagination-->
+    <div class="row" th:include="~{fragments/page_nav}"></div>
+</div>

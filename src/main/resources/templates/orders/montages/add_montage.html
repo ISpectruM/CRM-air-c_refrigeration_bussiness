@@ -4,23 +4,15 @@
     <div class="form-row m-2 card-header">
         <h4 class="col">Нова заявка за монтаж на клиент: </h4>
     </div>
-    <th:block th:object="${client}">
-        <div class="row m-2">
-            <label for="name" class="col-1 col-form-label">Име:</label>
-            <input type="text" readonly class="col-5 form-control-plaintext" id="name" th:placeholder="*{name}">
-            <label for="phone" class="col-1 col-form-label">Телефон:</label>
-            <input type="text" readonly class="col-5 form-control-plaintext" id="phone" th:placeholder="*{phone}">
-        </div>
-    </th:block>
+
+    <!--Client name-->
+    <div th:replace="/orders/fragments/client_section"></div>
+
     <hr/>
     <form class="form-horizontal" th:action="@{/orders/montages/montage/add/{id}(id=${client.id})}" th:method="POST">
-        <div class="form-group row m-2">
-            <label for="orderDate" class="col-md-2 col-form-label">Дата:</label>
-            <div class="col-md-3">
-                <input type="date" class="form-control" id="orderDate" name="orderDate"
-                       th:value="${currentDate}">
-            </div>
-        </div>
+        <!--Date-->
+        <div th:replace="/orders/fragments/date_section"></div>
+
         <!--Order type section-->
         <div class="form-group row m-2">
             <label for="montageType" class="col-sm-2 col-form-label">Вид заявка:</label>
@@ -36,13 +28,14 @@
                 <th:block th:each="error:${#fields.errors('montageType')}">
                     <small class="invalid-feedback text-danger" th:text="${error}"></small>
                 </th:block>
-                <th:block th:if="${#fields.hasGlobalErrors()}">
-                    <small class="invalid-feedback text-danger" style="display: block" th:text="${atLeastOneFilled}"></small>
+                <th:block th:if="${#fields.hasGlobalErrors()} and *{#strings.equalsIgnoreCase(montageType,'MONTAGE')}">
+                    <small class="invalid-feedback text-danger" style="display: block"
+                           th:text="${atLeastOneFilled}"></small>
                 </th:block>
             </div>
         </div>
 
-        <!--Products section-->
+        <!--Products type section-->
         <div id="productTypeContainer" class="col-12" style="display:none">
             <div id="allSelectedProducts">
                 <!--Chosen products-->
@@ -176,68 +169,13 @@
         </div>
 
         <!--Address section-->
-        <h6 class="card-header">Адрес</h6>
-        <div class="form-group row m-2">
-            <label for="city" class="col-sm-1 col-form-label">Град:</label>
-            <select id="city" name="city" class="form-control col-sm-2" th:field="*{city}">
-                <option value="">- Избери -</option>
-                <option th:each="city:${T(com.ispectrum.crmclima.areas.locations.entities.enums.Cities).values()}"
-                        th:value="${city}" th:text="${city.displayName}"></option>
-            </select>
-
-
-            <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" id="address" name="address"
-                       placeholder="ул. / бл. / № / вх. /ет. ..." th:field="*{address}">
-            </div>
-        </div>
+        <div th:replace="/orders/fragments/address_section"></div>
 
         <!--Status section-->
-        <h6 class="card-header">Статус</h6>
-        <div class="form-group row m-2 ">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isFinished" name="isFinished" th:checked="*{isFinished}">
-                <label class="form-check-label" for="isFinished">Приключена</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isWaiting" name="isWaiting" th:checked="*{isWaiting}">
-                <label class="form-check-label" for="isWaiting">В изчакване</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isForFinishing" name="isForFinishing"
-                       th:checked="*{isForFinishing}">
-                <label class="form-check-label" for="isForFinishing">За довършване</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isPayed" name="isPayed" th:checked="*{isPayed}">
-                <label class="form-check-label" for="isPayed">Платена</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isDeferred" name="isDeferred" th:checked="*{isDeferred}">
-                <label class="form-check-label" for="isDeferred">Разсрочено</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isWithInvoice" name="isWithInvoice" th:checked="*{isWithInvoice}">
-                <label class="form-check-label" for="isWithInvoice">С фактура</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="isMarked" name="isMarked" th:checked="*{isMarked}">
-                <label class="form-check-label" for="isMarked">Маркирана</label>
-            </div>
-        </div>
+        <div th:replace="/orders/fragments/status_section"></div>
+
         <!--Comments-->
-        <h6 class="card-header">Особености/бележки</h6>
-        <div class="form-group row m-2">
-            <div class="col-sm-6">
-                <label for="comment">Особености/бележки:</label>
-                <textarea class="form-control" id="comment" rows="4" th:field="*{comment}"></textarea>
-            </div>
-            <div class="col-sm-6">
-                <label for="scheduleDate" class="col-form-label">Планиран за дата:</label>
-                <input type="date" class="form-control col-sm-4" id="scheduleDate" th:field="*{scheduleDate}">
-            </div>
-        </div>
+        <div th:replace="/orders/fragments/comments_section"></div>
 
         <input
                 type="hidden"

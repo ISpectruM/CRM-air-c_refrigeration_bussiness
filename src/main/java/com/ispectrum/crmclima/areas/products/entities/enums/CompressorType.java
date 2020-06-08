@@ -1,6 +1,6 @@
 package com.ispectrum.crmclima.areas.products.entities.enums;
 
-public enum AircType {
+public enum CompressorType {
     INVERTER,
-    CONVENTIONAL
+    ON_OFF
 }
