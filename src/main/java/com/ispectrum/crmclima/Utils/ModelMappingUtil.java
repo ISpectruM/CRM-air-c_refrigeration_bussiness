@@ -8,15 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 public final class ModelMappingUtil {
-
-    private final ModelMapper modelMapper;
-    private ModelMappingUtil() {
-        this.modelMapper = new ModelMapper();
-    }
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     public static <S, D> D convertClass(S source, Class<D> destinationClass) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(source, destinationClass);
+        return modelMapper.map(source, destinationClass);
     }
 
     public static <S, D> Set<D> convertSet(Iterable<S> sourceIter, Class<D> destinationClass) {
@@ -39,13 +34,6 @@ public final class ModelMappingUtil {
     }
 
     public static <S, D> Page<D> convertPage(Page<S> source, Class<D> destinationClass) {
-        Page<D> resultList = source.map(s -> {
-            ModelMapper mapper = new ModelMapper();
-            D d = mapper.map(s, destinationClass);
-            return d;
-        });
-
-        return resultList;
+        return source.map(s -> modelMapper.map(s, destinationClass));
     }
-
 }
