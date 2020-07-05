@@ -3,13 +3,16 @@
     <div class="row card-header mb-1">
         <h3 class="col-sm-12">Климатици</h3>
         <div class="col-sm-4">
-            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/add}">Нов климатик</a>
+            <a type="button" class="btn btn-success" th:href="@{/products/${productType}/add}">Създай</a>
         </div>
-        <div class="col-sm-4">
-            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/indoor/all}">Вътрешни тела</a>
+        <div class="col-sm-4" th:if="${productType != 'indoors'}">
+            <a type="button" class="btn btn-success" th:href="@{/products/indoors/all?page=0}">Вътрешни тела</a>
         </div>
-        <div class="col-sm-4">
-            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/outdoor/all}">Външни тела</a>
+        <div class="col-sm-4" th:if="${productType != 'outdoors'}">
+            <a type="button" class="btn btn-success" th:href="@{/products/outdoors/all?page=0}">Външни тела</a>
+        </div>
+        <div class="col-sm-4" th:if="${productType != 'airconditioners'}">
+            <a type="button" class="btn btn-success" th:href="@{/products/airconditioners/all?page=0}">Климатици</a>
         </div>
         <div class="col-sm-7 inline ml-auto" th:include="~{fragments/search}"></div>
     </div>
@@ -22,31 +25,35 @@
             <th scope="col">#</th>
             <th scope="col">Марка</th>
             <th scope="col">Модел</th>
-            <th scope="col">Тип</th>
             <th scope="col">Компресор</th>
-            <th scope="col">Клас-Охл.</th>
-            <th scope="col">Клас-Отопл.</th>
-            <th scope="col">Фреон</th>
+
+            <th th:if="${productType != 'indoors'}" scope="col">Тип</th>
+            <th th:if="${productType != 'indoors'}" scope="col">Клас-Охл.</th>
+            <th th:if="${productType != 'indoors'}" scope="col">Клас-Отопл.</th>
+            <th th:if="${productType != 'indoors'}" scope="col">Фреон</th>
+
             <th scope="col">Цена</th>
             <th scope="col">Добавен</th>
             <th scope="col">Действия</th>
         </tr>
         </thead>
         <tbody>
-        <tr class="table" th:each="airconditioner, iter:${objects}" th:object="${airconditioner}">
+        <tr class="table" th:each="product, iter:${objects}" th:object="${product}">
             <th scope="row" th:text="${iter.index+1}"></th>
             <td th:text="*{brand}"></td>
             <td th:text="*{model}"></td>
-            <td th:text="*{splitType}"></td>
             <td th:text="*{compressorType}"></td>
-            <td th:text="*{coolClass}"></td>
-            <td th:text="*{heatClass}"></td>
-            <td th:text="*{gas}"></td>
+
+            <td th:if="${productType != 'indoors'}" th:text="*{splitType}"></td>
+            <td th:if="${productType != 'indoors'}" th:text="*{coolClass}"></td>
+            <td th:if="${productType != 'indoors'}" th:text="*{heatClass}"></td>
+            <td th:if="${productType != 'indoors'}" th:text="*{gas}"></td>
+
             <td th:text="*{price}"></td>
             <td th:text="*{date}"></td>
             <td>
                 <a type="button" class="btn btn-sm btn-info"
-                   th:href="@{/products/airconditioners/details/{id}(id=${airconditioner.id})}">Детайли</a>
+                   th:href="@{/products/${productType}/details/{id}(id=*{id})}">Детайли</a>
             </td>
         </tr>
         </tbody>
