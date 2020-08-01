@@ -1,36 +1,52 @@
-package com.ispectrum.crmclima.areas.products.models.bindingmodels;
+package com.ispectrum.crmclima.areas.products.models.dtos;
 
-import javax.validation.constraints.NotEmpty;
+public class BaseAirConditionerUnitDto {
 
-public class IndoorUnitBindingModel {
     private String id;
-    @NotEmpty(message = "Полето не може да бъде празно")
     private String brand;
-    private String compressorType;
     private String model;
+    private Double price;
     private int noise;
+    private Double weight;
     private int width;
     private int height;
     private int depth;
-    private Double weight;
-    private Double price;
     private int airFlow;
     private int dehumidification;
 
-    public String getCompressorType() {
-        return compressorType;
+    public BaseAirConditionerUnitDto() {
     }
 
-    public void setCompressorType(String compressorType) {
-        this.compressorType = compressorType;
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getBrand() {
+        return this.brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getModel() {
-        return model;
+        return this.model;
     }
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public Double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public int getNoise() {
@@ -39,6 +55,14 @@ public class IndoorUnitBindingModel {
 
     public void setNoise(int noise) {
         this.noise = noise;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public int getWidth() {
@@ -65,22 +89,6 @@ public class IndoorUnitBindingModel {
         this.depth = depth;
     }
 
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public int getAirFlow() {
         return airFlow;
     }
@@ -95,21 +103,5 @@ public class IndoorUnitBindingModel {
 
     public void setDehumidification(int dehumidification) {
         this.dehumidification = dehumidification;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

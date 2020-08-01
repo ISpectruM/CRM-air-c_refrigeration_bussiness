@@ -1,10 +1,12 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <div class="container" th:object="${indoorUnitBindingModel}">
     <div class="card-header">
-        <h4 class="col">Добавяне на вътрешно тяло: </h4>
+        <h4 class="col">Редактиране на вътрешно тяло: </h4>
     </div>
 
     <div class="container">
-        <form class="form-horizontal" th:action="@{/products/indoors/add}" th:method="POST">
+        <form class="form-horizontal" th:action="@{/products/indoors/edit/{id}(id=*{id})}" th:method="POST">
             <!--Compressor type section-->
             <h6 class="card-header">Тип компресор</h6>
             <div class="form-group row m-2">
@@ -13,10 +15,12 @@
                     <select class="form-control" id="compressorType" name="compressorType"
                             th:classappend="${#fields.hasErrors('compressorType')}? 'is-invalid':''"
                             th:field="*{compressorType}">
-                        <option value="">- Избери тип компресор -</option>
+                        <option th:value="*{compressorType}" th:text="*{compressorType}"></option>
                         <option class="form-control"
                                 th:each="type :${T(com.ispectrum.crmclima.areas.products.entities.enums.CompressorType).values()}"
-                                th:value="${type}" th:text="${type.displayName}"></option>
+                                th:value="${type}"
+                                th:text="${type.displayName}">
+                        </option>
                     </select>
                     <th:block th:each="error:${#fields.errors('compressorType')}">
                         <small class="invalid-feedback text-danger" th:text="${error}"></small>
@@ -29,7 +33,7 @@
             <div class="form-group row m-2">
                 <label for="brand" class="col-sm-2 col-form-label">Марка:</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="brand" name="model" placeholder="марка"
+                    <input type="text" class="form-control" id="brand" name="brand" placeholder="марка"
                            th:classappend="${#fields.hasErrors('brand')}? 'is-invalid':''"
                            th:field="*{brand}">
                     <th:block th:each="error:${#fields.errors('brand')}">
@@ -122,7 +126,6 @@
 
             <div class="form-group">
                 <div class="col-lg-12 col-lg-offset-2">
-                    <button type="reset" class="btn btn-default">Изчисти</button>
                     <a type="button" class="btn btn-outline-danger"
                        th:href="@{/products/indoors/all?page=0}">Откажи</a>
                     <button type="submit" class="btn btn-primary">Запиши</button>

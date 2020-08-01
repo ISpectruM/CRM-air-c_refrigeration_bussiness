@@ -5,6 +5,7 @@ import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class BaseProduct {
@@ -24,6 +25,8 @@ public abstract class BaseProduct {
 
     @Enumerated
     private Condition productCondition;
+
+    private LocalDateTime deletedOn;
 
 
     protected BaseProduct() {
@@ -59,5 +62,13 @@ public abstract class BaseProduct {
 
     public void setProductCondition(Condition productCondition) {
         this.productCondition = productCondition;
+    }
+
+    public LocalDateTime getDeletedOn() {
+        return deletedOn;
+    }
+
+    public void setDeletedOn(LocalDateTime deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

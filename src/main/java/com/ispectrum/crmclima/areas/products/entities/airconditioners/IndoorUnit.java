@@ -7,18 +7,18 @@ import java.util.List;
 @Entity
 public class IndoorUnit extends BaseUnit{
 
-    private String airFlow;
+    private int airFlow;
     private int dehumidification;
 
     @ManyToMany(mappedBy = "indoorUnits")
     private List<OutdoorUnit> outdoorUnits;
 
 
-    public String getAirFlow() {
+    public int getAirFlow() {
         return airFlow;
     }
 
-    public void setAirFlow(String airFlow) {
+    public void setAirFlow(int airFlow) {
         this.airFlow = airFlow;
     }
 

@@ -1,10 +1,15 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
 import com.ispectrum.crmclima.areas.products.entities.enums.CompressorType;
-import com.ispectrum.crmclima.areas.products.entities.enums.SplitType;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class BaseUnit {
@@ -18,18 +23,17 @@ public abstract class BaseUnit {
     private String id;
 
     @Enumerated
-    private SplitType splitType;
-
-    @Enumerated
     private CompressorType compressorType;
     private String model;
     private String brand;
-    private String noise;
+    private int noise;
     private int width;
     private int height;
     private int depth;
     private Double weight;
     private Double price;
+    private LocalDateTime deletedOn;
+
 
     public String getDimensions() {
         return height + "/" + width + "/" + depth;
@@ -43,11 +47,11 @@ public abstract class BaseUnit {
         this.model = model;
     }
 
-    public String getNoise() {
+    public int getNoise() {
         return noise;
     }
 
-    public void setNoise(String noise) {
+    public void setNoise(int noise) {
         this.noise = noise;
     }
 
@@ -91,14 +95,6 @@ public abstract class BaseUnit {
         this.id = id;
     }
 
-    public SplitType getSplitType() {
-        return splitType;
-    }
-
-    public void setSplitType(SplitType splitType) {
-        this.splitType = splitType;
-    }
-
     public CompressorType getCompressorType() {
         return compressorType;
     }
@@ -121,5 +117,13 @@ public abstract class BaseUnit {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public LocalDateTime getDeletedOn() {
+        return deletedOn;
+    }
+
+    public void setDeletedOn(LocalDateTime deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

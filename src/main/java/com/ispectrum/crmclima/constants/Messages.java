@@ -18,4 +18,5 @@ public final class Messages {
     public static final String FILL_AT_LEAST_ONE_FIELD = "Изберете и добавете продукт от менюто или впишете друг продукт в поле \"Друго\"!";
     public static final String FIELD_CANT_BE_EMPTY = "Полето е задължително за попълване!";
     public static final String SCHEDULE_ALREADY_CREATED = "График с тази дата вече съществува!";
+    public static final String INDOOR_NOT_FOUND = "Вътрешно тяло с id{0} не е намерено";
 }

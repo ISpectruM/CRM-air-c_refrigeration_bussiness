@@ -1,0 +1,28 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="container" th:object="${unit}">
+    <div class="row m-2 card-header">
+        <h4 th:if="${productType == 'indoors'}" class="col-sm-6" th:text="|Детайли на вътрешно тяло: *{model}|"></h4>
+        <h4 th:if="${productType == 'outdoors'}" class="col-sm-6" th:text="|Детайли на външно тяло: *{model}|"></h4>
+        <h4 th:if="${productType == 'airConditioner'}" class="col-sm-6" th:text="|Детайли на климатик: *{model}|"></h4>
+        <h4 class="col-sm-6" th:text="|Цена: *{price}|"></h4>
+    </div>
+    <div class="row m-2">
+        <div class="col">
+            <div th:if="${productType == 'indoors'}" class="row" th:replace="~{products/airconditioners/fragments/indoor_unit_details}"></div>
+        </div>
+    </div>
+
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"/>
+    <!--Buttons section-->
+    <div class="form-group">
+        <div class="col-lg-12 col-lg-offset-2">
+            <a type="button" th:href="@{/products/{product}/all?page=0(product=${productType})}" class="btn btn-success">Обратно</a>
+            <a type="button" th:href="@{/products/{product}/edit/{id}(product=${productType},id=*{id})}" class="btn btn-warning">Редактирай</a>
+            <a type="button" th:href="@{/products/{product}/delete/{id}(product=${productType},id=*{id})}" class="btn btn-danger">Изтрий</a>
+        </div>
+    </div>
+</div>

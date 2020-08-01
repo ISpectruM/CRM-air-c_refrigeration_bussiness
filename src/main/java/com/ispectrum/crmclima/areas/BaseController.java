@@ -14,8 +14,8 @@ public abstract class BaseController {
         return this.modelAndView;
     }
 
-    protected  ModelAndView addViewAndObjectsMap(String htmlPage,Map<String, Object> model){
-        ModelAndView modelAndView = this.setView(htmlPage);
+    protected  ModelAndView addViewAndObjectsMap(String view,Map<String, Object> model){
+        ModelAndView modelAndView = this.setView(view);
         modelAndView.addAllObjects(model);
         return modelAndView;
     }
@@ -29,7 +29,7 @@ public abstract class BaseController {
                                             Object object,
                                             String view){
         if (this.modelAndView == null ||
-                !this.modelAndView.getViewName().equals(view)){
+                !view.equals(this.modelAndView.getViewName())){
             this.modelAndView = new ModelAndView("index");
             this.modelAndView.addObject("view",view);
         }
