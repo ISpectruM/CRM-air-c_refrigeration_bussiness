@@ -1,8 +1,6 @@
 package com.ispectrum.crmclima.areas.products.controllers;
 
 import com.ispectrum.crmclima.areas.BaseController;
-import com.ispectrum.crmclima.areas.products.entities.airconditioners.AirConditioner;
-import com.ispectrum.crmclima.areas.products.models.bindingmodels.IndoorUnitBindingModel;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
 import com.ispectrum.crmclima.areas.products.service.AirConditionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/products/airconditioners")
@@ -31,11 +30,13 @@ public class AirConditionersController extends BaseController {
      * Air-conditioners endpoints
      */
     @GetMapping("/all")
-    public ModelAndView getAllAirConditioners(
+    public ModelAndView listAllAirConditioners(
             @PageableDefault(sort = {"brand"}, direction = Sort.Direction.ASC) Pageable pageable) {
+
         Page<AirConditionerDto> allAirConditioners = this.airConditionService.getAllAirConditioners(pageable);
         this.addViewAndObject("objects", allAirConditioners, "/products/airconditioners/all");
-        return this.addObjectToView("area", "products/airconditioners");
+        this.addObjectToView("area", "products/airconditioners");
+        return this.addObjectToView("productType", "airconditioners");
     }
 
     @GetMapping("/add")
@@ -63,41 +64,6 @@ public class AirConditionersController extends BaseController {
         return null;//TODO
     }
 
-    /**
-     * Indoor unit endpoints
-     */
-    @GetMapping("/indoor/all")
-    public ModelAndView getAllIndoorUnits() {
-        return null;//TODO
-    }
-
-    @GetMapping("/indoor/add")
-    public ModelAndView createIndoorUnit() {
-        return this.addViewAndObject(
-                "currentDate",
-                LocalDate.now(),
-                "products/airconditioners/indoor_units/add_indoor_unit");
-    }
-
-    @PostMapping("/indoor/add")
-    public ModelAndView createIndoorUnitAction(@RequestBody IndoorUnitBindingModel model) {
-        return null;//TODO
-    }
-
-    @GetMapping("/indoor/details/{id}")
-    public ModelAndView getIndoorUnitDetails(@PathVariable String id) {
-        return null;//TODO
-    }
-
-    @GetMapping("/indoor/edit/{id}")
-    public ModelAndView editIndoorUnit(@PathVariable String id) {
-        return null;//TODO
-    }
-
-    @PostMapping("/indoor/edit/{id}")
-    public ModelAndView editIndoorUnitAction(@PathVariable String id) {
-        return null;//TODO
-    }
 
     /**
      * OutDoor units endpoints

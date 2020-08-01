@@ -4,7 +4,7 @@ import com.ispectrum.crmclima.areas.products.entities.enums.SplitType;
 import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
 import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
 
-public class AirConditionerDto {
+public class AirConditionerDto{
 
     private String id;
 

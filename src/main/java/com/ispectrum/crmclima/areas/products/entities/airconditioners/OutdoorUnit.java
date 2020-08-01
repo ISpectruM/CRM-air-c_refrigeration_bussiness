@@ -1,14 +1,14 @@
 package com.ispectrum.crmclima.areas.products.entities.airconditioners;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import com.ispectrum.crmclima.areas.products.entities.enums.SplitType;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class OutdoorUnit extends BaseUnit {
-
+    @Enumerated
+    private SplitType splitType;
     private String coolPower;
     private String heatPower;
     private String coolConsumption;
@@ -77,5 +77,13 @@ public class OutdoorUnit extends BaseUnit {
 
     public void setIndoorUnits(List<IndoorUnit> indoorUnit) {
         this.indoorUnits = indoorUnit;
+    }
+
+    public SplitType getSplitType() {
+        return splitType;
+    }
+
+    public void setSplitType(SplitType splitType) {
+        this.splitType = splitType;
     }
 }

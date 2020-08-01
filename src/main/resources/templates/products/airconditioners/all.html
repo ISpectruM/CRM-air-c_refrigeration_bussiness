@@ -1,9 +1,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div class="ml-5 mr-5" th:with="currentPage=${#conversions.convert(#request.getParameter('page'),'Integer')}">
+<!--    -->
     <div class="row card-header mb-1">
-        <h3 class="col-sm-12">Климатици</h3>
+        <h3 th:if="${productType == 'airconditioners'}" class="col-sm-12">Климатици</h3>
+        <h3 th:if="${productType == 'indoors'}" class="col-sm-12">Вътрешни тела</h3>
+        <h3 th:if="${productType == 'outdoors'}" class="col-sm-12">Външни тела</h3>
         <div class="col-sm-4">
-            <a type="button" class="btn btn-success" th:href="@{/products/${productType}/add}">Създай</a>
+            <a type="button" class="btn btn-success" th:href="@{/products/{product}/add (product=${productType})}">Създай</a>
         </div>
         <div class="col-sm-4" th:if="${productType != 'indoors'}">
             <a type="button" class="btn btn-success" th:href="@{/products/indoors/all?page=0}">Вътрешни тела</a>
@@ -44,16 +47,18 @@
             <td th:text="*{model}"></td>
             <td th:text="*{compressorType}"></td>
 
-            <td th:if="${productType != 'indoors'}" th:text="*{splitType}"></td>
-            <td th:if="${productType != 'indoors'}" th:text="*{coolClass}"></td>
-            <td th:if="${productType != 'indoors'}" th:text="*{heatClass}"></td>
-            <td th:if="${productType != 'indoors'}" th:text="*{gas}"></td>
+            <th:block th:if="${productType != 'indoors'}">
+            <td th:text="*{splitType}"></td>
+            <td th:text="*{coolClass}"></td>
+            <td th:text="*{heatClass}"></td>
+            <td th:text="*{gas}"></td>
+            </th:block>
 
             <td th:text="*{price}"></td>
-            <td th:text="*{date}"></td>
+            <td th:text="*{createdAt}"></td>
             <td>
                 <a type="button" class="btn btn-sm btn-info"
-                   th:href="@{/products/${productType}/details/{id}(id=*{id})}">Детайли</a>
+                   th:href="@{/products/{product}/details/{id}(product=${productType},id=*{id})}">Детайли</a>
             </td>
         </tr>
         </tbody>

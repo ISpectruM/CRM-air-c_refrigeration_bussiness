@@ -2,6 +2,7 @@ package com.ispectrum.crmclima.areas.products.service;
 
 import com.ispectrum.crmclima.Utils.ModelMappingUtil;
 import com.ispectrum.crmclima.areas.products.entities.airconditioners.AirConditioner;
+import com.ispectrum.crmclima.areas.products.entities.airconditioners.IndoorUnit;
 import com.ispectrum.crmclima.areas.products.models.bindingmodels.IndoorUnitBindingModel;
 import com.ispectrum.crmclima.areas.products.models.dtos.AirConditionerDto;
 import com.ispectrum.crmclima.areas.products.repository.AirConditionRepository;
@@ -29,11 +30,5 @@ public class AirConditionServiceImpl implements AirConditionService {
     public AirConditioner getByModel(String model) {
         return this.airConditionRepository.findFirstByIndoorUnitModel(model);
     }
-
-    @Override
-    public String createIndoorUnit(IndoorUnitBindingModel model) {
-        return null;
-    }
-
 
 }
