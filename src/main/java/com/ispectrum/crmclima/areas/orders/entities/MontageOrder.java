@@ -5,10 +5,12 @@ import com.ispectrum.crmclima.areas.orders.entities.enums.Shift;
 import com.ispectrum.crmclima.areas.products.entities.airconditioners.AirConditioner;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
-public class MontageOrder extends BaseOrder{
+public class MontageOrder extends BaseOrder {
 
     private final String SERVICE = "montage";
 
@@ -24,10 +26,10 @@ public class MontageOrder extends BaseOrder{
     @JoinTable(
             name = "montages_conditioners_count",
             joinColumns = @JoinColumn(name = "morder_id")
-            )
+    )
     @MapKeyColumn(name = "airc_type")
     @Column(name = "count")
-    private Map<AirConditioner,Integer> airConditioners;
+    private Map<AirConditioner, Integer> airConditioners;
 
     private Double externalPrice;
 
@@ -66,8 +68,8 @@ public class MontageOrder extends BaseOrder{
     public Integer getProductCount() {
         int count = 0;
         Collection<Integer> values = this.getAirConditioners().values();
-        if(!values.isEmpty()){
-         count = values.stream().mapToInt(Number::intValue).sum();
+        if (!values.isEmpty()) {
+            count = values.stream().mapToInt(Number::intValue).sum();
         }
         return count;
     }
@@ -77,13 +79,13 @@ public class MontageOrder extends BaseOrder{
         Double total = 0D;
         Double price = this.getPrice();
 
-        if( price != null){
+        if (price != null) {
             total += price;
 
             total = this.getDiscountedPrice(total);
 
             Double deposit = this.getDeposit();
-            if(deposit != null && price>deposit){
+            if (deposit != null && price > deposit) {
                 total -= deposit;
             }
         }
@@ -95,28 +97,28 @@ public class MontageOrder extends BaseOrder{
         return this.SERVICE;
     }
 
-//Get the price embedded in the product object
+    //Get the price embedded in the product object
     private Double getProductsPrice() {
-        Double price=0D;
-        if (airConditioners.size() > 0){
+        Double price = 0D;
+        if (airConditioners.size() > 0) {
             price = this.getAirConditioners().entrySet().stream()
                     .mapToDouble(entry -> {
                         double prodPrice = 0D;
-                        if (entry.getKey().getPrice() != null){
+                        if (entry.getKey().getPrice() != null) {
                             prodPrice = entry.getKey().getPrice() * entry.getValue();
                         }
                         return prodPrice;
-                            }).sum();
+                    }).sum();
         }
 
         return price;
     }
 
-    private double  getDiscountedPrice(double aircCost) {
+    private double getDiscountedPrice(double aircCost) {
         Double discount = this.getDiscount();
 
-        if( discount != null){
-            aircCost -= aircCost * discount/100;
+        if (discount != null) {
+            aircCost -= aircCost * discount / 100;
         }
         return aircCost;
     }
@@ -132,7 +134,7 @@ public class MontageOrder extends BaseOrder{
 
     @Override
     public Double getPrice() {
-        if (this.getExternalPrice() == null){
+        if (this.getExternalPrice() == null) {
             return this.getProductsPrice();
         }
 

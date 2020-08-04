@@ -2,10 +2,12 @@ package com.ispectrum.crmclima.areas.orders.entities;
 
 import com.ispectrum.crmclima.areas.orders.entities.enums.RepairType;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
-public class RepairOrder extends BaseOrder{
+public class RepairOrder extends BaseOrder {
 
     private final String SERVICE = "repair";
 
@@ -13,10 +15,6 @@ public class RepairOrder extends BaseOrder{
     private RepairType repairType;
 
     private String product;
-
-
-    public RepairOrder() {
-    }
 
 
     public RepairType getRepairType() {
@@ -35,7 +33,7 @@ public class RepairOrder extends BaseOrder{
     public Double getForPayment() {
         Double price = this.getPrice();
         Double deposit = this.getDeposit();
-        if (deposit != null && price != null){
+        if (deposit != null && price != null) {
             return price - deposit;
         }
         return super.getForPayment();

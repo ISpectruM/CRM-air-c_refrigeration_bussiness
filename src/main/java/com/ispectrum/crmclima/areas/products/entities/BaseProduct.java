@@ -2,13 +2,17 @@ package com.ispectrum.crmclima.areas.products.entities;
 
 import com.ispectrum.crmclima.areas.products.entities.enums.Condition;
 import com.ispectrum.crmclima.areas.products.entities.enums.ProductType;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class BaseProduct {
+@EntityListeners(AuditListener.class)
+public abstract class BaseProduct implements Auditable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -17,7 +21,6 @@ public abstract class BaseProduct {
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
-
     private String brand;
 
     @Enumerated(EnumType.STRING)
@@ -25,12 +28,11 @@ public abstract class BaseProduct {
 
     @Enumerated
     private Condition productCondition;
-
     private LocalDateTime deletedOn;
 
+    @Embedded
+    private Audit audit;
 
-    protected BaseProduct() {
-    }
 
     public String getId() {
         return this.id;
@@ -70,5 +72,13 @@ public abstract class BaseProduct {
 
     public void setDeletedOn(LocalDateTime deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }
