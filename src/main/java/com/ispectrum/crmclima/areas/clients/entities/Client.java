@@ -3,8 +3,10 @@ package com.ispectrum.crmclima.areas.clients.entities;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
-import org.modelmapper.internal.cglib.core.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+@EntityListeners(AuditListener.class)
+public class Client implements Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -32,6 +35,9 @@ public class Client {
     private String email;
 
     private String phone;
+
+    @Embedded
+    private Audit audit;
 
     @OneToMany(mappedBy = "client")
     private Set<MontageOrder> montageOrders;
@@ -125,5 +131,13 @@ public class Client {
 
     public void setEnterDate(LocalDate enterDate) {
         this.enterDate = enterDate;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

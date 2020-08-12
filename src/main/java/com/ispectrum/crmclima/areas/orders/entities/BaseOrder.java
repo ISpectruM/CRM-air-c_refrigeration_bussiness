@@ -3,12 +3,17 @@ package com.ispectrum.crmclima.areas.orders.entities;
 import com.ispectrum.crmclima.areas.clients.entities.Client;
 import com.ispectrum.crmclima.areas.locations.entities.Location;
 import com.ispectrum.crmclima.areas.users.entities.User;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public abstract class BaseOrder {
+@EntityListeners(AuditListener.class)
+public abstract class BaseOrder implements Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -43,10 +48,12 @@ public abstract class BaseOrder {
 
     private LocalDate endDate;
 
+    @Embedded
+    private Audit audit;
+
     //Send current order status to the client
     @Transient
     private String status;
-
 
     private String description;
 
@@ -68,7 +75,8 @@ public abstract class BaseOrder {
     private LocalDate deletedOn;
 
 
-    public BaseOrder() {}
+    public BaseOrder() {
+    }
 
 
     public String getId() {
@@ -209,12 +217,12 @@ public abstract class BaseOrder {
 
     @Transient
     public String getStatus() {
-        String status="В изпълнение.";
-        if (this.getIsFinished()){
-            status="Приключен";
-        }else if(this.getIsWaiting()){
+        String status = "В изпълнение.";
+        if (this.getIsFinished()) {
+            status = "Приключен";
+        } else if (this.getIsWaiting()) {
             status = "В изчакване.";
-        }else if(this.getIsForFinishing()){
+        } else if (this.getIsForFinishing()) {
             status = "За довършване.";
         }
         return status;
@@ -286,5 +294,15 @@ public abstract class BaseOrder {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    @Override
+    public Audit getAudit() {
+        return audit;
+    }
+
+    @Override
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

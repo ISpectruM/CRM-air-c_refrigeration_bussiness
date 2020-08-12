@@ -5,7 +5,7 @@ import com.ispectrum.crmclima.areas.locations.models.dtos.LocationDto;
 import com.ispectrum.crmclima.areas.orders.entities.enums.MontageType;
 import com.ispectrum.crmclima.areas.orders.entities.enums.ProphylacticType;
 import com.ispectrum.crmclima.areas.orders.entities.enums.RepairType;
-import com.ispectrum.crmclima.areas.products.models.dtos.BaseProductDto;
+import com.ispectrum.crmclima.areas.products.models.dtos.BaseAirConditionerUnitDto;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class CreateScheduleDto {
 
     private String product;
 
-    private Map<BaseProductDto,Integer> airConditioners;
+    private Map<BaseAirConditionerUnitDto,Integer> airConditioners;
 
     private String otherProduct;
 
@@ -232,11 +232,11 @@ public class CreateScheduleDto {
         this.otherProduct = other;
     }
 
-    public Map<BaseProductDto, Integer> getAirConditioners() {
+    public Map<BaseAirConditionerUnitDto, Integer> getAirConditioners() {
         return this.airConditioners;
     }
 
-    public void setAirConditioners(Map<BaseProductDto, Integer> airConditioners) {
+    public void setAirConditioners(Map<BaseAirConditionerUnitDto, Integer> airConditioners) {
         this.airConditioners = airConditioners;
     }
 

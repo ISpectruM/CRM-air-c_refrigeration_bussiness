@@ -1,14 +1,20 @@
 package com.ispectrum.crmclima.areas.users.entities;
 
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class User implements UserDetails {
+@EntityListeners(AuditListener.class)
+public class User implements UserDetails, Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -28,11 +34,15 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
+    @Embedded
+    private Audit audit;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="users_auth",
-            joinColumns = @JoinColumn(name="user_id"),
+    @JoinTable(name = "users_auth",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> authorities;
+
 
     public User() {
         this.authorities = new ArrayList<>();
@@ -107,5 +117,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.isEnabled;
+    }
+
+    @Override
+    public Audit getAudit() {
+        return audit;
+    }
+
+    @Override
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

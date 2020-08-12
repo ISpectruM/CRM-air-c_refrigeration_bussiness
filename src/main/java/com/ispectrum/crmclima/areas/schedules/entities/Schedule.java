@@ -3,6 +3,9 @@ package com.ispectrum.crmclima.areas.schedules.entities;
 import com.ispectrum.crmclima.areas.orders.entities.MontageOrder;
 import com.ispectrum.crmclima.areas.orders.entities.ProphylacticOrder;
 import com.ispectrum.crmclima.areas.orders.entities.RepairOrder;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +15,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Schedule {
+@EntityListeners(AuditListener.class)
+public class Schedule implements Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -41,6 +45,9 @@ public class Schedule {
     private Integer repairsAmount;
     @Transient
     private Integer prophylacticsAmount;
+
+    @Embedded
+    private Audit audit;
 
     public Schedule() {
         this.montageOrders = new HashSet<>();
@@ -118,5 +125,15 @@ public class Schedule {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public Audit getAudit() {
+        return audit;
+    }
+
+    @Override
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

@@ -5,14 +5,13 @@ import com.ispectrum.crmclima.audit.Audit;
 import com.ispectrum.crmclima.audit.AuditListener;
 import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class BaseUnit {
+@EntityListeners(AuditListener.class)
+public abstract class BaseUnit implements Auditable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -33,6 +32,9 @@ public abstract class BaseUnit {
     private Double weight;
     private Double price;
     private LocalDateTime deletedOn;
+
+    @Embedded
+    private Audit audit;
 
 
     public String getDimensions() {
@@ -125,5 +127,15 @@ public abstract class BaseUnit {
 
     public void setDeletedOn(LocalDateTime deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    @Override
+    public Audit getAudit() {
+        return audit;
+    }
+
+    @Override
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

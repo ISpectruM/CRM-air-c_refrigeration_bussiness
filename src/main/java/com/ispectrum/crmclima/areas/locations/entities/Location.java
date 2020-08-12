@@ -1,12 +1,16 @@
 package com.ispectrum.crmclima.areas.locations.entities;
 
 import com.ispectrum.crmclima.areas.locations.entities.enums.Cities;
+import com.ispectrum.crmclima.audit.Audit;
+import com.ispectrum.crmclima.audit.AuditListener;
+import com.ispectrum.crmclima.audit.Auditable;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
-public class Location {
+@EntityListeners(AuditListener.class)
+public class Location implements Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -26,6 +30,9 @@ public class Location {
     private Double lat;
 
     private Double lng;
+
+    @Embedded
+    private Audit audit;
 
     public Location() {
     }
@@ -77,5 +84,13 @@ public class Location {
 
     public void setCity(Cities city) {
         this.city = city;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit auditAttributes) {
+        this.audit = auditAttributes;
     }
 }
